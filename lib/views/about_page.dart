@@ -32,7 +32,7 @@ class _AboutPageState extends State<AboutPage> {
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: const Text(
-                    'درباره ما',
+                    'about us',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 25,
@@ -45,7 +45,7 @@ class _AboutPageState extends State<AboutPage> {
                 Container(
                   margin: const EdgeInsets.all(20),
                   child: const Text(
-                    'این برنامه توسط سیدعلی کمالی ساخته شده است.',
+                   'This program was created by Seyed Ali Kamali',
                     textDirection: TextDirection.rtl,
                     style: TextStyle(
                       fontSize: 15,
@@ -104,7 +104,7 @@ class _AboutPageState extends State<AboutPage> {
                     launchUrl(Uri(
                         scheme: 'mailto',
                         path: 'wwwwwq37@gmail.com',
-                        queryParameters: {'subject': 'فوتبالو!'}));
+                        queryParameters: {'subject': 'Football!'}));
                   },
                   autofocus: false,
                   child: Container(

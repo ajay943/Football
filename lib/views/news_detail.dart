@@ -106,7 +106,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
             body: Center(
               child: Scaffold(
                 appBar: AppBar(
-                    title: const Text('فوتبالو',
+                    title: const Text('Football',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,

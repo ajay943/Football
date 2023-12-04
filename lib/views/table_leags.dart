@@ -101,7 +101,7 @@ class _TableLeagsState extends State<TableLeags> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'بازی',
+                                    'Play',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 10,
@@ -113,7 +113,7 @@ class _TableLeagsState extends State<TableLeags> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'برد',
+                                    'win',
                                     textAlign: TextAlign.center,
                                     // font size
                                     style: TextStyle(
@@ -126,7 +126,7 @@ class _TableLeagsState extends State<TableLeags> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'مساوی',
+                                    'equal',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 10,
@@ -138,7 +138,7 @@ class _TableLeagsState extends State<TableLeags> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'باخت',
+                                    'lost',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 10,
@@ -150,7 +150,7 @@ class _TableLeagsState extends State<TableLeags> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'تفاضل',
+                                    'difference',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 10,
@@ -162,7 +162,7 @@ class _TableLeagsState extends State<TableLeags> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'امتیاز',
+                                    'Score',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 10,

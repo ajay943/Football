@@ -53,7 +53,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
           child: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              title: const Text('فوتبالو',
+              title: const Text('Football',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
@@ -220,7 +220,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                     onEnd: () {
                       print("x");
                     },
-                    tabs: const ['رو در رو', 'اخبار', 'اتفاقات'],
+                    tabs: const ['face to face', 'news', 'events'],
                     children: [
                       Container(
                         // width: width * 0.95,
@@ -232,11 +232,11 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                         child: const Column(
                           children: [
                             SizedBox(height: 10),
-                            Text(" رو در رو"),
-                            Text(" رو در رو"),
-                            Text(" رو در رو"),
-                            Text(" رو در رو"),
-                            Text(" رو در رو"),
+                             Text("face to face"),
+                             Text("face to face"),
+                             Text("face to face"),
+                             Text("face to face"),
+                             Text("face to face"),
                             SizedBox(height: 10),
                           ],
                         ),
@@ -251,11 +251,11 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                         child: const Column(
                           children: [
                             SizedBox(height: 10),
-                            Text(" اخبار"),
-                            Text(" اخبار"),
-                            Text(" اخبار"),
-                            Text(" اخبار"),
-                            Text(" اخبار"),
+                             Text("News"),
+                             Text("News"),
+                             Text("News"),
+                             Text("News"),
+                             Text("News"),
                             SizedBox(height: 10),
                           ],
                         ),
@@ -270,11 +270,11 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                         child: const Column(
                           children: [
                             SizedBox(height: 10),
-                            Text(" اتفاقات"),
-                            Text(" اتفاقات"),
-                            Text(" اتفاقات"),
-                            Text(" اتفاقات"),
-                            Text(" اتفاقات"),
+                            Text("Events"),
+                             Text("Events"),
+                             Text("Events"),
+                             Text("Events"),
+                             Text("Events"),
                             SizedBox(height: 10),
                           ],
                         ),

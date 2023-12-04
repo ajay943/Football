@@ -104,7 +104,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('فوتبالو',
+          title: const Text('Football',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -131,19 +131,19 @@ class _MainPageState extends State<MainPage> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.futbol),
-            label: 'بازی های امروز',
+            label: "Today's Games"
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.tableList),
-            label: 'جدول لیگ ها',
+            label: 'League Table',
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.newspaper),
-            label: 'اخبار',
+            label: 'Newspaper',
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.circleInfo),
-            label: 'درباره ما',
+            label: 'about us',
           ),
         ].reversed.toList(),
         currentIndex: _selectedIndex,

@@ -28,22 +28,22 @@ class _LeagePageState extends State<LeagePage> {
               indicatorWeight: 5,
               tabs: const <Widget>[
                 Tab(
-                  text: 'لالیگا اسپانیا',
+                  text: "Spanish La Liga"
                 ),
                 Tab(
-                  text: 'لیگ برتر انگلیس',
+                  text: 'English Premier League'
                 ),
                 Tab(
-                  text: 'لیگ فرانسه',
+                  text: 'French League'
                 ),
                 Tab(
-                  text: 'بوندس لیگا',
+                  text: 'Bundesliga'
                 ),
                 Tab(
-                  text: 'سری آ ایتالیا',
+                  text: 'Italian Serie A'
                 ),
                 Tab(
-                  text: 'لیگ برتر خلیج فارس',
+                  text: "Persian Gulf Premier League"
                 ),
               ],
             ),

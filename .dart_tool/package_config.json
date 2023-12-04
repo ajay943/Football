@@ -15,21 +15,21 @@
     },
     {
       "name": "cached_network_image",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/cached_network_image-3.2.3",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/cached_network_image-3.3.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "cached_network_image_platform_interface",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/cached_network_image_platform_interface-2.0.0",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/cached_network_image_platform_interface-3.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "cached_network_image_web",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/cached_network_image_web-1.0.2",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/cached_network_image_web-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "characters",
@@ -93,15 +93,15 @@
     },
     {
       "name": "flutter_blurhash",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/flutter_blurhash-0.7.0",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/flutter_blurhash-0.8.2",
       "packageUri": "lib/",
-      "languageVersion": "2.15"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_cache_manager",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.0",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "flutter_lints",
@@ -135,9 +135,9 @@
     },
     {
       "name": "fwfh_text_style",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/fwfh_text_style-2.22.08+1",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/fwfh_text_style-2.23.8",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.17"
     },
     {
       "name": "grouped_list",
@@ -189,7 +189,7 @@
     },
     {
       "name": "octo_image",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/octo_image-1.0.2",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/octo_image-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -234,12 +234,6 @@
       "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/path_provider_windows-2.1.6",
       "packageUri": "lib/",
       "languageVersion": "2.17"
-    },
-    {
-      "name": "pedantic",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/pedantic-1.11.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "platform",
@@ -428,7 +422,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-12-02T07:58:13.940080Z",
+  "generated": "2023-12-02T08:14:10.482356Z",
   "generator": "pub",
   "generatorVersion": "3.2.2"
 }

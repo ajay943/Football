@@ -41,8 +41,10 @@ dependencies:
   url_launcher: ^6.1.10
   font_awesome_flutter: ^10.4.0
   flutter_widget_from_html_core: ^0.10.0
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.3.0
+  flutter_blurhash: ^0.8.2
   tab_container: ^2.0.0
+  fwfh_text_style: ^2.23.8
 
 dev_dependencies:
   flutter_test:

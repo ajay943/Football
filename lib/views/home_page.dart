@@ -61,7 +61,7 @@ class _TableGamesLivePageState extends State<TableGamesLivePage> {
                 height: 20,
               ),
               Text(
-                "هیچ بازی وجود ندارد",
+               "There is no game",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ],
