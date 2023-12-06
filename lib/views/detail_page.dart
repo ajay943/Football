@@ -1,7 +1,6 @@
-import 'package:app/services/match_datail_service.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tab_container/tab_container.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:app/services/match_datail_service.dart';
 
 class MatchDetailPage extends StatefulWidget {
   final int matchId;
@@ -12,7 +11,6 @@ class MatchDetailPage extends StatefulWidget {
 }
 
 class _MatchDetailPageState extends State<MatchDetailPage> {
-  // ignore: non_constant_identifier_names, prefer_typing_uninitialized_variables
   var MatchData;
   bool isLoaded = false;
 
@@ -39,9 +37,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double roundWidth = width / 6;
-    double gap = width / 12;
-    double textboxsize = width / 8;
+    double buttonWidth = width * 0.2; // Adjust the button width as needed
     double fontsize = width / 27;
     double fontsize2 = width / 30;
 
@@ -53,12 +49,12 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
           child: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              title: const Text('Football',
+              title: const Text('Cricket',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
-              backgroundColor: Colors.deepOrangeAccent,
+              backgroundColor: Colors.red,
               centerTitle: true,
               elevation: 10,
               toolbarHeight: 60,
@@ -74,7 +70,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                   height: 20,
                 ),
                 Container(
-                  // color: Colors.white,
                   height: 150,
                   width: width * 0.95,
                   alignment: Alignment.center,
@@ -82,206 +77,11 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                     borderRadius: BorderRadius.circular(12),
                     color: Theme.of(context).cardColor,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: roundWidth,
-                        height: roundWidth,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(
-                              MatchData["data"]["info"]['home_team']['logo'] ??
-                                  "https://i.pravatar.cc/100?img=0",
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      SizedBox(
-                        width: textboxsize,
-                        child: Text(
-                          MatchData["data"]["info"]['home_team']['name_fa'] ??
-                              MatchData["data"]["info"]['home_team']['name_en'],
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: fontsize,
-                              color:
-                                  Theme.of(context).textTheme.bodySmall?.color),
-                          textAlign: TextAlign.center,
-                          textDirection: TextDirection.rtl,
-                          textWidthBasis: TextWidthBasis.parent,
-                        ),
-                      ),
-                      SizedBox(
-                        width: gap,
-                      ),
-                      MatchData["data"]["info"]['match_started']
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                Text(
-                                  '${MatchData["data"]["info"]['home_team_score']} - ${MatchData["data"]["info"]['away_team_score']}',
-                                  style: TextStyle(
-                                      fontSize: fontsize2,
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.color),
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(MatchData["data"]["info"]['status'],
-                                    textAlign: TextAlign.values[1],
-                                    style: TextStyle(
-                                        fontSize: fontsize2,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.color)),
-                              ],
-                            )
-                          : Text(
-                              '${date.hour}:${date.minute}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.color),
-                            ),
-                      SizedBox(
-                        width: gap,
-                      ),
-                      SizedBox(
-                        width: textboxsize,
-                        child: Text(
-                          MatchData["data"]["info"]['away_team']['name_fa'] ??
-                              MatchData["data"]["info"]['away_team']['name_en'],
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: fontsize,
-                              color:
-                                  Theme.of(context).textTheme.bodySmall?.color),
-                          textAlign: TextAlign.center,
-                          textDirection: TextDirection.rtl,
-                          textWidthBasis: TextWidthBasis.parent,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        width: roundWidth,
-                        height: roundWidth,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(
-                              MatchData["data"]["info"]['away_team']['logo'] ??
-                                  "https://i.pravatar.cc/100?img=80",
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                // tab view
-
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // const Divider(
-                //   height: 2,
-                //   color: Colors.deepOrangeAccent,
-                //   thickness: 2,
-                // ),
                 const SizedBox(
                   height: 20,
                 ),
-                SizedBox(
-                  height: 450,
-                  width: width * 0.95,
-                  child: TabContainer(
-                    color: Theme.of(context).cardColor,
-                    onEnd: () {
-                      print("x");
-                    },
-                    tabs: const ['face to face', 'news', 'events'],
-                    children: [
-                      Container(
-                        // width: width * 0.95,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).cardColor,
-                        ),
-                        child: const Column(
-                          children: [
-                            SizedBox(height: 10),
-                             Text("face to face"),
-                             Text("face to face"),
-                             Text("face to face"),
-                             Text("face to face"),
-                             Text("face to face"),
-                            SizedBox(height: 10),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        // width: width * 0.95,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).cardColor,
-                        ),
-                        child: const Column(
-                          children: [
-                            SizedBox(height: 10),
-                             Text("News"),
-                             Text("News"),
-                             Text("News"),
-                             Text("News"),
-                             Text("News"),
-                            SizedBox(height: 10),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        // width: width * 0.95,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).cardColor,
-                        ),
-                        child: const Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Text("Events"),
-                             Text("Events"),
-                             Text("Events"),
-                             Text("Events"),
-                             Text("Events"),
-                            SizedBox(height: 10),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildInfiniteCardList(buttonWidth),
                 Container(
                   width: double.infinity,
                 ),
@@ -301,5 +101,165 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
         ),
       );
     }
+  }
+
+  Widget _buildInfiniteCardList(double buttonWidth) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: 5, // Adjust the itemCount as needed
+        itemBuilder: (context, index) => Column(
+          children: [
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 16.0), // Add horizontal padding
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey, // Set the border color to grey
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Card(
+                  elevation:
+                      0, // Set elevation to 0 to remove the default shadow
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Prize Pool"),
+                            RichText(
+                              text: TextSpan(
+                                text: 'Entry: ',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: '₹ 33',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "₹35 Lakhs",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              width: buttonWidth,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Add button click functionality
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.green,
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                ),
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: '₹',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: '49',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          padding: EdgeInsets.all(10),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 248, 245, 245),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "₹1.5 Lakhs",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color:
+                                      const Color.fromARGB(255, 139, 136, 136),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(
+                                    Icons.verified,
+                                    color: Color.fromARGB(255, 195, 197,
+                                        195), // Choose the color you prefer
+                                    size: 16, // Adjust the size as needed
+                                  ),
+                                  Text(
+                                    "Guaranteed",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color.fromARGB(
+                                          255, 125, 123, 123),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
   }
 }
