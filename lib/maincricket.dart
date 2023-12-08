@@ -16,6 +16,8 @@ void main() {
   runApp(const MyApp());
 }
 
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -95,19 +97,21 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 3;
   final dynamic _pages = [
-    const AboutPage(),
-    const NewsPage(),
-    const LeagePage(),
     const TableGamesLivePage(
       tab_id: '',
     ),
+    const LeagePage(),
+    const NewsPage(),
+    const AboutPage(),
   ].reversed.toList();
+
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Cricket',
+          title: const Text('Cricket Khelo',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -118,7 +122,7 @@ class _MainPageState extends State<MainPage> {
           toolbarHeight: 60,
           shape: const RoundedRectangleBorder(
             borderRadius:
-                BorderRadius.vertical(bottom: Radius.elliptical(100, 100)),
+                BorderRadius.vertical(bottom: Radius.elliptical(1, 1)),
           )),
       body: Padding(
         padding: const EdgeInsets.only(top: 15, bottom: 5, left: 5, right: 5),
@@ -133,8 +137,8 @@ class _MainPageState extends State<MainPage> {
         // revese the order of the items
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.circleInfo),
-            label: 'about us',
+            icon: Icon(FontAwesomeIcons.basketball),
+            label: 'Games',
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.newspaper),
@@ -145,7 +149,8 @@ class _MainPageState extends State<MainPage> {
             label: 'League Table',
           ),
           BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.futbol), label: "Today's Games"),
+              icon: Icon(FontAwesomeIcons.futbol), 
+              label: "About Us "),
         ].reversed.toList(),
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.deepOrange,
