@@ -10,19 +10,6 @@ class YourNewScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // First Row with Three Columns of Text
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     // Left Column
-          //     Text("Left Column"),
-          //     // Center Column
-          //     Text("Center Column"),
-          //     // Right Column
-          //     Text("Right Column"),
-          //   ],
-          // ),
-          // Card Section
           Align(
             alignment: Alignment.topCenter,
             child: Container(
