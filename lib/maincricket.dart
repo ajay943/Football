@@ -97,9 +97,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 3;
   final dynamic _pages = [
-    const TableGamesLivePage(
-      tab_id: '',
-    ),
+    const SidebarXExampleApp(),
     const LeagePage(),
     const NewsPage(),
     const AboutPage(),
@@ -110,20 +108,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('Cricket Khelo',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              )),
-          backgroundColor: Colors.deepOrangeAccent,
-          centerTitle: true,
-          elevation: 10,
-          toolbarHeight: 60,
-          shape: const RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.vertical(bottom: Radius.elliptical(1, 1)),
-          )),
       body: Padding(
         padding: const EdgeInsets.only(top: 15, bottom: 5, left: 5, right: 5),
         child: _pages[_selectedIndex],

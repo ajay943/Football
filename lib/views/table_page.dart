@@ -68,8 +68,8 @@ class _TablePageState extends State<TablePage> {
                 child: TabBarView(
                     children: pages
                         .map(
-                          (e) => TableGamesLivePage(
-                              tab_id: e['id']), //Tab(text: e['id']),
+                          (e) => SidebarXExampleApp(
+                             ), //Tab(text: e['id']),
                         )
                         .toList()
                         .reversed
