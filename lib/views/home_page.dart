@@ -80,7 +80,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               )),
-          backgroundColor: Colors.deepOrangeAccent,
+          backgroundColor: Colors.red,
           centerTitle: true,
           elevation: 10,
           toolbarHeight: 60,
