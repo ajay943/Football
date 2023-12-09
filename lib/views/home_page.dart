@@ -1,4 +1,10 @@
 
+import 'package:app/phone.dart';
+import 'package:app/views/chat.dart';
+import 'package:app/views/pointsystem.dart';
+import 'package:app/views/profile.dart';
+import 'package:app/views/responsibleplay.dart';
+import 'package:app/views/termsandconditions.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:app/services/footbali_services.dart';
 import 'package:app/views/detail_page.dart';
@@ -341,33 +347,77 @@ class ExampleSidebarX extends StatelessWidget {
           height: 100,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets/images/avatar.png'),
+            child: Image.asset('assets/slider3.png'),
           ),
         );
       },
       items: [
         SidebarXItem(
-          icon: Icons.home,
-          label: 'Home',
+          icon: Icons.people,
+          label: 'Profile',
           onTap: () {
-            debugPrint('Home');
+           Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),);
           },
         ),
-        const SidebarXItem(
-          icon: Icons.search,
-          label: 'Search',
+        SidebarXItem(
+          icon: Icons.description,
+          label: 'T&C',
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TermsAndConditionsPage(),
+                ),);
+          },
         ),
-        const SidebarXItem(
-          icon: Icons.people,
-          label: 'People',
+        SidebarXItem(
+          icon: Icons.point_of_sale,
+          label: 'Point System',
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PointsSystemPage(),
+                ),);
+          },
         ),
-        const SidebarXItem(
-          icon: Icons.favorite,
-          label: 'Favorites',
+        SidebarXItem(
+          icon: Icons.policy,
+          label: 'Responsible Play',
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResponsiblePlayPage(),
+                ),);
+          },
         ),
-        const SidebarXItem(
-          iconWidget: FlutterLogo(size: 20),
-          label: 'Flutter',
+        SidebarXItem(
+           icon: Icons.contact_emergency,
+          // iconWidget: FlutterLogo(size: 20),
+          label: 'Contact Us',
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LiveChat(),
+                ),);
+          },
+        ),
+        SidebarXItem(
+           icon: Icons.logout,
+          label: 'Logout',
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPhone(),
+                ),);
+          },
         ),
       ],
     );
@@ -377,19 +427,17 @@ class ExampleSidebarX extends StatelessWidget {
 String _getTitleByIndex(int index) {
   switch (index) {
     case 0:
-      return 'Home';
-    case 1:
-      return 'Search';
-    case 2:
-      return 'People';
-    case 3:
-      return 'Favorites';
-    case 4:
-      return 'Custom iconWidget';
-    case 5:
       return 'Profile';
-    case 6:
-      return 'Settings';
+    case 1:
+      return 'T&C';
+    case 2:
+      return 'Point System';
+    case 3:
+      return 'Responsible Play';
+    case 4:
+      return 'Contact Us';
+    case 5:
+      return 'Logout';
     default:
       return 'Not found page';
   }
