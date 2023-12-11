@@ -63,7 +63,7 @@ class YourNewScreen extends StatelessWidget {
                           Text(
                             "₹35 Lakhs",
                             style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 25,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
