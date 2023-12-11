@@ -1,4 +1,5 @@
 import 'package:app/views/player.dart';
+import 'package:app/views/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:app/services/match_datail_service.dart';
@@ -316,8 +317,25 @@ class TeamSelectionScreen extends StatelessWidget {
         title: Text('Team Selection'),
       ),
       body: Center(
-        child: Text('Team Selection Screen'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Team Selection Screen'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to WalletScreen when the button is pressed
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WalletScreen()),
+                );
+              },
+              child: Text('Select Team'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
