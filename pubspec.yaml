@@ -54,6 +54,8 @@ dependencies:
   shared_preferences: ^2.0.15
   webview_flutter: ^3.0.0
   image_picker: any
+  flutter_otp_text_field: ^1.1.1
+  pin_code_fields: ^7.4.0
 
 dev_dependencies:
   flutter_test:

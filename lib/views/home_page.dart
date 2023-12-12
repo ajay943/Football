@@ -453,7 +453,7 @@ class ExampleSidebarX extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => MyPhone(),
+                builder: (context) => SignInNewScreen(),
               ),
             );
           },

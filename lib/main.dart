@@ -1,3 +1,4 @@
+import 'package:app/otpScreen.dart';
 import 'package:app/phone.dart';
 import 'package:app/verify.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,8 @@ void main() {
     initialRoute: 'phone',
     debugShowCheckedModeBanner: false,
     routes: {
-      'phone': (context) => MyPhone(),
-      'verify': (context) => MyVerify()
+      'phone': (context) => SignInNewScreen(),
+      // 'verify': (context) => OtpScreen(dynamic , dynamic)
     },
   ));
 }
