@@ -5,9 +5,11 @@ class YourNewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Your New Screen'),
-      ),
+     appBar: AppBar(
+  title: Text('Your New Screen'),
+  backgroundColor: Colors.red, // Set red background color
+),
+
       body: Column(
         children: [
           Align(
@@ -18,6 +20,7 @@ class YourNewScreen extends StatelessWidget {
               child: Card(
                 elevation: 5,
                 margin: EdgeInsets.all(20),
+                color: Colors.white, // Set white background color
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8), // Set border radius
                   side: BorderSide(
@@ -68,24 +71,22 @@ class YourNewScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 150, // Set the desired width
+                            width: 130, // Set the desired width
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                    // builder: (context) => SidebarXExampleApp()),
-                                      builder: (context) => KycScreen()),
+                                    builder: (context) => KycScreen(),
+                                  ),
                                   (route) => false,
                                 );
-                                // Add button click functionality
-                                print("Button Pressed");
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.green,
                                 padding: EdgeInsets.symmetric(vertical: 10),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4.0),
+                                  borderRadius: BorderRadius.circular(5.0),
                                 ),
                               ),
                               child: RichText(

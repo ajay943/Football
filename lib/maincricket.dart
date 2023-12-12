@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Vazir',
         primaryColor: Colors.white,
         canvasColor: Colors.white,
-        cardColor: Colors.amber[100],
+        cardColor: Colors.white,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           foregroundColor: Colors.white,
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Vazir',
         primaryColor: Colors.black,
         canvasColor: Colors.black,
-        cardColor: Colors.grey,
+        cardColor: Colors.white,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,
           elevation: 0,

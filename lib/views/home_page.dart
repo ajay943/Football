@@ -70,8 +70,8 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
       title: 'SidebarX Example',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          // Your theme data
-          ),
+        // Your theme data
+      ),
       home: Builder(
         builder: (context) {
           final isSmallScreen = MediaQuery.of(context).size.width < 600;
@@ -92,7 +92,8 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                     toolbarHeight: 60,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
-                          bottom: Radius.elliptical(1, 1)),
+                        bottom: Radius.elliptical(1, 1),
+                      ),
                     ),
                     actions: [
                       IconButton(
@@ -104,11 +105,14 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                               builder: (context) => WalletScreen(),
                             ),
                           );
-                          // Handle wallet icon press
-                          // You can navigate to a new screen or perform other actions
                         },
                       ),
                     ],
+                    flexibleSpace: Column(
+                      children: [
+                        SizedBox(height: 20), // Add space here
+                      ],
+                    ),
                   )
                 : null,
             drawer: ExampleSidebarX(controller: _controller),
@@ -120,7 +124,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                     children: [
                       CarouselSlider(
                         options: CarouselOptions(
-                          height: 100.0,
+                          height: 150.0,
                           enlargeCenterPage: true,
                           autoPlay: true,
                           aspectRatio: 16 / 9,
@@ -148,13 +152,13 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                           );
                         }).toList(),
                       ),
-                      const SizedBox(height: 20), // Add some spacing
+                      const SizedBox(height: 20),
                       Text(
                         'Upcoming Matches',
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black, // Adjust the color as needed
+                          color: Colors.black,
                         ),
                       ),
                       Expanded(
@@ -176,6 +180,11 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                               child: Card(
                                 margin: const EdgeInsets.all(5),
                                 elevation: 25,
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(color: Colors.black),
+                                ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(15),
                                   child: Row(
@@ -343,7 +352,7 @@ class ExampleSidebarX extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withOpacity(0.28),
               blurRadius: 30,
-            )
+            ),
           ],
         ),
         iconTheme: IconThemeData(
@@ -363,12 +372,17 @@ class ExampleSidebarX extends StatelessWidget {
       ),
       footerDivider: divider,
       headerBuilder: (context, extended) {
-        return SizedBox(
-          height: 100,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets/slider3.png'),
-          ),
+        return Column(
+          children: [
+            SizedBox(height: 20),
+            SizedBox(
+              height: 100,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Image.asset('assets/slider3.png'),
+              ),
+            ),
+          ],
         );
       },
       items: [
@@ -408,21 +422,20 @@ class ExampleSidebarX extends StatelessWidget {
             );
           },
         ),
-        SidebarXItem(
-          icon: Icons.policy,
-          label: 'Responsible Play',
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ResponsiblePlayPage(),
-              ),
-            );
-          },
-        ),
+       SidebarXItem(
+  icon: Icons.policy,
+  label: 'Responsible Play',
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResponsiblePlayPage(),
+      ),
+    );
+  },
+),
         SidebarXItem(
           icon: Icons.contact_emergency,
-          // iconWidget: FlutterLogo(size: 20),
           label: 'Contact Us',
           onTap: () {
             Navigator.push(
