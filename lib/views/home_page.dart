@@ -5,6 +5,7 @@ import 'package:app/views/profile.dart';
 import 'package:app/views/responsibleplay.dart';
 import 'package:app/views/termsandconditions.dart';
 import 'package:app/views/wallet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:app/services/footbali_services.dart';
 import 'package:app/views/detail_page.dart';
@@ -25,7 +26,6 @@ class SidebarXExampleApp extends StatefulWidget {
 class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
   final _key = GlobalKey<ScaffoldState>();
-
   List competitions = [];
   final List<String> advertisements = [
     'assets/slider1.jpg',
@@ -34,8 +34,22 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
   ];
   bool isLoaded = false;
 
+  // _isLoggedIn() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.getBool('loggedin');
+  //   print('loggedinVALUE==>${prefs.getBool('loggedin')}');
+  // }
+
+  _setLoggedIn() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('loggedin', true);
+  print('loggedinVALUE==>${prefs.getBool('loggedin')}');
+}
+
   @override
   void initState() {
+    // _isLoggedIn();
+     _setLoggedIn();
     super.initState();
     fetchData();
   }
@@ -70,8 +84,8 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
       title: 'SidebarX Example',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // Your theme data
-      ),
+          // Your theme data
+          ),
       home: Builder(
         builder: (context) {
           final isSmallScreen = MediaQuery.of(context).size.width < 600;
@@ -422,18 +436,18 @@ class ExampleSidebarX extends StatelessWidget {
             );
           },
         ),
-       SidebarXItem(
-  icon: Icons.policy,
-  label: 'Responsible Play',
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ResponsiblePlayPage(),
-      ),
-    );
-  },
-),
+        SidebarXItem(
+          icon: Icons.policy,
+          label: 'Responsible Play',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResponsiblePlayPage(),
+              ),
+            );
+          },
+        ),
         SidebarXItem(
           icon: Icons.contact_emergency,
           label: 'Contact Us',
@@ -449,13 +463,16 @@ class ExampleSidebarX extends StatelessWidget {
         SidebarXItem(
           icon: Icons.logout,
           label: 'Logout',
-          onTap: () {
+          onTap: () async {
+            SharedPreferences pref = await SharedPreferences.getInstance();
+            pref.clear();
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => SignInNewScreen(),
               ),
             );
+            // await _logout();
           },
         ),
       ],
