@@ -76,6 +76,7 @@ class PointsList extends StatelessWidget {
           style: TextStyle(fontSize: 16.0),
         ),
         SizedBox(height: 8.0),
+        
         // Add more point rules as needed
       ],
     );

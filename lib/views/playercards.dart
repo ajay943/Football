@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class TeamSelectionScreen extends StatefulWidget {
   @override
@@ -10,45 +11,75 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
   late TabController _tabController;
   List<Player> players = [
     Player(
-        name: 'Player 1',
-        position: 'Forward',
-        skill: 'Attack',
-        photo: 'assets/player1.jpg'),
+      name: 'Player 1',
+      position: 'Forward',
+      skill: 'WK(0)',
+      photo: 'assets/player1.jpg',
+      point: '5',
+    ),
     Player(
-        name: 'Player 2',
-        position: 'Forward',
-        skill: 'Attack',
-        photo: 'assets/player2.jpg'),
+      name: 'Player 2',
+      position: 'Forward',
+      skill: 'WK(0)',
+      photo: 'assets/player2.jpg',
+      point: '6',
+    ),
     Player(
-        name: 'Player 3',
-        position: 'Midfielder',
-        skill: 'Midfield',
-        photo: 'assets/player3.jpg'),
+      name: 'Player 3',
+      position: 'Forward',
+      skill: 'WK(0)',
+      photo: 'assets/player2.jpg',
+      point: '8',
+    ),
     Player(
-        name: 'Player 4',
-        position: 'Midfielder',
-        skill: 'Midfield',
-        photo: 'assets/player4.jpg'),
+      name: 'Player 4',
+      position: 'Forward',
+      skill: 'WK(0)',
+      photo: 'assets/player2.jpg',
+      point: '7',
+    ),
     Player(
-        name: 'Player 5',
-        position: 'Defender',
-        skill: 'Defense',
-        photo: 'assets/player5.jpg'),
+      name: 'Player 5',
+      position: 'Midfielder',
+      skill: 'BAT(0)',
+      photo: 'assets/player3.jpg',
+      point: '8',
+    ),
     Player(
-        name: 'Player 6',
-        position: 'Defender',
-        skill: 'Defense',
-        photo: 'assets/player6.jpg'),
+      name: 'Player 6',
+      position: 'Midfielder',
+      skill: 'BAT(0)',
+      photo: 'assets/player4.jpg',
+      point: '5',
+    ),
     Player(
-        name: 'Player 7',
-        position: 'Goalkeeper',
-        skill: 'Goalkeeping',
-        photo: 'assets/player7.jpg'),
+      name: 'Player 7',
+      position: 'Defender',
+      skill: 'AR(0)',
+      photo: 'assets/player5.jpg',
+      point: '8',
+    ),
     Player(
-        name: 'Player 8',
-        position: 'Goalkeeper',
-        skill: 'Goalkeeping',
-        photo: 'assets/player8.jpg'),
+      name: 'Player 8',
+      position: 'Defender',
+      skill: 'AR(0)',
+      photo: 'assets/player6.jpg',
+      point: '6',
+    ),
+    Player(
+      name: 'Player 9',
+      position: 'Goalkeeper',
+      skill: 'BOWL(0)',
+      photo: 'assets/player7.jpg',
+      point: '9',
+    ),
+    Player(
+      name: 'Player 10',
+      position: 'Goalkeeper',
+      skill: 'BOWL(0)',
+      photo: 'assets/player8.jpg',
+      point: '12',
+    ),
   ];
 
   List<Player> selectedPlayers = [];
@@ -73,6 +104,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
     return Scaffold(
       appBar: AppBar(
         title: Text('Team Selection'),
+        backgroundColor: Colors.red,
       ),
       body: Column(
         children: [
@@ -87,31 +119,91 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Maximum of 10 players one team',
+                      'Maximum of 10 players from one team',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20.0,
+                        fontSize: 15.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
-                        height:
-                            16.0), // Add some space between text and progress bar
-                    LinearProgressIndicator(
-                      value: 0.3, // Set the progress value (e.g., 0.1 for 10%)
-                      backgroundColor: Colors
-                          .grey, // Set the background color of the progress bar
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.blue), // Set the progress color
+                    SizedBox(height: 30.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Players',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                        Text(
+                          'Credits Left',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                        height:
-                            8.0), // Add some space between progress bar and number
-                    Text(
-                      '11/11', // Display the number
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
+                    SizedBox(height: 5.0), // Add space between the two rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '0/11',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                        Text(
+                          '100',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10.0),
+                    Center(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          LinearPercentIndicator(
+                            width: 310.0,
+                            lineHeight: 27.0,
+                            percent: 0.8,
+                            center: Text(
+                              "80.0%",
+                              style: TextStyle(fontSize: 12.0),
+                            ),
+                            trailing: Icon(Icons.mood),
+                            linearStrokeCap: LinearStrokeCap.roundAll,
+                            backgroundColor: Colors.grey,
+                            progressColor: Colors.white,
+                          ),
+                          Positioned(
+                            right: 0.0,
+                            child: Container(
+                              padding: EdgeInsets.all(0.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black,
+                                border: Border.all(
+                                  color: Colors
+                                      .white, // Set the border color to white
+                                  width: 1.5, // Set the border width
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.remove,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -129,7 +221,13 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
               children: _getUniqueSkills().map((skill) {
                 return Column(
                   children: [
-                    Text('Select your $skill team:'),
+                    Text(
+                      'Select 1 - 8 your $skill team:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
                     Expanded(
                       child: ListView.builder(
                         itemCount: _getPlayersBySkill(skill).length,
@@ -159,6 +257,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                     });
                                   },
                                 ),
+                                Text(player.point),
                                 IconButton(
                                   icon: Icon(Icons.add),
                                   onPressed: () {
@@ -201,10 +300,13 @@ class Player {
   final String position;
   final String skill;
   final String photo;
+  final String point;
 
-  Player(
-      {required this.name,
-      required this.position,
-      required this.skill,
-      required this.photo});
+  Player({
+    required this.name,
+    required this.position,
+    required this.skill,
+    required this.photo,
+    required this.point,
+  });
 }

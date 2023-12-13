@@ -57,6 +57,7 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   pin_code_fields: ^7.4.0
   horizontal_stepper_step: ^0.0.5
+  percent_indicator: ^2.1.5
 
 dev_dependencies:
   flutter_test:

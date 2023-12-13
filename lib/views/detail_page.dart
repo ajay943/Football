@@ -89,51 +89,58 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
             ],
           ),
         ),
-        floatingActionButton: Align(
-          alignment: Alignment.bottomCenter,
+       floatingActionButton: Align(
+  alignment: Alignment.bottomCenter,
+  child: Padding(
+    padding: const EdgeInsets.only(bottom: 2.0), // Add some bottom padding
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
           child: Padding(
-            padding:
-                const EdgeInsets.only(bottom: 2.0), // Add some bottom padding
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TeamSelectionScreen(),
-                      ),
-                    );
-                  },
-                  backgroundColor: Colors.green,
-                  child: Padding(
-                    padding: const EdgeInsets.all(
-                        6.0), // Add padding around the text
-                    child: Text('Choose Team'),
+            padding: const EdgeInsets.symmetric(horizontal: 6.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TeamSelectionScreen(),
                   ),
-                ),
-                // SizedBox(width: 8), // Add some space between the buttons
-                FloatingActionButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TeamSelectionScreen(),
-                      ),
-                    );
-                  },
-                  backgroundColor: Colors.blue,
-                  child: Padding(
-                    padding: const EdgeInsets.all(
-                        6.0), // Add padding around the text
-                    child: Text('Create Team'),
-                  ),
-                ),
-              ],
+                );
+              },
+              backgroundColor: Colors.green,
+              child: Padding(
+                padding: const EdgeInsets.all(1.0),
+                child: Text('Choose Team'),
+              ),
             ),
           ),
         ),
+        // SizedBox(width: 4), // Add some space between the buttons
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TeamSelectionScreen(),
+                  ),
+                );
+              },
+              backgroundColor: Colors.blue,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text('Create Team'),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  ),
+),
 
       );
     } else {
