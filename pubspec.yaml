@@ -56,6 +56,7 @@ dependencies:
   image_picker: any
   flutter_otp_text_field: ^1.1.1
   pin_code_fields: ^7.4.0
+  horizontal_stepper_step: ^0.0.5
 
 dev_dependencies:
   flutter_test:

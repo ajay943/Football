@@ -212,6 +212,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "horizontal_stepper_step",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/horizontal_stepper_step-0.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "html",
       "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/html-0.15.2",
       "packageUri": "lib/",
@@ -680,7 +686,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-12-12T12:21:42.271790Z",
+  "generated": "2023-12-13T07:26:13.007574Z",
   "generator": "pub",
   "generatorVersion": "3.2.2"
 }
