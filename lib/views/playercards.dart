@@ -5,58 +5,25 @@ class TeamSelectionScreen extends StatefulWidget {
   _TeamSelectionScreenState createState() => _TeamSelectionScreenState();
 }
 
-class _TeamSelectionScreenState extends State<TeamSelectionScreen>
-    with SingleTickerProviderStateMixin {
+class _TeamSelectionScreenState extends State<TeamSelectionScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   List<Player> players = [
-    Player(
-        name: 'Player 1',
-        position: 'Forward',
-        skill: 'Attack',
-        photo: 'assets/player1.jpg'),
-    Player(
-        name: 'Player 2',
-        position: 'Forward',
-        skill: 'Attack',
-        photo: 'assets/player2.jpg'),
-    Player(
-        name: 'Player 3',
-        position: 'Midfielder',
-        skill: 'Midfield',
-        photo: 'assets/player3.jpg'),
-    Player(
-        name: 'Player 4',
-        position: 'Midfielder',
-        skill: 'Midfield',
-        photo: 'assets/player4.jpg'),
-    Player(
-        name: 'Player 5',
-        position: 'Defender',
-        skill: 'Defense',
-        photo: 'assets/player5.jpg'),
-    Player(
-        name: 'Player 6',
-        position: 'Defender',
-        skill: 'Defense',
-        photo: 'assets/player6.jpg'),
-    Player(
-        name: 'Player 7',
-        position: 'Goalkeeper',
-        skill: 'Goalkeeping',
-        photo: 'assets/player7.jpg'),
-    Player(
-        name: 'Player 8',
-        position: 'Goalkeeper',
-        skill: 'Goalkeeping',
-        photo: 'assets/player8.jpg'),
+    Player(name: 'Player 1', position: 'Forward', skill: 'Attack', photo: 'assets/player1.jpg'),
+    Player(name: 'Player 2', position: 'Forward', skill: 'Attack', photo: 'assets/player2.jpg'),
+    Player(name: 'Player 3', position: 'Midfielder', skill: 'Midfield', photo: 'assets/player3.jpg'),
+    Player(name: 'Player 4', position: 'Midfielder', skill: 'Midfield', photo: 'assets/player4.jpg'),
+    Player(name: 'Player 5', position: 'Defender', skill: 'Defense', photo: 'assets/player5.jpg'),
+    Player(name: 'Player 6', position: 'Defender', skill: 'Defense', photo: 'assets/player6.jpg'),
+    Player(name: 'Player 7', position: 'Goalkeeper', skill: 'Goalkeeping', photo: 'assets/player7.jpg'),
+    Player(name: 'Player 8', position: 'Goalkeeper', skill: 'Goalkeeping', photo: 'assets/player8.jpg'),
   ];
+
   List<Player> selectedPlayers = [];
 
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(length: _getUniqueSkills().length, vsync: this);
+    _tabController = TabController(length: _getUniqueSkills().length, vsync: this);
   }
 
   List<String> _getUniqueSkills() {
@@ -70,26 +37,13 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-  title: const Text('Cricket Khelo',
-      style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.bold)),
-  backgroundColor: Colors.red,
-  centerTitle: true,
-  elevation: 10,
-  toolbarHeight: 60,
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.vertical(bottom: Radius.elliptical(1, 1)),
-  ),
-  leading: IconButton(
-  icon: Icon(Icons.arrow_back),
-  onPressed: () {
-    Navigator.pop(context); // Navigate back to the previous screen
-  },
-),
-),
+      appBar: AppBar(
+        title: Text('Team Selection'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: _getUniqueSkills().map((skill) => Tab(text: skill)).toList(),
+        ),
+      ),
       body: TabBarView(
         controller: _tabController,
         children: _getUniqueSkills().map((skill) {
@@ -148,14 +102,12 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
           );
         }).toList(),
       ),
-      floatingActionButton: Align(
-        alignment: Alignment.bottomCenter,
-        child: ElevatedButton(
-          onPressed: () {
-            print('Selected Players: ${selectedPlayers.map((e) => e.name)}');
-          },
-          child: Text('Submit'),
-        ),
+      floatingActionButton: ElevatedButton(
+        onPressed: () {
+          // Handle the selected players
+          print('Selected Players: ${selectedPlayers.map((e) => e.name)}');
+        },
+        child: Text('Submit'),
       ),
     );
   }
@@ -166,9 +118,6 @@ class Player {
   final String position;
   final String skill;
   final String photo;
-  Player(
-      {required this.name,
-      required this.position,
-      required this.skill,
-      required this.photo});
+
+  Player({required this.name, required this.position, required this.skill, required this.photo});
 }

@@ -1,9 +1,9 @@
-import 'package:app/views/player.dart';
+import 'package:app/views/detail_page.dart';
+import 'package:app/views/playercards.dart';
 import 'package:app/views/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:app/services/match_datail_service.dart';
-
 import 'multiple.dart';
 
 class MatchDetailPage extends StatefulWidget {
@@ -91,29 +91,50 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
         ),
         floatingActionButton: Align(
           alignment: Alignment.bottomCenter,
-          child: Container(
-            width: 200, // Set the width as needed
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TeamSelectionScreen(),
+          child: Padding(
+            padding:
+                const EdgeInsets.only(bottom: 2.0), // Add some bottom padding
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TeamSelectionScreen(),
+                      ),
+                    );
+                  },
+                  backgroundColor: Colors.green,
+                  child: Padding(
+                    padding: const EdgeInsets.all(
+                        6.0), // Add padding around the text
+                    child: Text('Choose Team'),
                   ),
-                );
-              },
-              backgroundColor: Colors.green, // Customize the color as needed
-              child: Text(
-                ' Choose Team / Create Team',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
                 ),
-              ),
+                // SizedBox(width: 8), // Add some space between the buttons
+                FloatingActionButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TeamSelectionScreen(),
+                      ),
+                    );
+                  },
+                  backgroundColor: Colors.blue,
+                  child: Padding(
+                    padding: const EdgeInsets.all(
+                        6.0), // Add padding around the text
+                    child: Text('Create Team'),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
       );
     } else {
       return const Scaffold(
@@ -148,159 +169,161 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                   );
                 },
                 child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Container(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Prize Pool"),
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Entry: ',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: '₹ 33',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "₹35 Lakhs",
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(
-                                width: buttonWidth,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    // Add button click functionality
-                                    print("Button Pressed");
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.green,
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                  ),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      text: '₹',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: '49',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            padding: EdgeInsets.all(10),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 223, 241, 220),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
+                    child: Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "₹1.5 Lakhs",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold,
-                                    color:
-                                        const Color.fromARGB(255, 139, 136, 136),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Center(
-                                    child: Text(
-                                      "Flexible",
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey,
+                                Text("Prize Pool"),
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Entry: ',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: '₹ 33',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green,
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Icon(
-                                      Icons.verified,
-                                      color: Color.fromARGB(
-                                          255, 195, 197, 195),
-                                      size: 16,
-                                    ),
-                                    Text(
-                                      "Guaranteed",
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        color: const Color.fromARGB(
-                                            255, 125, 123, 123),
-                                      ),
-                                    ),
-                                  ],
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "₹35 Lakhs",
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: buttonWidth,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      // Add button click functionality
+                                      print("Button Pressed");
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.green,
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                      ),
+                                    ),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text: '₹',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: '49',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.all(10),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 223, 241, 220),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "₹1.5 Lakhs",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color.fromARGB(
+                                          255, 139, 136, 136),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Center(
+                                      child: Text(
+                                        "Flexible",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Icon(
+                                        Icons.verified,
+                                        color:
+                                            Color.fromARGB(255, 195, 197, 195),
+                                        size: 16,
+                                      ),
+                                      Text(
+                                        "Guaranteed",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color.fromARGB(
+                                              255, 125, 123, 123),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                ),
+                    )),
               ),
             ),
           ],
@@ -309,33 +332,5 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
     );
   }
 }
-class TeamSelectionScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Team Selection'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Team Selection Screen'),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to WalletScreen when the button is pressed
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WalletScreen()),
-                );
-              },
-              child: Text('Select Team'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+
 
