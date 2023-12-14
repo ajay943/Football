@@ -1,19 +1,5 @@
+import 'package:app/views/top_up.dart';
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(WalletApp());
-}
-
-class WalletApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: WalletScreen(),
-    );
-  }
-}
-
 class WalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -96,6 +82,12 @@ class WalletCard extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
+                   Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TopUpScreen(),
+              ),
+            );
                   // Handle Top-Up
                 },
                 child: Text('Top-Up'),
