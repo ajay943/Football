@@ -1,4 +1,87 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'razerpay.dart'; // Import your Razorpay page
+
+// class TopUpScreen extends StatefulWidget {
+//   @override
+//   _TopUpScreenState createState() => _TopUpScreenState();
+// }
+
+// class _TopUpScreenState extends State<TopUpScreen> {
+//   TextEditingController controller = TextEditingController(); // Add controller
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(
+//           'Top - Up',
+//           style: TextStyle(color: Colors.white),
+//         ),
+//         centerTitle: true,
+//         backgroundColor: Colors.red,
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.stretch,
+//           children: [
+//             Column(
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: [
+//                 Text(
+//                   'TOP - UP',
+//                   style: TextStyle(
+//                     fontSize: 18.0,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//                 SizedBox(height: 8.0),
+//                 Text(
+//                   'Enter Amount (Min ₹1)',
+//                   style: TextStyle(
+//                     fontSize: 16.0,
+//                     color: Colors.grey,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             TextField(
+//               controller: controller,
+//               keyboardType: TextInputType.numberWithOptions(decimal: true),
+//               inputFormatters: <TextInputFormatter>[
+//                 FilteringTextInputFormatter.digitsOnly,
+//               ],
+//               decoration: InputDecoration(
+//                 labelText: 'Enter Numeric Value',
+//               ),
+//             ),
+//             ElevatedButton(
+//               onPressed: () {
+//                 Navigator.push(
+//                   context,
+//                   MaterialPageRoute(
+//                     builder: (context) => MyHomePage(),
+//                   ),
+//                 );
+//               },
+//               style: ElevatedButton.styleFrom(
+//                 minimumSize: Size(double.infinity, 50),
+//                 primary: Colors.yellow,
+//               ),
+//               child: Text('Add Money'),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class TopUpScreen extends StatefulWidget {
   @override
@@ -6,20 +89,18 @@ class TopUpScreen extends StatefulWidget {
 }
 
 class _TopUpScreenState extends State<TopUpScreen> {
-  TextEditingController amountController = TextEditingController();
-  double currentBalance = 100.0; // Replace with actual user balance
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var condition;
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Top - Up',
-          style: TextStyle(color: Colors.white), // Set text color to red
+          style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true, // Center the title
-        backgroundColor: Colors.red, // Set the background color to red
+        centerTitle: true,
+        backgroundColor: Colors.red,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -36,7 +117,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8.0), // Add some space between the two lines
+                SizedBox(height: 8.0),
                 Text(
                   'Enter Amount (Min ₹1)',
                   style: TextStyle(
@@ -46,135 +127,102 @@ class _TopUpScreenState extends State<TopUpScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: Colors.grey), // Set the border color to grey
-                borderRadius: BorderRadius.circular(
-                    8.0), // Optionally, set border radius for rounded corners
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: amountController,
-                      decoration: InputDecoration(
-                        labelText: condition ?? false ? 'Custom Label' : null,
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.zero,
-                      ),
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              'Instant',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Row(
-              children: [
-                Container(
-                  height: 40.0,
-                  width: 105.0,
-                  margin: EdgeInsets.all(5.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      topUp();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(
-                          255, 210, 209, 209), // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            1.0), // Rectangular shape with border radius
-                      ),
-                    ),
-                    child: Text(
-                      '₹100',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 93, 92, 92),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 40.0,
-                  width: 105.0,
-                  margin: EdgeInsets.all(5.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(
-                          255, 204, 203, 203), // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            1.0), // Rectangular shape with border radius
-                      ),
-                    ),
-                    child: Text(
-                      '₹500',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 103, 102, 102),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 40.0,
-                  width: 105.0,
-                  margin: EdgeInsets.all(5.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Handle the onPressed for the third button
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color.fromARGB(
-                          255, 206, 204, 204), // Background color
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            1.0), // Rectangular shape with border radius
-                      ),
-                    ),
-                    child: Text(
-                      '₹2000',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 96, 95, 95),
-                      ),
-                    ),
-                  ),
-                ),
+            TextField(
+              controller: controller,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly,
               ],
-            )
+              // decoration: InputDecoration(
+              //   labelText: 'Enter Numeric Value',
+              // ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                double enteredAmount = double.parse(controller.text);
+                if (enteredAmount >= 1) {
+                  _openRazorpay(enteredAmount);
+                } else {
+                  // Handle invalid amount
+                  // You can show an error message or perform other actions
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(double.infinity, 50),
+                primary: Colors.yellow,
+              ),
+              child: Text('Add Money'),
+            ),
           ],
         ),
       ),
     );
   }
 
-  void topUp() {
-    // Validate the amount
-    if (amountController.text.isNotEmpty) {
-      double topUpAmount = double.tryParse(amountController.text) ?? 0.0;
+  void _openRazorpay(double amount) {
+    Razorpay razorpay = Razorpay();
+    var options = {
+      'key': 'rzp_live_ILgsfZCZoFIKMb',
+      'amount': (amount * 100).toInt(), // Convert amount to paise
+      'name': 'Acme Corp.',
+      'description': 'Fine T-Shirt',
+      'retry': {'enabled': true, 'max_count': 1},
+      'send_sms_hash': true,
+      'prefill': {
+        'contact': '8888888888',
+        'email': 'test@razorpay.com',
+      },
+      'external': {
+        'wallets': ['paytm'],
+      },
+    };
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentErrorResponse);
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccessResponse);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWalletSelected);
+    razorpay.open(options);
+  }
 
-      // Update the user's balance
-      setState(() {
-        currentBalance += topUpAmount;
-      });
+  void _handlePaymentErrorResponse(PaymentFailureResponse response) {
+    _showAlertDialog(
+      "Payment Failed",
+      "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}",
+    );
+  }
 
-      // Optionally, you can implement logic to update the backend or perform other actions.
-    }
+  void _handlePaymentSuccessResponse(PaymentSuccessResponse response) {
+    _showAlertDialog(
+      "Payment Successful",
+      "Payment ID: ${response.paymentId}",
+    );
+  }
+
+  void _handleExternalWalletSelected(ExternalWalletResponse response) {
+    _showAlertDialog(
+      "External Wallet Selected",
+      "${response.walletName}",
+    );
+  }
+
+  void _showAlertDialog(String title, String message) {
+    Widget continueButton = ElevatedButton(
+      child: const Text("Continue"),
+      onPressed: () {},
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+      actions: [
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
