@@ -14,6 +14,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'dart:async';
 
 class SidebarXExampleApp extends StatefulWidget {
   const SidebarXExampleApp({Key? key}) : super(key: key);
@@ -34,24 +35,29 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
   ];
   bool isLoaded = false;
 
-  // _isLoggedIn() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.getBool('loggedin');
-  //   print('loggedinVALUE==>${prefs.getBool('loggedin')}');
-  // }
+  _isLoggedIn() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    // pref.setString('phoneNumber', phoneNumber);
+    var phoneNumber = pref.getString('phoneNumber');
+    print('loggedinVALUE==>$phoneNumber');
+  }
 
   _setLoggedIn() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('loggedin', true);
-  print('loggedinVALUE==>${prefs.getBool('loggedin')}');
-}
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('loggedin', true);
+    // print('loggedinVALUE==>${prefs.getBool('loggedin')}');
+  }
 
   @override
   void initState() {
-    // _isLoggedIn();
-     _setLoggedIn();
+    _isLoggedIn();
+    _setLoggedIn();
+    // Timer.periodic(Duration(seconds: 5), (Timer timer) {
+    //    _isLoggedIn();
+    //  });
     super.initState();
     fetchData();
+   
   }
 
   void fetchData() async {

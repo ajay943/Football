@@ -1,4 +1,3 @@
-
 import 'dart:math';
 import 'package:app/otpScreen.dart';
 import 'package:flutter/gestures.dart';
@@ -189,7 +188,7 @@ class _SignInNewScreenState extends State<SignInNewScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      setState(() {
+                      setState(() async {
                         print("phoneNumber${_data.phoneNumber}");
 
                         if (_formKey.currentState!.validate()) {
@@ -197,11 +196,14 @@ class _SignInNewScreenState extends State<SignInNewScreen> {
                           if (phoneNumber.isNotEmpty) {
                             final random = Random();
                             final otp = 1000 + random.nextInt(6666);
+                            SharedPreferences pref =
+                                await SharedPreferences.getInstance();
+                            pref.setString('phoneNumber', phoneNumber);
                             Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          OtpScreen(otp, phoneNumber)));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        OtpScreen(otp, phoneNumber)));
                             // ApiService.otpApi(
                             //   apikey,
                             //   sender,
@@ -224,6 +226,7 @@ class _SignInNewScreenState extends State<SignInNewScreen> {
                       setState(() async {
                         SharedPreferences pref =
                             await SharedPreferences.getInstance();
+                        // pref.setString('phoneNumber', phoneNumber);
                         var phoneNumber = pref.getString('phoneNumber');
                       });
                     },
@@ -245,7 +248,7 @@ class _SignInNewScreenState extends State<SignInNewScreen> {
                         ),
                       ),
                     ),
-                  ),   
+                  ),
                   const SizedBox(
                     height: 50,
                   ),
