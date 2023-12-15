@@ -89,7 +89,6 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
       print(response.reasonPhrase);
     }
   }
-
   void fetchData() async {
     var url = Uri.parse(
         'https://rest.entitysport.com/v2/competitions/121143/matches/?token=ec471071441bb2ac538a0ff901abd249&per_page=50&&paged=1');
@@ -499,13 +498,25 @@ class ExampleSidebarX extends StatelessWidget {
           onTap: () async {
             SharedPreferences pref = await SharedPreferences.getInstance();
             pref.clear();
+            var url = Uri.parse('https://crickx.onrender.com/logout');
+            var request = http.Request('POST', url);
+            try {
+              http.StreamedResponse response = await request.send();
+              if (response.statusCode == 200) {
+                print(await response.stream.bytesToString());
+              } else {
+                print(response.reasonPhrase);
+              }
+            } catch (error) {
+              print('Error: $error');
+            }
+          
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => SignInNewScreen(),
               ),
             );
-            // await _logout();
           },
         ),
       ],

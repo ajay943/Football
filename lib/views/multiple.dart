@@ -1,7 +1,50 @@
-import 'package:app/views/kyc.dart';
-import 'package:flutter/material.dart';
 
-class YourNewScreen extends StatelessWidget {
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class YourNewScreen extends StatefulWidget {
+  @override
+  _YourNewScreenState createState() => _YourNewScreenState();
+}
+
+class _YourNewScreenState extends State<YourNewScreen> {
+  String responseData = "";
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+
+    var url = Uri.parse('https://crickx.onrender.com/getRankPrice');
+
+    try {
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: json.encode({
+          "contest_id": "6570287ec44254db03c35258",
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          responseData = utf8.decode(response.bodyBytes);
+        });
+      } else {
+        print(response.reasonPhrase);
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,17 +57,17 @@ class YourNewScreen extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              width: 450, // Set the desired width
-              height: 200, // Set the desired height
+              width: 450,
+              height: 200,
               child: Card(
                 elevation: 5,
                 margin: EdgeInsets.all(20),
-                color: Colors.white, // Set white background color
+                color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8), // Set border radius
+                  borderRadius: BorderRadius.circular(8),
                   side: BorderSide(
-                    color: Colors.black, // Set border color
-                    width: 1.0, // Set border width
+                    color: Colors.black,
+                    width: 1.0,
                   ),
                 ),
                 child: Padding(
@@ -70,16 +113,11 @@ class YourNewScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 130, // Set the desired width
+                            width: 130,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => KycScreen(),
-                                  ),
-                                  (route) => false,
-                                );
+                                // Add button click functionality
+                                print("Button Pressed");
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.green,
@@ -172,22 +210,7 @@ class YourNewScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Second Row with Three Columns of Text
-          Row(
-            children: [
-              // Text with space on the left
-              Container(
-                margin: EdgeInsets.only(left: 20),
-                child: Text(
-                  "Winnings",
-                  style: TextStyle(
-                    color: Colors.blue, // Set text color to blue
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
+            SizedBox(height: 20),
           Container(
             margin: EdgeInsets.only(left: 20, right: 20),
             child: Row(
@@ -224,7 +247,6 @@ class YourNewScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10),
-
           Container(
             margin: EdgeInsets.only(left: 20, right: 20),
             child: Row(
@@ -264,14 +286,11 @@ class YourNewScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-
           Container(
-            // Set background color to light blue
             color: Colors.lightBlue,
             child: Table(
-              // Remove border
               border: TableBorder.all(
-                color: Colors.transparent, // Set border color to transparent
+                color: Colors.transparent,
               ),
               children: [
                 TableRow(
@@ -281,43 +300,64 @@ class YourNewScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'Rank',
-                          style: TextStyle(color: Colors.black), // Text color
+                          style: TextStyle(color: Colors.black),
                         ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 100, top: 8.0),
-                        child: Text(
-                          'Winnings',
-                          style: TextStyle(color: Colors.black), // Text color
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Data 1'),
                       ),
                     ),
                     TableCell(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 110, top: 8.0),
-                        child: Text('Data 2'),
+                        child: Text(
+                          'Winnings',
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
                     ),
                   ],
                 ),
-                // Add more TableRow widgets as needed
+                ...mapRanksAndPrices(),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
+
+  List<TableRow> mapRanksAndPrices() {
+    Map<String, dynamic> ranksAndPrices = getRanksAndPricesFromResponse();
+
+    return ranksAndPrices.entries.map((entry) {
+      return TableRow(
+        children: [
+          TableCell(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(entry.key),
+            ),
+          ),
+          TableCell(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 110, top: 8.0),
+              child: Text(entry.value.toString()),
+            ),
+          ),
+        ],
+      );
+    }).toList();
+  }
+
+  Map<String, dynamic> getRanksAndPricesFromResponse() {
+    if (responseData.isNotEmpty) {
+      Map<String, dynamic> jsonResponse = json.decode(responseData);
+      return jsonResponse['data']['ranksAndPrices'];
+    }
+    return {};
+  }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: YourNewScreen(),
+  ));
 }

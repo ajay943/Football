@@ -1,83 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'razerpay.dart'; // Import your Razorpay page
-
-// class TopUpScreen extends StatefulWidget {
-//   @override
-//   _TopUpScreenState createState() => _TopUpScreenState();
-// }
-
-// class _TopUpScreenState extends State<TopUpScreen> {
-//   TextEditingController controller = TextEditingController(); // Add controller
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(
-//           'Top - Up',
-//           style: TextStyle(color: Colors.white),
-//         ),
-//         centerTitle: true,
-//         backgroundColor: Colors.red,
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.stretch,
-//           children: [
-//             Column(
-//               crossAxisAlignment: CrossAxisAlignment.stretch,
-//               children: [
-//                 Text(
-//                   'TOP - UP',
-//                   style: TextStyle(
-//                     fontSize: 18.0,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//                 SizedBox(height: 8.0),
-//                 Text(
-//                   'Enter Amount (Min ₹1)',
-//                   style: TextStyle(
-//                     fontSize: 16.0,
-//                     color: Colors.grey,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             TextField(
-//               controller: controller,
-//               keyboardType: TextInputType.numberWithOptions(decimal: true),
-//               inputFormatters: <TextInputFormatter>[
-//                 FilteringTextInputFormatter.digitsOnly,
-//               ],
-//               decoration: InputDecoration(
-//                 labelText: 'Enter Numeric Value',
-//               ),
-//             ),
-//             ElevatedButton(
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                     builder: (context) => MyHomePage(),
-//                   ),
-//                 );
-//               },
-//               style: ElevatedButton.styleFrom(
-//                 minimumSize: Size(double.infinity, 50),
-//                 primary: Colors.yellow,
-//               ),
-//               child: Text('Add Money'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -133,9 +53,6 @@ class _TopUpScreenState extends State<TopUpScreen> {
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              // decoration: InputDecoration(
-              //   labelText: 'Enter Numeric Value',
-              // ),
             ),
             SizedBox(
               height: 20,
