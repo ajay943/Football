@@ -35,7 +35,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
 
   var url = Uri.parse('https://crickx.onrender.com/getpool-contest');
 
-  var 3ww3333w  `` = await http.post(
+  var response = await http.post(
     url,
     headers: headers,
     body: json.encode({
