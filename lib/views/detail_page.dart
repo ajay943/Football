@@ -9,6 +9,7 @@ import 'package:app/services/match_datail_service.dart';
 import 'multiple.dart';
 import '../services/api_service.dart';
 
+
 class MatchDetailPage extends StatefulWidget {
   final int matchId;
   const MatchDetailPage({Key? key, required this.matchId}) : super(key: key);
@@ -211,30 +212,36 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Prize Pool"),
+                                  Text(
+                                    "Prize ",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      // Add any other styling properties as needed
+                                    ),
+                                  ),
                                   RichText(
                                     text: TextSpan(
-                                      text: 'Entry: ',
+                                      text: 'Entry ',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
-                                        color: Colors.black,
+                                        color: Colors.grey,
                                       ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: element['entry_fee'].toString(),
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                      ],
+                                      // children: <TextSpan>[
+                                      //   TextSpan(
+                                      //     text: element['entry_fee'].toString(),
+                                      //     style: TextStyle(
+                                      //       fontSize: 14,
+                                      //       fontWeight: FontWeight.bold,
+                                      //       color: Colors.green,
+                                      //     ),
+                                      //   ),
+                                      // ],
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
+                              SizedBox(height: 1),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -272,7 +279,8 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                           ),
                                           children: <TextSpan>[
                                             TextSpan(
-                                              text: '49',
+                                              text: element['entry_fee']
+                                                  .toString(),
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
