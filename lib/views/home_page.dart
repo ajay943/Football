@@ -34,30 +34,60 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
     'assets/slider3.png',
   ];
   bool isLoaded = false;
+  late String phone;
 
   _isLoggedIn() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    // pref.setString('phoneNumber', phoneNumber);
     var phoneNumber = pref.getString('phoneNumber');
+    setState(() {
+      phone = phoneNumber!;
+    });
     print('loggedinVALUE==>$phoneNumber');
   }
 
   _setLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('loggedin', true);
-    // print('loggedinVALUE==>${prefs.getBool('loggedin')}');
   }
 
   @override
   void initState() {
+    super.initState();
     _isLoggedIn();
     _setLoggedIn();
-    // Timer.periodic(Duration(seconds: 5), (Timer timer) {
-    //    _isLoggedIn();
-    //  });
-    super.initState();
     fetchData();
-   
+    Future.delayed(Duration(seconds: 2), () {
+      register();
+    });
+  }
+
+  void register() async {
+    print(phone);
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var url = Uri.parse('https://crickx.onrender.com/saveNumber');
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode({
+        "phoneNumber": phone,
+      }),
+    );
+    if (response.statusCode == 200) {
+      setState(() {});
+      print("response$response");
+      print(await response.body);
+    } else if (response.statusCode == 201) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SignInNewScreen(),
+        ),
+      );
+    } else {
+      print(response.reasonPhrase);
+    }
   }
 
   void fetchData() async {
@@ -89,9 +119,6 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
     return MaterialApp(
       title: 'SidebarX Example',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          // Your theme data
-          ),
       home: Builder(
         builder: (context) {
           final isSmallScreen = MediaQuery.of(context).size.width < 600;
