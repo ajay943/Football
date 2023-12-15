@@ -5,11 +5,10 @@ class YourNewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: AppBar(
-  title: Text('Your New Screen'),
-  backgroundColor: Colors.red, // Set red background color
-),
-
+      appBar: AppBar(
+        title: Text('Your New Screen'),
+        backgroundColor: Colors.red, // Set red background color
+      ),
       body: Column(
         children: [
           Align(

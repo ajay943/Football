@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:app/views/detail_page.dart';
 import 'package:app/views/playercards.dart';
 import 'package:app/views/wallet.dart';
@@ -5,44 +7,57 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:app/services/match_datail_service.dart';
 import 'multiple.dart';
+import '../services/api_service.dart';
 
 class MatchDetailPage extends StatefulWidget {
   final int matchId;
-
   const MatchDetailPage({Key? key, required this.matchId}) : super(key: key);
-
   @override
   State<MatchDetailPage> createState() => _MatchDetailPageState();
 }
 
 class _MatchDetailPageState extends State<MatchDetailPage> {
   var MatchData;
-  bool isLoaded = false;
+  bool isLoaded = true;
 
+  List<dynamic> suggestions = [];
   @override
   void initState() {
     super.initState();
-    fetchDataDetail();
+    fetchData(widget.matchId);
+     
   }
 
-  fetchDataDetail() async {
-    try {
-      await Future.delayed(Duration(seconds: 2));
-      MatchData = {
-        'data': {
-          'info': {'timestamp': DateTime.now().millisecondsSinceEpoch}
-        }
-      };
+  void fetchData(int matchId) async {
+  var headers = {
+    'Content-Type': 'application/json',
+  };
 
-      if (MatchData != null) {
-        setState(() {
-          isLoaded = true;
-        });
-      }
-    } catch (e) {
-      fetchDataDetail();
-    }
+  var url = Uri.parse('https://crickx.onrender.com/getpool-contest');
+
+  var 3ww3333w  `` = await http.post(
+    url,
+    headers: headers,
+    body: json.encode({
+      "match_id": matchId,
+    }),
+  );
+  print("response$response[data]");
+
+  if (response.statusCode == 200) {
+    var jsonResponse = json.decode(response.body);
+
+    setState(() {
+      suggestions = jsonResponse['data'];
+    });
+    print("hello$suggestions");
+    // You can parse the response JSON here if needed
+  } else {
+    print(response.reasonPhrase);
   }
+}
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -89,59 +104,59 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
             ],
           ),
         ),
-       floatingActionButton: Align(
-  alignment: Alignment.bottomCenter,
-  child: Padding(
-    padding: const EdgeInsets.only(bottom: 2.0), // Add some bottom padding
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(
+        floatingActionButton: Align(
+          alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6.0),
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TeamSelectionScreen(),
+            padding:
+                const EdgeInsets.only(bottom: 2.0), // Add some bottom padding
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TeamSelectionScreen(),
+                          ),
+                        );
+                      },
+                      backgroundColor: Colors.green,
+                      child: Padding(
+                        padding: const EdgeInsets.all(1.0),
+                        child: Text('Choose Team'),
+                      ),
+                    ),
                   ),
-                );
-              },
-              backgroundColor: Colors.green,
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Text('Choose Team'),
-              ),
+                ),
+                // SizedBox(width: 4), // Add some space between the buttons
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TeamSelectionScreen(),
+                          ),
+                        );
+                      },
+                      backgroundColor: Colors.blue,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text('Create Team'),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        // SizedBox(width: 4), // Add some space between the buttons
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: FloatingActionButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TeamSelectionScreen(),
-                  ),
-                );
-              },
-              backgroundColor: Colors.blue,
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text('Create Team'),
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  ),
-),
-
       );
     } else {
       return const Scaffold(
@@ -157,10 +172,13 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
   }
 
   Widget _buildInfiniteCardList(double buttonWidth) {
-    return Expanded(
+    return 
+    Expanded(
       child: ListView.builder(
-        itemCount: 4,
-        itemBuilder: (context, index) => Column(
+        itemCount: suggestions.length,
+        itemBuilder: (context, index) {
+          var element = suggestions[index];
+       return Column(
           children: [
             SizedBox(height: 10),
             Padding(
@@ -207,7 +225,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
-                                        text: '₹ 33',
+                                        text: element['entry_fee'].toString(),
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
@@ -334,10 +352,9 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
               ),
             ),
           ],
-        ),
+        );
+        },
       ),
     );
   }
 }
-
-
