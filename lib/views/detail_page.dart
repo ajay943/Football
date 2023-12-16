@@ -33,7 +33,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
       'Content-Type': 'application/json',
     };
 
-    var url = Uri.parse('https://crickx.onrender.com/getpool-contest');
+    var url = Uri.parse('https://crickx.onrender.com/getpool');
 
     var response = await http.post(
       url,
