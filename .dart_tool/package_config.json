@@ -2,6 +2,12 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "accordion",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/accordion-2.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "args",
       "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/args-2.4.2",
       "packageUri": "lib/",
@@ -135,7 +141,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/packages/flutter",
+      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -177,13 +183,13 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -210,6 +216,12 @@
       "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/fwfh_text_style-2.23.8",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "get",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/get-4.6.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "google_fonts",
@@ -458,6 +470,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "scroll_to_index",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/scroll_to_index-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "shamsi_date",
       "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/shamsi_date-1.0.1",
       "packageUri": "lib/",
@@ -513,7 +531,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -728,7 +746,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-12-16T10:38:27.364059Z",
+  "generated": "2023-12-16T11:35:14.213625Z",
   "generator": "pub",
-  "generatorVersion": "3.2.0"
+  "generatorVersion": "3.2.2"
 }
