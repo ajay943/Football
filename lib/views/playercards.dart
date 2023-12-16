@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:percent_indicator/percent_indicator.dart';
 
 class TeamSelectionScreen extends StatefulWidget {
@@ -9,90 +11,68 @@ class TeamSelectionScreen extends StatefulWidget {
 class _TeamSelectionScreenState extends State<TeamSelectionScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List<Player> players = [
-    Player(
-      name: 'Player 1',
-      position: 'Forward',
-      skill: 'WK(0)',
-      photo: 'assets/player1.jpg',
-      point: '5',
-    ),
-    Player(
-      name: 'Player 2',
-      position: 'Forward',
-      skill: 'WK(0)',
-      photo: 'assets/player2.jpg',
-      point: '6',
-    ),
-    Player(
-      name: 'Player 3',
-      position: 'Forward',
-      skill: 'WK(0)',
-      photo: 'assets/player2.jpg',
-      point: '8',
-    ),
-    Player(
-      name: 'Player 4',
-      position: 'Forward',
-      skill: 'WK(0)',
-      photo: 'assets/player2.jpg',
-      point: '7',
-    ),
-    Player(
-      name: 'Player 5',
-      position: 'Midfielder',
-      skill: 'BAT(0)',
-      photo: 'assets/player3.jpg',
-      point: '8',
-    ),
-    Player(
-      name: 'Player 6',
-      position: 'Midfielder',
-      skill: 'BAT(0)',
-      photo: 'assets/player4.jpg',
-      point: '5',
-    ),
-    Player(
-      name: 'Player 7',
-      position: 'Defender',
-      skill: 'AR(0)',
-      photo: 'assets/player5.jpg',
-      point: '8',
-    ),
-    Player(
-      name: 'Player 8',
-      position: 'Defender',
-      skill: 'AR(0)',
-      photo: 'assets/player6.jpg',
-      point: '6',
-    ),
-    Player(
-      name: 'Player 9',
-      position: 'Goalkeeper',
-      skill: 'BOWL(0)',
-      photo: 'assets/player7.jpg',
-      point: '9',
-    ),
-    Player(
-      name: 'Player 10',
-      position: 'Goalkeeper',
-      skill: 'BOWL(0)',
-      photo: 'assets/player8.jpg',
-      point: '12',
-    ),
-  ];
-
+  List<Player> players = [];
   List<Player> selectedPlayers = [];
+  int totalCredits = 100;
+  int maxPlayers = 11;
 
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(length: _getUniqueSkills().length, vsync: this);
+    _tabController = TabController(
+      length: 4,
+      vsync: this,
+    );
+    _fetchPlayers();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _fetchPlayers() async {
+    try {
+      var response = await http.get(
+          Uri.parse('https://rest.entitysport.com/v2/matches/49629/squads?token=ec471071441bb2ac538a0ff901abd249'));
+
+      if (response.statusCode == 200) {
+        var jsonResponse = json.decode(response.body);
+
+        if (jsonResponse.containsKey('response')) {
+          List<Player> apiPlayers = [];
+          for (var data in jsonResponse['response']['players']) {
+            Player player = Player(
+              name: data['first_name'].toString() ?? '',
+              position: data['playing_role'].toString() ?? '',
+              skill: data['playing_role'].toString() ?? '',
+              photo: 'assets/player8.jpg',
+              point: data['fantasy_player_rating'].toString() ?? '',
+            );
+            apiPlayers.add(player);
+          }
+
+          setState(() {
+            players = apiPlayers;
+          });
+        } else {
+          print('Error: Data not found in API response');
+        }
+      } else {
+        print('Error: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   List<String> _getUniqueSkills() {
-    return players.map((player) => player.skill).toSet().toList();
+    return players
+        .where((player) => player.skill.isNotEmpty)
+        .map((player) => player.skill)
+        .toSet()
+        .toList();
   }
 
   List<Player> _getPlayersBySkill(String skill) {
@@ -146,19 +126,19 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                         ),
                       ],
                     ),
-                    SizedBox(height: 5.0), // Add space between the two rows
+                    SizedBox(height: 5.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '0/11',
+                          '${selectedPlayers.length}/$maxPlayers',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.0,
                           ),
                         ),
                         Text(
-                          '100',
+                          '$totalCredits',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15.0,
@@ -174,9 +154,9 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                           LinearPercentIndicator(
                             width: 310.0,
                             lineHeight: 27.0,
-                            percent: 0.8,
+                            percent: (selectedPlayers.length / maxPlayers).toDouble(),
                             center: Text(
-                              "80.0%",
+                              '${(selectedPlayers.length / maxPlayers * 100).toStringAsFixed(1)}%',
                               style: TextStyle(fontSize: 12.0),
                             ),
                             trailing: Icon(Icons.mood),
@@ -193,8 +173,8 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                 color: Colors.black,
                                 border: Border.all(
                                   color: Colors
-                                      .white, // Set the border color to white
-                                  width: 1.5, // Set the border width
+                                      .white,
+                                  width: 1.5,
                                 ),
                               ),
                               child: Icon(
@@ -253,6 +233,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                     setState(() {
                                       if (selectedPlayers.contains(player)) {
                                         selectedPlayers.remove(player);
+                                        totalCredits += int.parse(player.point);
                                       }
                                     });
                                   },
@@ -262,8 +243,11 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                   icon: Icon(Icons.add),
                                   onPressed: () {
                                     setState(() {
-                                      if (!selectedPlayers.contains(player)) {
+                                      if (selectedPlayers.length < maxPlayers &&
+                                          !selectedPlayers.contains(player) &&
+                                          totalCredits >= int.parse(player.point)) {
                                         selectedPlayers.add(player);
+                                        totalCredits -= int.parse(player.point);
                                       }
                                     });
                                   },
@@ -286,7 +270,6 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () {
-          // Handle the selected players
           print('Selected Players: ${selectedPlayers.map((e) => e.name)}');
         },
         child: Text('Submit'),
