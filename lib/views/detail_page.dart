@@ -9,6 +9,7 @@ import 'package:app/services/match_datail_service.dart';
 import 'multiple.dart';
 import '../services/api_service.dart';
 import 'package:loader_skeleton/loader_skeleton.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MatchDetailPage extends StatefulWidget {
   final int matchId;
@@ -115,7 +116,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
                   child: FloatingActionButton(
                     onPressed: () {
                       Navigator.push(
@@ -127,16 +128,15 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                     },
                     backgroundColor: Colors.green,
                     child: Padding(
-                      padding: const EdgeInsets.all(1.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: Text('Choose Team'),
                     ),
                   ),
                 ),
               ),
-              // SizedBox(width: 4), // Add some space between the buttons
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
                   child: FloatingActionButton(
                     onPressed: () {
                       Navigator.push(
@@ -148,7 +148,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                     },
                     backgroundColor: Colors.blue,
                     child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: Text('Create Team'),
                     ),
                   ),
@@ -229,7 +229,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "₹35 Lakhs",
+                                    element['price_pool'].toString(),
                                     style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,
@@ -239,7 +239,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                     width: buttonWidth,
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        // Add button click functionality
                                         print("Button Pressed");
                                       },
                                       style: ElevatedButton.styleFrom(
@@ -278,7 +277,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: 10),
-                                padding: EdgeInsets.all(10),
+                                padding: EdgeInsets.all(0),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   color: Color.fromARGB(255, 223, 241, 220),
@@ -288,15 +287,57 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "₹1.5 Lakhs",
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        color: const Color.fromARGB(
-                                            255, 139, 136, 136),
+                                    TextButton(
+                                      onPressed: () {
+                                        Fluttertoast.showToast(
+                                          msg: 'Winning percentage',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons
+                                                .emoji_events, // Use the icon you prefer, I used emoji_events as an example
+                                            color: Colors.black,
+                                            size: 16,
+                                          ),
+                                          SizedBox(
+                                              width:
+                                                  6), // Add some space between the icon and text
+                                          Text(
+                                            '${element['winning_spots_precent'].toString()}%',
+                                            style: TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              // Add any other styling properties as needed
+                                            ),
+                                          ),
+                                        ],
                                       ),
+                                      // child: Text(
+                                      //   '${element['winning_spots_precent'].toString()}%',
+                                      //   style: TextStyle(
+                                      //     fontSize: 10,
+                                      //     fontWeight: FontWeight.bold,
+                                      //     // Add any other styling properties as needed
+                                      //   ),
+                                      // ),
                                     ),
+                                    // Text(
+                                    //   '${element['winning_spots_precent'].toString()}%',
+                                    //   style: TextStyle(
+                                    //     fontSize: 10,
+                                    //     fontWeight: FontWeight.bold,
+                                    //     color: const Color.fromARGB(
+                                    //         255, 139, 136, 136),
+                                    //   ),
+                                    // ),
                                     Expanded(
                                       child: Center(
                                         child: Text(
@@ -320,7 +361,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                           size: 16,
                                         ),
                                         Text(
-                                          "Guaranteed",
+                                          '${element['done_spots'].toString()}/${element['total_spots'].toString()}',
                                           style: TextStyle(
                                             fontSize: 10,
                                             fontWeight: FontWeight.bold,
