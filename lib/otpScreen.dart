@@ -291,37 +291,37 @@ class _OtpScreenState extends State<OtpScreen> {
       _formKey.currentState!.save();
       print("OUR1_$otpPin");
       print("YOU1_$userEnterOtp");
-       Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => MainPage()),
-          (route) => false,
-        );
-      // if (otpPin.toString() == userEnterOtp.toString()) {
-      //   print("OUR_$otpPin");
-      //   print("YOU_$userEnterOtp");
-      //   Navigator.pushAndRemoveUntil(
+      //  Navigator.pushAndRemoveUntil(
       //     context,
       //     MaterialPageRoute(builder: (context) => MainPage()),
       //     (route) => false,
       //   );
-      // } else {
-      //   showDialog(
-      //     context: context,
-      //     builder: (BuildContext context) {
-      //       return AlertDialog(
-      //         title: Text('Invalid OTP'),
-      //         actions: <Widget>[
-      //           ElevatedButton(
-      //             child: Text('OK'),
-      //             onPressed: () {
-      //               Navigator.of(context).pop();
-      //             },
-      //           ),
-      //         ],
-      //       );
-      //     },
-      //   );
-      // }
+      if (otpPin.toString() == userEnterOtp.toString()) {
+        print("OUR_$otpPin");
+        print("YOU_$userEnterOtp");
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => MainPage()),
+          (route) => false,
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Invalid OTP'),
+              actions: <Widget>[
+                ElevatedButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 }

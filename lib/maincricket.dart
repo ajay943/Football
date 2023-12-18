@@ -16,15 +16,12 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 0;
   final dynamic _pages = [
-    const SidebarXExampleApp(),
-    const LeagePage(),
-    const NewsPage(),
     const AboutPage(),
+    const LeagePage(),
+    const SidebarXExampleApp(),    
   ].reversed.toList();
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -39,23 +36,18 @@ class _MainPageState extends State<MainPage> {
         unselectedIconTheme: const IconThemeData(size: 25),
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        // revese the order of the items
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.basketball),
-            label: 'Games',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.newspaper),
-            label: 'Newspaper',
-          ),
+              icon: Icon(FontAwesomeIcons.futbol), 
+              label: "About Us "),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.tableList),
             label: 'League Table',
           ),
           BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.futbol), 
-              label: "About Us "),
+            icon: Icon(FontAwesomeIcons.basketball),
+            label: 'Games',
+          ),
         ].reversed.toList(),
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.deepOrange,

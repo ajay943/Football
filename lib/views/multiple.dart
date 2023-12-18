@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:loader_skeleton/loader_skeleton.dart';
 
 class YourNewScreen extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class YourNewScreen extends StatefulWidget {
 
 class _YourNewScreenState extends State<YourNewScreen> {
   String responseData = "";
-
+    bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -36,6 +37,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
       if (response.statusCode == 200) {
         setState(() {
           responseData = utf8.decode(response.bodyBytes);
+          isLoading = false;
         });
       } else {
         print(response.reasonPhrase);
@@ -52,7 +54,13 @@ class _YourNewScreenState extends State<YourNewScreen> {
         title: Text('Your New Screen'),
         backgroundColor: Colors.red, // Set red background color
       ),
-      body: Column(
+      body: 
+      isLoading // Check if loading, show loader
+                ? CardSkeleton(
+                    isCircularImage: true,
+                    isBottomLinesActive: true,
+                  )
+                : Column(
         children: [
           Align(
             alignment: Alignment.topCenter,

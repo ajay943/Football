@@ -8,7 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:app/services/match_datail_service.dart';
 import 'multiple.dart';
 import '../services/api_service.dart';
-
+import 'package:loader_skeleton/loader_skeleton.dart';
 
 class MatchDetailPage extends StatefulWidget {
   final int matchId;
@@ -19,7 +19,7 @@ class MatchDetailPage extends StatefulWidget {
 
 class _MatchDetailPageState extends State<MatchDetailPage> {
   var MatchData;
-  bool isLoaded = true;
+  bool isLoading = true;
 
   List<dynamic> suggestions = [];
   @override
@@ -49,6 +49,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
 
       setState(() {
         suggestions = jsonResponse['data'];
+        isLoading = false;
       });
       print("hello$suggestions");
       // You can parse the response JSON here if needed
@@ -61,112 +62,103 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double buttonWidth = width * 0.2;
-
-    if (isLoaded) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text('Cricket Khelo',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold)),
-          backgroundColor: Colors.red,
-          centerTitle: true,
-          elevation: 10,
-          toolbarHeight: 60,
-          shape: const RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.vertical(bottom: Radius.elliptical(1, 1)),
-          ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text('Cricket Khelo',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.red,
+        centerTitle: true,
+        elevation: 10,
+        toolbarHeight: 60,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.elliptical(1, 1)),
         ),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
+      ),
+      body: isLoading // Check if loading, show loader
+          ? CardSkeleton(
+              isCircularImage: true,
+              isBottomLinesActive: true,
+            )
+          : Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    child: Image.asset(
+                      'assets/bannerImage.webp',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _buildInfiniteCardList(buttonWidth),
+                  Container(
+                    width: double.infinity,
+                  ),
+                ],
+              ),
+            ),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding:
+              const EdgeInsets.only(bottom: 2.0), // Add some bottom padding
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: 200,
-                width: double.infinity,
-                child: Image.asset(
-                  'assets/bannerImage.webp',
-                  fit: BoxFit.cover,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TeamSelectionScreen(),
+                        ),
+                      );
+                    },
+                    backgroundColor: Colors.green,
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Text('Choose Team'),
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              _buildInfiniteCardList(buttonWidth),
-              Container(
-                width: double.infinity,
+              // SizedBox(width: 4), // Add some space between the buttons
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TeamSelectionScreen(),
+                        ),
+                      );
+                    },
+                    backgroundColor: Colors.blue,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text('Create Team'),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ),
-        floatingActionButton: Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(bottom: 2.0), // Add some bottom padding
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TeamSelectionScreen(),
-                          ),
-                        );
-                      },
-                      backgroundColor: Colors.green,
-                      child: Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: Text('Choose Team'),
-                      ),
-                    ),
-                  ),
-                ),
-                // SizedBox(width: 4), // Add some space between the buttons
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TeamSelectionScreen(),
-                          ),
-                        );
-                      },
-                      backgroundColor: Colors.blue,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text('Create Team'),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    } else {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(
-            color: Colors.deepOrangeAccent,
-            strokeWidth: 7,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrangeAccent),
-          ),
-        ),
-      );
-    }
+      ),
+    );
   }
 
   Widget _buildInfiniteCardList(double buttonWidth) {
@@ -227,16 +219,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                         fontWeight: FontWeight.normal,
                                         color: Colors.grey,
                                       ),
-                                      // children: <TextSpan>[
-                                      //   TextSpan(
-                                      //     text: element['entry_fee'].toString(),
-                                      //     style: TextStyle(
-                                      //       fontSize: 14,
-                                      //       fontWeight: FontWeight.bold,
-                                      //       color: Colors.green,
-                                      //     ),
-                                      //   ),
-                                      // ],
                                     ),
                                   ),
                                 ],

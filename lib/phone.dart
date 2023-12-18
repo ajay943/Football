@@ -199,27 +199,27 @@ class _SignInNewScreenState extends State<SignInNewScreen> {
                             SharedPreferences pref =
                                 await SharedPreferences.getInstance();
                             pref.setString('phoneNumber', phoneNumber);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        OtpScreen(otp, phoneNumber)));
-                            // ApiService.otpApi(
-                            //   apikey,
-                            //   sender,
-                            //   phoneNumber,
-                            //   otp,
-                            // ).then((value) async {
-                            //   SharedPreferences pref =
-                            //       await SharedPreferences.getInstance();
-                            //   phoneNumber = pref.getString('phoneNumber');
-                            //   var res = value;
-                            //   Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) =>
-                            //               OtpScreen(otp, phoneNumber)));
-                            // });
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             OtpScreen(otp, phoneNumber)));
+                            ApiService.otpApi(
+                              apikey,
+                              sender,
+                              phoneNumber,
+                              otp,
+                            ).then((value) async {
+                              SharedPreferences pref =
+                                  await SharedPreferences.getInstance();
+                              phoneNumber = pref.getString('phoneNumber');
+                              var res = value;
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          OtpScreen(otp, phoneNumber)));
+                            });
                           }
                         }
                       });

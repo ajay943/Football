@@ -15,6 +15,9 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'package:loader_skeleton/loader_skeleton.dart';
+
+//Widget
 
 class SidebarXExampleApp extends StatefulWidget {
   const SidebarXExampleApp({Key? key}) : super(key: key);
@@ -33,7 +36,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
     'assets/slider2.jpg',
     'assets/slider3.png',
   ];
-  bool isLoaded = false;
+  bool isLoading = true;
   late String phone;
 
   _isLoggedIn() async {
@@ -56,7 +59,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
     _isLoggedIn();
     _setLoggedIn();
     fetchData();
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 1), () {
       register();
     });
   }
@@ -75,7 +78,9 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
       }),
     );
     if (response.statusCode == 200) {
-      setState(() {});
+      setState(() {
+        isLoading = false;
+      });
       print("response$response");
       print(await response.body);
     } else if (response.statusCode == 201) {
@@ -89,6 +94,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
       print(response.reasonPhrase);
     }
   }
+
   void fetchData() async {
     var url = Uri.parse(
         'https://rest.entitysport.com/v2/competitions/121143/matches/?token=ec471071441bb2ac538a0ff901abd249&per_page=50&&paged=1');
@@ -102,7 +108,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
             for (int i = 0; i < data['response']['items'].length; i++) {
               competitions.addAll(data['response']['items']);
             }
-            isLoaded = true;
+            isLoading = true;
           });
         }
       } else {
@@ -162,195 +168,214 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                   )
                 : null,
             drawer: ExampleSidebarX(controller: _controller),
-            body: Row(
-              children: [
-                if (!isSmallScreen) ExampleSidebarX(controller: _controller),
-                Expanded(
-                  child: Column(
+            body: isLoading // Check if loading, show loader
+                ? CardSkeleton(
+                    isCircularImage: true,
+                    isBottomLinesActive: true,
+                  )
+                : Row(
                     children: [
-                      CarouselSlider(
-                        options: CarouselOptions(
-                          height: 150.0,
-                          enlargeCenterPage: true,
-                          autoPlay: true,
-                          aspectRatio: 16 / 9,
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enableInfiniteScroll: true,
-                          autoPlayAnimationDuration:
-                              Duration(milliseconds: 800),
-                          viewportFraction: 0.8,
-                        ),
-                        items: advertisements.map((ad) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              return Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  image: DecorationImage(
-                                    image: AssetImage(ad),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        }).toList(),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'Upcoming Matches',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
+                      if (!isSmallScreen)
+                        ExampleSidebarX(controller: _controller),
                       Expanded(
-                        child: ListView.builder(
-                          itemCount: competitions.length,
-                          itemBuilder: (context, index) {
-                            var element = competitions[index];
-                            return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MatchDetailPage(
-                                      matchId: element["match_id"],
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Card(
-                                margin: const EdgeInsets.all(5),
-                                elevation: 25,
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(color: Colors.black),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: Row(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Container(
-                                            width: 60,
-                                            height: 60,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
-                                                image:
-                                                    CachedNetworkImageProvider(
-                                                  element['teama']
-                                                          ['thumb_url'] ??
-                                                      "https://i.pravatar.cc/100?img=0",
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            element['teama']['short_name'] ??
-                                                element['home_team']['name_en'],
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall
-                                                  ?.color,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: 22, right: 22),
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              "T-20",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall
-                                                    ?.color,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 16),
-                                            Text(
-                                              '${element['date_start']}',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall
-                                                    ?.color,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              margin:
-                                                  EdgeInsets.only(left: 1.0),
-                                              width: 60,
-                                              height: 60,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                image: DecorationImage(
-                                                  image:
-                                                      CachedNetworkImageProvider(
-                                                    element['teamb']
-                                                            ['thumb_url'] ??
-                                                        "https://i.pravatar.cc/100?img=80",
-                                                  ),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            Text(
-                                              element['teamb']['short_name'] ??
-                                                  element['away_team']
-                                                      ['name_en'],
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall
-                                                    ?.color,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 20),
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                height: 150.0,
+                                enlargeCenterPage: true,
+                                autoPlay: true,
+                                aspectRatio: 16 / 9,
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enableInfiniteScroll: true,
+                                autoPlayAnimationDuration:
+                                    Duration(milliseconds: 800),
+                                viewportFraction: 0.8,
                               ),
-                            );
-                          },
+                              items: advertisements.map((ad) {
+                                return Builder(
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        image: DecorationImage(
+                                          image: AssetImage(ad),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'Upcoming Matches',
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: competitions.length,
+                                itemBuilder: (context, index) {
+                                  var element = competitions[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MatchDetailPage(
+                                            matchId: element["match_id"],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Card(
+                                      margin: const EdgeInsets.all(5),
+                                      elevation: 25,
+                                      color: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        side: BorderSide(color: Colors.black),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15),
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                Container(
+                                                  width: 60,
+                                                  height: 60,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    image: DecorationImage(
+                                                      image:
+                                                          CachedNetworkImageProvider(
+                                                        element['teama']
+                                                                ['thumb_url'] ??
+                                                            "https://i.pravatar.cc/100?img=0",
+                                                      ),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Text(
+                                                  element['teama']
+                                                          ['short_name'] ??
+                                                      element['home_team']
+                                                          ['name_en'],
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall
+                                                        ?.color,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 22, right: 22),
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "T-20",
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall
+                                                          ?.color,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 16),
+                                                  Text(
+                                                    '${element['date_start']}',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall
+                                                          ?.color,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 1.0),
+                                                    width: 60,
+                                                    height: 60,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      image: DecorationImage(
+                                                        image:
+                                                            CachedNetworkImageProvider(
+                                                          element['teamb'][
+                                                                  'thumb_url'] ??
+                                                              "https://i.pravatar.cc/100?img=80",
+                                                        ),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    element['teamb']
+                                                            ['short_name'] ??
+                                                        element['away_team']
+                                                            ['name_en'],
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall
+                                                          ?.color,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
           );
         },
       ),
@@ -445,6 +470,18 @@ class ExampleSidebarX extends StatelessWidget {
           },
         ),
         SidebarXItem(
+          icon: Icons.wallet,
+          label: 'Wallet',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WalletScreen(),
+              ),
+            );
+          },
+        ),
+        SidebarXItem(
           icon: Icons.description,
           label: 'T&C',
           onTap: () {
@@ -510,7 +547,7 @@ class ExampleSidebarX extends StatelessWidget {
             } catch (error) {
               print('Error: $error');
             }
-          
+
             Navigator.push(
               context,
               MaterialPageRoute(

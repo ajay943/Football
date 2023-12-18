@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:loader_skeleton/loader_skeleton.dart';
 
 class TeamSelectionScreen extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
   List<Player> selectedPlayers = [];
   int totalCredits = 100;
   int maxPlayers = 11;
+    bool isLoading = true;
 
   @override
   void initState() {
@@ -55,6 +57,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
 
           setState(() {
             players = apiPlayers;
+            isLoading = false;
           });
         } else {
           print('Error: Data not found in API response');
@@ -86,7 +89,12 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
         title: Text('Team Selection'),
         backgroundColor: Colors.red,
       ),
-      body: Column(
+      body: isLoading // Check if loading, show loader
+          ? CardSkeleton(
+              isCircularImage: true,
+              isBottomLinesActive: true,
+            )
+          :Column(
         children: [
           Container(
             height: 200.0,
