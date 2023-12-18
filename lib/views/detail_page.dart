@@ -79,7 +79,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
           borderRadius: BorderRadius.vertical(bottom: Radius.elliptical(1, 1)),
         ),
       ),
-      body: isLoading // Check if loading, show loader
+      body: isLoading
           ? CardSkeleton(
               isCircularImage: true,
               isBottomLinesActive: true,
@@ -174,11 +174,12 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                 padding: EdgeInsets.symmetric(horizontal: 15.0),
                 child: GestureDetector(
                   onTap: () {
-                    // Navigate to a new screen when the card is pressed
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => YourNewScreen(),
+                        builder: (context) => YourNewScreen(
+                          contestId: element["_id"],
+                        ),
                       ),
                     );
                   },
@@ -302,42 +303,21 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                       child: Row(
                                         children: [
                                           Icon(
-                                            Icons
-                                                .emoji_events, // Use the icon you prefer, I used emoji_events as an example
+                                            Icons.emoji_events,
                                             color: Colors.black,
                                             size: 16,
                                           ),
-                                          SizedBox(
-                                              width:
-                                                  6), // Add some space between the icon and text
+                                          SizedBox(width: 6),
                                           Text(
                                             '${element['winning_spots_precent'].toString()}%',
                                             style: TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,
-                                              // Add any other styling properties as needed
                                             ),
                                           ),
                                         ],
                                       ),
-                                      // child: Text(
-                                      //   '${element['winning_spots_precent'].toString()}%',
-                                      //   style: TextStyle(
-                                      //     fontSize: 10,
-                                      //     fontWeight: FontWeight.bold,
-                                      //     // Add any other styling properties as needed
-                                      //   ),
-                                      // ),
                                     ),
-                                    // Text(
-                                    //   '${element['winning_spots_precent'].toString()}%',
-                                    //   style: TextStyle(
-                                    //     fontSize: 10,
-                                    //     fontWeight: FontWeight.bold,
-                                    //     color: const Color.fromARGB(
-                                    //         255, 139, 136, 136),
-                                    //   ),
-                                    // ),
                                     Expanded(
                                       child: Center(
                                         child: Text(

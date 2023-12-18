@@ -71,11 +71,11 @@ class _KycScreenState extends State<KycScreen> {
                 IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => YourNewScreen()),
-                      (route) => false,
-                    );
+                    // Navigator.pushAndRemoveUntil(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => YourNewScreen()),
+                    //   (route) => false,
+                    // );
                   },
                 ),
               ],
