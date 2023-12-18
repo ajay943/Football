@@ -16,7 +16,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
   List<Player> selectedPlayers = [];
   int totalCredits = 100;
   int maxPlayers = 11;
-    bool isLoading = true;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -36,8 +36,8 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
 
   Future<void> _fetchPlayers() async {
     try {
-      var response = await http.get(
-          Uri.parse('https://rest.entitysport.com/v2/matches/49629/squads?token=ec471071441bb2ac538a0ff901abd249'));
+      var response = await http.get(Uri.parse(
+          'https://rest.entitysport.com/v2/matches/49629/squads?token=ec471071441bb2ac538a0ff901abd249'));
 
       if (response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
@@ -85,204 +85,230 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Team Selection'),
-        backgroundColor: Colors.red,
-      ),
-      body: isLoading // Check if loading, show loader
-          ? CardSkeleton(
-              isCircularImage: true,
-              isBottomLinesActive: true,
-            )
-          :Column(
-        children: [
-          Container(
-            height: 200.0,
-            width: 700.0,
-            child: Card(
-              color: Colors.black,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Maximum of 10 players from one team',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 30.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Players',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        Text(
-                          'Credits Left',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '${selectedPlayers.length}/$maxPlayers',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        Text(
-                          '$totalCredits',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10.0),
-                    Center(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          LinearPercentIndicator(
-                            width: 310.0,
-                            lineHeight: 27.0,
-                            percent: (selectedPlayers.length / maxPlayers).toDouble(),
-                            center: Text(
-                              '${(selectedPlayers.length / maxPlayers * 100).toStringAsFixed(1)}%',
-                              style: TextStyle(fontSize: 12.0),
-                            ),
-                            trailing: Icon(Icons.mood),
-                            linearStrokeCap: LinearStrokeCap.roundAll,
-                            backgroundColor: Colors.grey,
-                            progressColor: Colors.white,
-                          ),
-                          Positioned(
-                            right: 0.0,
-                            child: Container(
-                              padding: EdgeInsets.all(0.0),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.black,
-                                border: Border.all(
-                                  color: Colors
-                                      .white,
-                                  width: 1.5,
-                                ),
-                              ),
-                              child: Icon(
-                                Icons.remove,
-                                color: Colors.grey,
+        appBar: AppBar(
+          title: Text('Team Selection'),
+          backgroundColor: Colors.red,
+        ),
+        body: isLoading // Check if loading, show loader
+            ? CardSkeleton(
+                isCircularImage: true,
+                isBottomLinesActive: true,
+              )
+            : Column(
+                children: [
+                  Container(
+                    height: 200.0,
+                    width: 700.0,
+                    child: Card(
+                      color: Colors.black,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Maximum of 10 players from one team',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          TabBar(
-            controller: _tabController,
-            tabs: _getUniqueSkills().map((skill) => Tab(text: skill)).toList(),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: _getUniqueSkills().map((skill) {
-                return Column(
-                  children: [
-                    Text(
-                      'Select 1 - 8 your $skill team:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: _getPlayersBySkill(skill).length,
-                        itemBuilder: (context, index) {
-                          final player = _getPlayersBySkill(skill)[index];
-                          return ListTile(
-                            title: Row(
+                            SizedBox(height: 30.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Text(
+                                  'Players',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
                                 CircleAvatar(
-                                  backgroundImage: AssetImage(player.photo),
+                                  radius: 20.0,
+                                  backgroundImage:
+                                      AssetImage('assets/india_flag.png'),
                                 ),
-                                SizedBox(width: 16.0),
-                                Text(player.name),
+                                SizedBox(width: 1.0),
+                                CircleAvatar(
+                                  radius: 20.0,
+                                  backgroundImage:
+                                      AssetImage('assets/usa_flag.png'),
+                                ),
+                                Text(
+                                  'Credits Left',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
                               ],
                             ),
-                            subtitle: Text(player.position),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
+                            SizedBox(height: 5.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                IconButton(
-                                  icon: Icon(Icons.remove),
-                                  onPressed: () {
-                                    setState(() {
-                                      if (selectedPlayers.contains(player)) {
-                                        selectedPlayers.remove(player);
-                                        totalCredits += int.parse(player.point);
-                                      }
-                                    });
-                                  },
+                                Text(
+                                  '${selectedPlayers.length}/$maxPlayers',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
                                 ),
-                                Text(player.point),
-                                IconButton(
-                                  icon: Icon(Icons.add),
-                                  onPressed: () {
-                                    setState(() {
-                                      if (selectedPlayers.length < maxPlayers &&
-                                          !selectedPlayers.contains(player) &&
-                                          totalCredits >= int.parse(player.point)) {
-                                        selectedPlayers.add(player);
-                                        totalCredits -= int.parse(player.point);
-                                      }
-                                    });
-                                  },
+                                Text(
+                                  '$totalCredits',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
                                 ),
                               ],
                             ),
-                            tileColor: selectedPlayers.contains(player)
-                                ? Colors.blue.withOpacity(0.3)
-                                : null,
-                          );
-                        },
+                            SizedBox(height: 10.0),
+                            Center(
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  LinearPercentIndicator(
+                                    width: 310.0,
+                                    lineHeight: 27.0,
+                                    percent:
+                                        (selectedPlayers.length / maxPlayers)
+                                            .toDouble(),
+                                    center: Text(
+                                      '${(selectedPlayers.length / maxPlayers * 100).toStringAsFixed(1)}%',
+                                      style: TextStyle(fontSize: 12.0),
+                                    ),
+                                    trailing: Icon(Icons.mood),
+                                    linearStrokeCap: LinearStrokeCap.roundAll,
+                                    backgroundColor: Colors.grey,
+                                    progressColor: Colors.white,
+                                  ),
+                                  Positioned(
+                                    right: 0.0,
+                                    child: Container(
+                                      padding: EdgeInsets.all(0.0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.black,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.remove,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
-                );
-              }).toList(),
-            ),
+                  ),
+                  TabBar(
+                    controller: _tabController,
+                    tabs: _getUniqueSkills()
+                        .map((skill) => Tab(text: skill))
+                        .toList(),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: _getUniqueSkills().map((skill) {
+                        return Column(
+                          children: [
+                            // Text(
+                            //   'Select 1 - 8 your $skill team:',
+                            //   style: TextStyle(
+                            //     fontWeight: FontWeight.bold,
+                            //     fontSize: 16.0,
+                            //   ),
+                            // ),
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: _getPlayersBySkill(skill).length,
+                                itemBuilder: (context, index) {
+                                  final player =
+                                      _getPlayersBySkill(skill)[index];
+                                  return ListTile(
+                                    title: Row(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundImage:
+                                              AssetImage(player.photo),
+                                        ),
+                                        SizedBox(width: 16.0),
+                                        Text(player.name),
+                                      ],
+                                    ),
+                                    subtitle: Text(player.position),
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.remove),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (selectedPlayers
+                                                  .contains(player)) {
+                                                selectedPlayers.remove(player);
+                                                totalCredits +=
+                                                    int.parse(player.point);
+                                              }
+                                            });
+                                          },
+                                        ),
+                                        Text(player.point),
+                                        IconButton(
+                                          icon: Icon(Icons.add),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (selectedPlayers.length <
+                                                      maxPlayers &&
+                                                  !selectedPlayers
+                                                      .contains(player) &&
+                                                  totalCredits >=
+                                                      int.parse(player.point)) {
+                                                selectedPlayers.add(player);
+                                                totalCredits -=
+                                                    int.parse(player.point);
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    tileColor: selectedPlayers.contains(player)
+                                        ? Colors.blue.withOpacity(0.3)
+                                        : null,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+        floatingActionButton: Container(
+          margin: EdgeInsets.only(
+              right: 140), // Set the desired margin from the top
+          child: ElevatedButton(
+            onPressed: () {
+              // Your onPressed logic here
+              print('Selected Players: ${selectedPlayers.map((e) => e.name)}');
+            },
+            child: Text('Submit'),
           ),
-        ],
-      ),
-      floatingActionButton: ElevatedButton(
-        onPressed: () {
-          print('Selected Players: ${selectedPlayers.map((e) => e.name)}');
-        },
-        child: Text('Submit'),
-      ),
-    );
+        ));
   }
 }
 
