@@ -120,7 +120,8 @@ class _PointsListState extends State<PointsList> {
               AccordionSection(
                 isOpen: true,
                 contentVerticalPadding: 20,
-                // leftIcon: const Icon(Icons.text_fields_rounded, color: Colors.white),
+                leftIcon:
+                    const Icon(Icons.text_fields_rounded, color: Colors.white),
                 header: const Text(
                   'POINTS TYPE',
                   style: TextStyle(
@@ -128,7 +129,154 @@ class _PointsListState extends State<PointsList> {
                     fontWeight: FontWeight.bold, // Make text bold
                   ),
                 ),
-                content: Text(''),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'POINTS TYPE',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, // Make text bold
+                          ),
+                        ),
+                        Text(
+                          'POINTS',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Runs',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '1',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Boundary Bonus',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '1',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Six bonus',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '2',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Half- century bonus',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '4',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Century bonus',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '8',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Dimisal for a Duck(Batter Wicket',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '-3',
+                          style: TextStyle(
+                            color: Colors.red, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Note:- Any Player scoring century will only',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'get points for century.No points will be awarded as their half century bonus. if any runs are scored on an overthyrow,point for those runs will be creditted to batter on strike for that ball however if overthrow, points',
+                      style: TextStyle(
+                          // Make text bold
+                          ),
+                    ),
+                  ],
+                ),
               ),
 
               // Add more AccordionSection as needed
@@ -162,11 +310,11 @@ class _PointsListState extends State<PointsList> {
         if (_isBowlingExpanded)
           // Integration of the Accordion widget
           Accordion(
-            headerBorderColor: Colors.blueGrey,
-            headerBorderColorOpened: Colors.transparent,
-            headerBackgroundColorOpened: Colors.green,
-            contentBackgroundColor: Colors.white,
-            contentBorderColor: Colors.green,
+            headerBorderColor: const Color.fromARGB(255, 191, 194, 196),
+            headerBorderColorOpened: Colors.grey,
+            // headerBackgroundColorOpened: Colors.green,
+            // contentBackgroundColor: Colors.white,
+            // contentBorderColor: Colors.green,
             contentBorderWidth: 3,
             contentHorizontalPadding: 20,
             scaleWhenAnimating: true,
@@ -181,9 +329,121 @@ class _PointsListState extends State<PointsList> {
                 contentVerticalPadding: 20,
                 leftIcon:
                     const Icon(Icons.text_fields_rounded, color: Colors.white),
-                header: const Text('Simple Text'),
-                content: const Text(loremIpsum),
+                header: const Text(''),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'POINTS TYPE',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, // Make text bold
+                          ),
+                        ),
+                        Text(
+                          'POINTS',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Wicket',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '25',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Bonus(LBW/Bowled)',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '8',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '4 wicket Bonus',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '4',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '5 wicket bonus',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '8',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Maiden Over',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '4',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
+
               // Add more AccordionSection as needed
             ],
           ),
@@ -234,8 +494,137 @@ class _PointsListState extends State<PointsList> {
                 contentVerticalPadding: 20,
                 leftIcon:
                     const Icon(Icons.text_fields_rounded, color: Colors.white),
-                header: const Text('Simple Text'),
-                content: const Text(loremIpsum),
+                header: const Text(''),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'POINTS TYPE',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, // Make text bold
+                          ),
+                        ),
+                        Text(
+                          'POINTS',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Catch',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '8',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '3 catch Bonus',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '4',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Stumping',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '12',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Run out(Direct Hit)',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '12',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Run out(Not a direct Hit)',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '6',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Note:- A Direct hit is inflicted by the fielder',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'who is only one to touch the ball after the batter faces the delivery .in all other cases,points will be awarded only to the last 2 fieldwers who touch the ball Players taking more than 3 catches  will also get 4 points as 3 catch bonus',
+                      style: TextStyle(
+                          // Make text bold
+                          ),
+                    ),
+                  ],
+                ),
               ),
               // Add more AccordionSection as needed
             ],
@@ -287,9 +676,395 @@ class _PointsListState extends State<PointsList> {
                 contentVerticalPadding: 20,
                 leftIcon:
                     const Icon(Icons.text_fields_rounded, color: Colors.white),
-                header: const Text('Simple Text'),
-                content: const Text(loremIpsum),
+                header: const Text(''),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'POINTS TYPE',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, // Make text bold
+                          ),
+                        ),
+                        Text(
+                          'POINTS',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Captain',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '2x',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Vice-captain',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '1.5x',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'in announced Lineups',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '4',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Paying Substitute(concussion,)',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '4',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Economic Rate Points',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '(Min 5 overs)',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Below 2.5 runs per over',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '6',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 2.5-3.9 run per over',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '4',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 3.5-4.5 runs per over',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '2',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 4.51-6.99 runs per over',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '0',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 7-8 runs per over',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '- 2',
+                          style: TextStyle(
+                            color: Colors.red, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 8.01-9 runs per over',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '- 4',
+                          style: TextStyle(
+                            color: Colors.red, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Above 9 Runs per over',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '- 6 ',
+                          style: TextStyle(
+                            color: Colors.red, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Strike Rate',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+
+                            /// Make text bold
+                          ),
+                        ),
+                        Text(
+                          '(Min 20 Balls to be played)',
+                          style: TextStyle(
+                            color: Colors.black, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Above 140 runs per 100 balls',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '6',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 120.101-140 run/100 ball',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '4',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 100-120 runs /100 balls',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '2',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 50.01-100 runs/100 balls',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '0',
+                          style: TextStyle(
+                            color: Colors.green, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 40-50 runs/100 balls',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '- 2',
+                          style: TextStyle(
+                            color: Colors.red, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'between 30-39.99 runs/100 balls',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '- 4',
+                          style: TextStyle(
+                            color: Colors.red, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0), // Add some space between the rows
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Below 30 runs per 100 balls',
+                          style: TextStyle(
+                              // Make text bold
+                              ),
+                        ),
+                        Text(
+                          '-6',
+                          style: TextStyle(
+                            color: Colors.red, // Make text bold
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
+
               // Add more AccordionSection as needed
             ],
           ),
@@ -297,6 +1072,3 @@ class _PointsListState extends State<PointsList> {
     );
   }
 }
-
-const String loremIpsum =
-    '''Lorem ipsum is typically a corrupted version of 'De finibus bonorum et malorum', a 1st century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin.''';
