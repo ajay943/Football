@@ -82,14 +82,14 @@ class _TopUpScreenState extends State<TopUpScreen> {
   void _openRazorpay(double amount) {
     Razorpay razorpay = Razorpay();
     var options = {
-      'key': 'rzp_live_ILgsfZCZoFIKMb',
+      'key': 'rzp_test_kLcl21a6RHqZpK',
       'amount': (amount * 100).toInt(), // Convert amount to paise
-      'name': 'Acme Corp.',
+      'name': 'abhi',
       'description': 'Fine T-Shirt',
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
       'prefill': {
-        'contact': '8888888888',
+        'contact': '6200345898',
         'email': 'test@razorpay.com',
       },
       'external': {
