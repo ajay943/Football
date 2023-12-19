@@ -314,6 +314,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "intro_screen_onboarding_flutter",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/intro_screen_onboarding_flutter-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "lints",
       "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/lints-2.0.1",
       "packageUri": "lib/",
@@ -752,7 +758,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-12-18T10:28:25.074419Z",
+  "generated": "2023-12-19T07:26:33.561852Z",
   "generator": "pub",
   "generatorVersion": "3.2.0"
 }

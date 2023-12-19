@@ -63,6 +63,7 @@ dependencies:
   accordion: ^2.6.0
   loader_skeleton: ^0.0.4
   fluttertoast: ^8.0.8
+  intro_screen_onboarding_flutter: ^1.0.0
   
  
 
