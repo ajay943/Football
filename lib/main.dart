@@ -38,25 +38,14 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-
-    // Delayed navigation to the next screen
     Future.delayed(Duration(seconds: 1), () {
       _checkAuth();
     });
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 3),
     );
-
-    // Create the animation
-    _animation = ColorTween(begin: Colors.red, end: Colors.blue)
-        .animate(_animationController);
-    _animationController.addListener(() {
-      setState(() {});
-      // print('_animation== ${_animation.value}');
-    });
-    // Start the animation
     _animationController.forward();
   }
 
@@ -93,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TweenAnimationBuilder(
-                    tween: Tween(begin: 40.0, end: 70.0),
+                    tween: Tween(begin: 30.0, end: 70.0),
                     duration: Duration(seconds: 3),
                     builder: (context, value, child) {
                       return Text(
@@ -105,14 +94,6 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                       );
                     }),
-                // Text(
-                //   'FUNZY',
-                //   style: TextStyle(
-                //     color: Colors.white,
-                //     fontSize: 70,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
               ],
             ),
           ),

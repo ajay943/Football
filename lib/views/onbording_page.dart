@@ -1,29 +1,68 @@
+import 'package:app/phone.dart';
 import 'package:flutter/material.dart';
-import 'package:intro_screen_onboarding_flutter/intro_app.dart';
-class TestScreen extends StatelessWidget {
+
+class TestScreen extends StatefulWidget {
+  @override
+  _TestScreenState createState() => _TestScreenState();
+}
+
+class _TestScreenState extends State<TestScreen>
+    with SingleTickerProviderStateMixin {
   final PageController _pageController = PageController();
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
   final List<OnboardingPage> pages = [
     OnboardingPage(
       title: 'Welcome to Funzy',
-      subTitle: 'Ready to start wining? Swipe left to \n learn the basic of the Funzy Games',
+      subTitle:
+          'Ready to start winning? Swipe left to \n learn the basics of the Funzy Games',
       imageUrl: 'assets/playerimage.png',
     ),
     OnboardingPage(
       title: 'Select A Match',
-      subTitle: 'Ready to start wining? Swipe left to \n learn the basic of the Funzy Games',
+      subTitle:
+          'Ready to start winning? Swipe left to \n learn the basics of the Funzy Games',
       imageUrl: 'assets/playerimage.png',
     ),
     OnboardingPage(
       title: 'Join Contests',
-      subTitle: 'Ready to start wining? Swipe left to \n learn the basic of the Funzy Games',
+      subTitle:
+          'Ready to start winning? Swipe left to \n learn the basics of the Funzy Games',
       imageUrl: 'assets/playerimage.png',
     ),
     OnboardingPage(
       title: 'Create Teams',
-      subTitle: 'Ready to start wining? Swipe left to \n learn the basic of the Funzy Games',
+      subTitle:
+          'Ready to start winning? Swipe left to \n learn the basics of the Funzy Games',
       imageUrl: 'assets/playerimage.png',
     ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+
+    _animation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
+
+    _pageController.addListener(() {
+      _animationController.value = _pageController.page! / (pages.length - 1);
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +88,10 @@ class TestScreen extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 // Handle skip button tap
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInNewScreen()),
+                );
               },
               child: Text('Skip'),
             ),
@@ -56,27 +99,47 @@ class TestScreen extends StatelessWidget {
           Positioned(
             bottom: 70,
             left: 160,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    if (_pageController.page! < pages.length - 1) {
-                      _pageController.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease,
-                      );
-                    } else {
-                      // Handle button action when on the last page
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(16), // Adjust as needed
+            child: Container(
+              width: 80,
+              height: 80,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Transform.scale(
+                    scale: 2,
+                    child: CircularProgressIndicator(
+                      value: _animation.value,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      strokeWidth: 4,
+                    ),
                   ),
-                  child: Icon(Icons.arrow_forward),
-                ),
-              ],
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_pageController.page! < pages.length - 1) {
+                        _pageController.nextPage(
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease,
+                        );
+                        _animationController.reset();
+                        _animationController.forward();
+                      } else {
+                        // Handle button action when on the last page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignInNewScreen()),
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(16),
+                      primary: const Color(0xFF8443BA),
+                    ),
+                    child: Icon(Icons.arrow_forward, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -84,6 +147,7 @@ class TestScreen extends StatelessWidget {
     );
   }
 }
+
 class OnboardingPage {
   final String title;
   final String subTitle;
@@ -94,6 +158,7 @@ class OnboardingPage {
     required this.imageUrl,
   });
 }
+
 class OnboardingPageWidget extends StatelessWidget {
   final String title;
   final String subTitle;
@@ -105,7 +170,8 @@ class OnboardingPageWidget extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return 
+    Stack(
       children: [
         Center(
           child: Image.asset(
@@ -126,21 +192,24 @@ class OnboardingPageWidget extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.black, Colors.black, Colors.black54.withOpacity(0.1)],
+                colors: [
+                  Colors.black,
+                  Colors.black,
+                  Colors.black54.withOpacity(0.1),
+                ],
               ),
             ),
             child: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: 25), // Adjust as needed
+                  SizedBox(height: 25),
                   Text(
                     title,
                     style: TextStyle(
                       fontSize: 30,
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
-                      
                     ),
                   ),
                   SizedBox(height: 16),
