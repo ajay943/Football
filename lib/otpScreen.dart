@@ -1,19 +1,17 @@
-// ignore_for_file: file_names, avoid_print, non_constant_identifier_names
 import 'dart:async';
-import 'dart:math';
-import 'package:app/maincricket.dart';
-import 'package:app/phone.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../services/api_service.dart';
+import 'package:app/phone.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:app/maincricket.dart';
 
 class OtpScreen extends StatefulWidget {
-  final randomNumber, phonenumber;
-  OtpScreen(this.randomNumber, this.phonenumber);
+  final int randomNumber;
+  final String phoneNumber;
+  OtpScreen(this.randomNumber, this.phoneNumber);
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
@@ -21,259 +19,267 @@ class OtpScreen extends StatefulWidget {
 class _OtpScreenState extends State<OtpScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController otpController = TextEditingController();
-  final _maxSeconds = 120;
-  int _currentSecond = 0;
-  bool _isOTPSENT = false;
-  bool _resendBotton = false;
+  bool _resendButtonEnabled = false;
+  int _currentSecond = 60;
   Timer? _timer;
   var optSent = '';
-  Duration myDuration = Duration(minutes: 1);
-  Timer? countdownTimer;
-
-  String get _timerText {
-    final secondsPerMinute = 60;
-    final secondsLeft = _maxSeconds - _currentSecond;
-
-    final formattedMinutesLeft =
-        (secondsLeft ~/ secondsPerMinute).toString().padLeft(2, '0');
-    final formattedSecondsLeft =
-        (secondsLeft % secondsPerMinute).toString().padLeft(2, '0');
-
-    print('$formattedMinutesLeft : $formattedSecondsLeft');
-    return '$formattedMinutesLeft : $formattedSecondsLeft';
-  }
-
   @override
   void initState() {
-    otpPin = widget.randomNumber;
-    phoneNumber = widget.phonenumber;
-
-    // _startTimer();
-    startTimer();
     super.initState();
+    otpPin = widget.randomNumber;
+    phoneNumber = widget.phoneNumber;
     startTimer();
-    Future.delayed(const Duration(seconds: 1), () {
+  }
+
+  void startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        _resendBotton = true;
+        if (_currentSecond > 0) {
+          _currentSecond--;
+        } else {
+          _resendButtonEnabled = true;
+          _timer?.cancel();
+        }
       });
     });
   }
 
-  void startTimer() {
-    countdownTimer =
-        Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
-  }
-
   void resetTimer() {
-    stopTimer();
-    setState(() => myDuration = Duration(minutes: 1));
-  }
-
-  void stopTimer() {
-    setState(() => countdownTimer!.cancel());
-  }
-
-  _ResetTimer() {
-    resetTimer();
+    setState(() {
+      _currentSecond = 60;
+      _resendButtonEnabled = false;
+    });
     startTimer();
   }
 
-  void setCountDown() {
-    final reduceSecondsBy = 1;
-    setState(() {
-      final seconds = myDuration.inSeconds - reduceSecondsBy;
-      if (seconds < 0) {
-        countdownTimer!.cancel();
-      } else {
-        myDuration = Duration(seconds: seconds);
-      }
-    });
-  }
-
   String userEnterOtp = '';
-
   var otpPin;
   var phoneNumber;
   var sender;
-
   var apikey;
 
   @override
   void dispose() {
-    _timer!.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    String strDigits(int n) => n.toString().padLeft(2, '0');
-
-    final minutes = strDigits(myDuration.inMinutes.remainder(60));
-    final seconds = strDigits(myDuration.inSeconds.remainder(60));
-    return WillPopScope(
-      onWillPop: () async => true,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Stack(
               children: [
-                SizedBox(
-                  height: 140,
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 30),
-                  child: SizedBox(
-                    height: 150,
-                    width: 140,
-                    child: Image.asset('assets/img1.png'),
+                Center(
+                  child: Image(
+                    image: AssetImage("assets/otp.png"),
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 50, top: 10),
-                  child: Row(
-                    children: [
-                      Text(
-                        '+91 - $phoneNumber',
-                        style: GoogleFonts.notoSans(
-                            fontSize: 14,
-                            color: const Color(0xff151515),
-                            fontWeight: FontWeight.w600),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                             Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SignInNewScreen()));
-                          },
-                          icon: const Icon(
-                            Icons.edit_outlined,
-                            color: Color(0xffFF6600),
-                            size: 27,
-                          )),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.only(top: 50),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 40, right: 40),
-                      child: PinCodeTextField(
-                        length: 4,
-                        keyboardType: const TextInputType.numberWithOptions(),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(4)
-                        ],
-                        textStyle: const TextStyle(
-                          fontSize: 18.0,
-                          color: Color(0xff151515),
-                          fontWeight: FontWeight.w600,
-                        ),
-                        controller: otpController,
-                        onChanged: (value) {
-                          setState(() {
-                            userEnterOtp = value;
-                            print("userEnterOtp_$userEnterOtp");
-                          });
-                        },
-                        appContext: context,
-                        pinTheme: PinTheme(
-                          inactiveColor: Colors.grey,
-                          activeColor: Colors.grey,
-                          selectedColor: Colors.grey,
-                          // shape: PinCodeFieldShape.box,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.only(left: 45, right: 45),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "$minutes:$seconds",
-                          style: GoogleFonts.notoSans(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: const Color(0xffFF6600)),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            if (_resendBotton) {
-                              setState(() {
-                                if (_formKey.currentState!.validate()) {
-                                  ApiService.otpApi(
-                                    apikey,
-                                    sender,
-                                    phoneNumber,
-                                    otpPin,
-                                  ).then((value) async {
-                                    var res = value;
-                                    print("secondScreen_$res");
-                                    print("success==>${res['status']}");
-                                    setState(() {
-                                      optSent = res['status'];
-                                    });
-                                    if (optSent == 'success') {
-                                      _ResetTimer();
-                                      _isOTPSENT = true;
-                                      Future.delayed(const Duration(seconds: 10),
-                                          () {
-                                        setState(() {
-                                          _isOTPSENT = false;
-                                          _ResetTimer();
-                                        });
-                                      });
-                                      setState(() {
-                                        _resendBotton = false;
-                                        resetTimer();
-                                      });
-                                    }
-                                  });
-                                }
-                              });
-                            }
-                          },
-                          child: Text(
-                            _isOTPSENT ? 'OTP sent' : 'Resend Code',
-                            style: GoogleFonts.notoSans(
-                                decoration: TextDecoration.underline,
-                                fontSize: 14,
-                                color: const Color(0xff1B439B),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        )
-                      ],
-                    )),
-                GestureDetector(
-                  onTap: () {
-                    _submitForm();
-                    setState(() async {});
-                  },
+                Positioned(
+                  top: 380,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
                   child: Container(
-                    margin: const EdgeInsets.only(top: 60),
-                    height: 40,
-                    width: MediaQuery.of(context).size.width * .50,
-                    decoration: const BoxDecoration(
-                      color: Color(0xffFF6600),
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                    height: 500,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black,
+                          Colors.black,
+                          Colors.black54.withOpacity(0.1),
+                        ],
+                      ),
                     ),
-                    child: Center(
-                      child: Text(
-                        'Verify OTP',
-                        style: GoogleFonts.notoSans(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            color: const Color(0xffFFFFFF)),
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 25),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: Text(
+                              "Please enter the OTP sent to",
+                              style: TextStyle(
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '+91 - ${widget.phoneNumber}',
+                                  style: GoogleFonts.notoSans(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SignInNewScreen(),
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.edit_outlined,
+                                    color: Colors.white,
+                                    size: 27,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 60, right: 60),
+                              child: PinCodeTextField(
+                                length: 4,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(4),
+                                ],
+                                textStyle: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                controller: otpController,
+                                onChanged: (value) {
+                                  setState(() {
+                                    userEnterOtp = value;
+                                  });
+                                },
+                                appContext: context,
+                                pinTheme: PinTheme(
+                                  shape: PinCodeFieldShape.box,
+                                  borderRadius: BorderRadius.circular(10),
+                                  fieldHeight: 50,
+                                  fieldWidth: 50,
+                                  inactiveColor: Colors.white,
+                                  activeColor: Colors.white,
+                                  selectedColor: Colors.white,
+                                  activeFillColor: Colors.white,
+                                  selectedFillColor: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: const EdgeInsets.only(left: 45, right: 45),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Didn't receive OTP?",
+                                    style: GoogleFonts.notoSans(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  _resendButtonEnabled
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            if (_resendButtonEnabled) {
+                                              setState(() {
+                                                if (_formKey.currentState!
+                                                    .validate()) {
+                                                  resetTimer();
+                                                  ApiService.otpApi(
+                                                    apikey,
+                                                    sender,
+                                                    phoneNumber,
+                                                    otpPin,
+                                                  ).then((value) async {
+                                                    var res = value;
+                                                    print("secondScreen_$res");
+                                                    print(
+                                                        "success==>${res['status']}");
+                                                    setState(() {
+                                                      optSent = res['status'];
+                                                    });
+                                                  });
+                                                }
+                                              });
+                                            }
+                                          },
+                                          child: Text(
+                                            ' Resend OTP',
+                                            style: GoogleFonts.notoSans(
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        )
+                                      : Text(
+                                          " Resend in $_currentSecond Seconds",
+                                          style: GoogleFonts.notoSans(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                _submitForm();
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 60),
+                                height: 40,
+                                width: MediaQuery.of(context).size.width * .50,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF8443BA),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Verify OTP',
+                                    style: GoogleFonts.notoSans(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      color: const Color(0xffFFFFFF),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -289,21 +295,17 @@ class _OtpScreenState extends State<OtpScreen> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print("OUR1_$otpPin");
-      print("YOU1_$userEnterOtp");
-      //  Navigator.pushAndRemoveUntil(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => MainPage()),
-      //     (route) => false,
-      //   );
-      if (otpPin.toString() == userEnterOtp.toString()) {
-        print("OUR_$otpPin");
-        print("YOU_$userEnterOtp");
-        Navigator.pushAndRemoveUntil(
+      Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => MainPage()),
           (route) => false,
         );
+      // if (otpPin.toString() == userEnterOtp.toString()) {
+      //   Navigator.pushAndRemoveUntil(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => MainPage()),
+      //     (route) => false,
+      //   );
       } else {
         showDialog(
           context: context,
@@ -324,4 +326,4 @@ class _OtpScreenState extends State<OtpScreen> {
       }
     }
   }
-}
+// }

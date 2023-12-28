@@ -17,25 +17,25 @@ class _TestScreenState extends State<TestScreen>
       title: 'Welcome to Funzy',
       subTitle:
           'Ready to start winning? Swipe left to \n learn the basics of the Funzy Games',
-      imageUrl: 'assets/playerimage.png',
+      imageUrl: 'assets/onBording1.png',
     ),
     OnboardingPage(
       title: 'Select A Match',
       subTitle:
           'Ready to start winning? Swipe left to \n learn the basics of the Funzy Games',
-      imageUrl: 'assets/playerimage.png',
+      imageUrl: 'assets/onBording2.png',
     ),
     OnboardingPage(
       title: 'Join Contests',
       subTitle:
           'Ready to start winning? Swipe left to \n learn the basics of the Funzy Games',
-      imageUrl: 'assets/playerimage.png',
+      imageUrl: 'assets/onBording3.png',
     ),
     OnboardingPage(
       title: 'Create Teams',
       subTitle:
           'Ready to start winning? Swipe left to \n learn the basics of the Funzy Games',
-      imageUrl: 'assets/playerimage.png',
+      imageUrl: 'assets/onBording4.png',
     ),
   ];
 
@@ -105,6 +105,7 @@ class _TestScreenState extends State<TestScreen>
               child: Stack(
                 alignment: Alignment.center,
                 children: [
+                  
                   Transform.scale(
                     scale: 2,
                     child: CircularProgressIndicator(
@@ -220,6 +221,7 @@ class OnboardingPageWidget extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                  
                 ],
               ),
             ),

@@ -1,20 +1,23 @@
 import 'dart:async';
 import 'package:app/maincricket.dart';
 import 'package:app/phone.dart';
+import 'package:app/views/demo.dart';
 import 'package:app/views/onbording_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // Add a const constructor to allow null keys
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+  // OneSignal.shared.setAppId("c97e076e-788e-49c4-8862-bff043f07115");
     return MaterialApp(
       initialRoute: 'splashScreen',
       debugShowCheckedModeBanner: false,
@@ -25,7 +28,6 @@ class MyApp extends StatelessWidget {
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen();
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -35,9 +37,16 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
   late Animation _animation;
 
+  void configOneSignel()
+  { 
+    OneSignal.shared.setAppId("c97e076e-788e-49c4-8862-bff043f07115");
+    // OneSignal.shared.init('7d108336-42a4-4e9f-9a23-6105dd125a74');
+  }
+
   @override
   void initState() {
     super.initState();
+    configOneSignel();
     Future.delayed(Duration(seconds: 1), () {
       _checkAuth();
     });
@@ -51,10 +60,16 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _checkAuth() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Navigator.of(context).pushReplacement(MaterialPageRoute(
+    //   builder: (context) => MatchDetailPage(matchId: 12345,),
+    // ));
     if (prefs.getBool('loggedin') == true) {
       Timer(
         const Duration(seconds: 3),
         () {
+          // Navigator.of(context).pushReplacement(MaterialPageRoute(
+          //   builder: (context) => MainPage(),
+          // ));
           Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => TestScreen(),
           ));

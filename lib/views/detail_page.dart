@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app/views/stadium.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/views/detail_page.dart';
 import 'package:app/views/playercards.dart';
@@ -21,7 +22,9 @@ class MatchDetailPage extends StatefulWidget {
 class _MatchDetailPageState extends State<MatchDetailPage> {
   var MatchData;
   bool isLoading = true;
-
+  late final int totalSports;
+  late final int filledSports;
+  // double progress = filledSports / totalSports;
   List<dynamic> suggestions = [];
   @override
   void initState() {
@@ -33,9 +36,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
     var headers = {
       'Content-Type': 'application/json',
     };
-
     var url = Uri.parse('https://crickx.onrender.com/getpool');
-
     var response = await http.post(
       url,
       headers: headers,
@@ -44,7 +45,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
       }),
     );
     print("response$response[data]");
-
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
 
@@ -53,7 +53,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
         isLoading = false;
       });
       print("hello$suggestions");
-      // You can parse the response JSON here if needed
     } else {
       print(response.reasonPhrase);
     }
@@ -61,309 +60,464 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double buttonWidth = width * 0.2;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('Cricket Khelo',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.red,
-        centerTitle: true,
-        elevation: 10,
-        toolbarHeight: 60,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.elliptical(1, 1)),
-        ),
-      ),
-      body: isLoading
-          ? CardSkeleton(
-              isCircularImage: true,
-              isBottomLinesActive: true,
-            )
-          : Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(
-                    height: 200,
-                    width: double.infinity,
-                    child: Image.asset(
-                      'assets/bannerImage.webp',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _buildInfiniteCardList(buttonWidth),
-                  Container(
-                    width: double.infinity,
-                  ),
-                ],
-              ),
-            ),
-      floatingActionButton: Align(
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding:
-              const EdgeInsets.only(bottom: 2.0), // Add some bottom padding
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
+      body: Column(
+        children: [
+          Stack(
             children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TeamSelectionScreen(),
-                        ),
-                      );
-                    },
-                    backgroundColor: Colors.green,
-                    child: Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: Text('Choose Team'),
-                    ),
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20.0),
+                ),
+                child: Image.asset(
+                  'assets/indianCricket.gif',
+                  width: 400,
+                  height: 170,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                top: 70.0,
+                left: 140.0,
+                child: Text(
+                  'IND vs ENG',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 26.0,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                  child: FloatingActionButton(
+              Positioned(
+                top: 100.0,
+                left: 160.0,
+                child: Text(
+                  '1d:21m left',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 55,
+                left: 16,
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(
+                        100.0), // Adjust the radius as needed
+                  ),
+                  padding: EdgeInsets.all(1.0),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TeamSelectionScreen(),
-                        ),
-                      );
+                      Navigator.of(context).pop();
                     },
-                    backgroundColor: Colors.blue,
-                    child: Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: Text('Create Team'),
-                    ),
                   ),
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInfiniteCardList(double buttonWidth) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: suggestions.length,
-        itemBuilder: (context, index) {
-          var element = suggestions[index];
-          return Column(
-            children: [
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => YourNewScreen(
-                          contestId: element["_id"],
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Card(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Prize ",
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      // Add any other styling properties as needed
-                                    ),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                      text: 'Entry ',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+          Expanded(
+            child: ListView.builder(
+              itemCount: suggestions.length,
+              itemBuilder: (context, index) {
+                var element = suggestions[index];
+                return Expanded(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 0),
+                        // padding: EdgeInsets.symmetric(horizontal: 15.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => YourNewScreen(
+                                  contestId: element["_id"],
+                                ),
                               ),
-                              SizedBox(height: 1),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    element['price_pool'].toString(),
-                                    style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 0),
+                            child: Center(
+                              child: Container(
+                                height: 165,
+                                width: 370,
+                                child: Card(
+                                  elevation: 5,
+                                  shadowColor: Colors.grey,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  SizedBox(
-                                    width: buttonWidth,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        print("Button Pressed");
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.green,
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 10),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                        ),
-                                      ),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          text: '₹',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: element['entry_fee']
-                                                  .toString(),
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                  color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 20),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              child: Container(
+                                                height: 60,
+                                                width: 130,
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      Color.fromARGB(
+                                                          255, 169, 74, 228),
+                                                      Color.fromARGB(
+                                                          255,
+                                                          51,
+                                                          10,
+                                                          86), // End color
+                                                    ],
+                                                    begin:
+                                                        Alignment.topCenter,
+                                                    end: Alignment
+                                                        .bottomCenter,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(10.0),
+                                                    bottomRight:
+                                                        Radius.circular(10.0),
+                                                  ),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 2,
+                                                    ),
+                                                    Text(
+                                                      'Max Prize Pool',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Colors.white54,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 2,
+                                                    ),
+                                                    Text(
+                                                      '₹ 25000',
+                                                      style: TextStyle(
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.w900,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
+                                            ),
+                                            Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Text("Entry"),
+                                                SizedBox(
+                                                  height: 35,
+                                                  width: 80,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      print("Button Pressed");
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary: Colors.green,
+                                                      padding: EdgeInsets
+                                                          .symmetric(
+                                                              vertical: 10),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    4.0),
+                                                      ),
+                                                    ),
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                        text: '₹',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                        ),
+                                                        children: <TextSpan>[
+                                                          TextSpan(
+                                                            text: " 50",
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Colors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
                                       ),
+                                      Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height: 15),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 20, left: 20),
+                                              child: LinearProgressIndicator(
+                                                value: 0,
+                                                backgroundColor:
+                                                    Colors.grey[300],
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        const Color(
+                                                            0xFF8443BA)),
+                                              ),
+                                            ),
+                                            SizedBox(height: 15),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 20, left: 20),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    '1,567 spots left',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: const Color(
+                                                          0xFF8443BA),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '2,000 spots',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black54,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 15),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Container(
+                                          height: 31,
+                                          width: 370,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color.fromARGB(
+                                                    255, 169, 74, 228),
+                                                Color.fromARGB(255, 51, 10,
+                                                    86), // End color
+                                              ],
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                            ),
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft:
+                                                  Radius.circular(10.0),
+                                              bottomRight:
+                                                  Radius.circular(10.0),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 6,
+                                              ),
+                                              Text(
+                                                'Max Prize Pool',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.white54,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: Stack(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 1), // Adjust as needed
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton(
+                    onPressed: () {
+                       Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StadiumPage(),
+                              ),
+                            );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20.0),
+                          topLeft: Radius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    child: Container(
+                      height: 30,
+                      width: 95,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/detailfloatingicon2.png',
+                                    height: 18,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    'CONTESTS',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                 ],
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                padding: EdgeInsets.all(0),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 223, 241, 220),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Fluttertoast.showToast(
-                                          msg: 'Winning percentage',
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.black,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0,
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.emoji_events,
-                                            color: Colors.black,
-                                            size: 16,
-                                          ),
-                                          SizedBox(width: 6),
-                                          Text(
-                                            '${element['winning_spots_precent'].toString()}%',
-                                            style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          "Flexible",
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(
-                                          Icons.verified,
-                                          color: Color.fromARGB(
-                                              255, 195, 197, 195),
-                                          size: 16,
-                                        ),
-                                        Text(
-                                          '${element['done_spots'].toString()}/${element['total_spots'].toString()}',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.bold,
-                                            color: const Color.fromARGB(
-                                                255, 125, 123, 123),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 1), // Adjust as needed
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton(
+                    onPressed: () {
+                        Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TeamSelectionScreen(),
+                              ),
+                            );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(20.0),
+                          topRight: Radius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    child: Container(
+                      height: 30,
+                      width: 120,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                    'assets/detailfloatingicon1.png',
+                                    height: 20,                                    
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                              Text(
+                                'CREATE TEAM',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                      )),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
-          );
-        },
+          )
+        ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

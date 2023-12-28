@@ -1,183 +1,255 @@
-import 'package:app/views/top_up.dart';
 import 'package:flutter/material.dart';
-class WalletScreen extends StatelessWidget {
+class WalletScreen extends StatefulWidget {
+  const WalletScreen({Key? key}) : super(key: key);
+  @override
+  State<WalletScreen> createState() => _WalletScreenState();
+}
+class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            WalletCard(),
-            SizedBox(height: 16),
-            CustomCard(
-              label1: 'Cash Deposit',
-              value1: '\₹0',
-              label2: 'Net Winnings',
-              value2: '\₹0',
-              label3: 'Cashback',
-              value3: '\₹0',
-              label4: 'Withdwawk',
-              value4: '\₹0',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class WalletCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.blue,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
         children: [
-          AppBar(
-            automaticallyImplyLeading: false,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                // Handle back button press
-                Navigator.pop(context);
-              },
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
+          // Background widget
+          Container(
+            color: Colors.white, // Set the background color or use an image
+            width: double.infinity,
+            height: double.infinity,
           ),
-          Center(
-            child: Text(
-              'Available Balance',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-          ),
-          SizedBox(height: 8),
-          Center(
-            child: Text(
-              '\₹5,000.00',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
+          // App Bar with back arrow icon and centered text
+          Positioned(
+            top: 0,
+            height:83.0,
+            left: 0,
+            right: 0,
+            child: AppBar(
+              backgroundColor: Colors.black,
+              elevation: 0,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
-                  // Handle Withdrawal
+                  Navigator.of(context).pop(); // Add navigation logic here
                 },
-                child: Text('Withdraw'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                   Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TopUpScreen(),
+              // centerTitle: true,
+              title: Padding(
+                padding: EdgeInsets.only(
+                  left: 77.0,
+                  top: 0.0,
+                ),
+                child: Text(
+                  'My Wallet',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-            );
-                  // Handle Top-Up
-                },
-                child: Text('Top-Up'),
-              ),
-            ],
+            ),
           ),
-       
+          // Container on top with specified height, width, and border radius at the bottom
+          Positioned(
+            top: 82,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                Container(
+                  height: 217.0,
+                  width: 400.0,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFF8745C0), Color(0xFF351A58)],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(50.0),
+                      bottomRight: Radius.circular(50.0),
+                    ),
+                  ),
+                  child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Available Balance',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '₹ 5,000.00',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 16.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Positioned(
+                                left: 16.0,
+                                child: SizedBox(
+                                  width: 180.0,
+                                  height: 39,
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 34.0),
+                                    child: FloatingActionButton(
+                                      onPressed: () {
+                                        // Add your logic for the left FloatingActionButton
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Withdraw',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      backgroundColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        side: BorderSide(
+                                            color: Colors.white, width: 1.0),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                right: 16.0,
+                                child: SizedBox(
+                                  width: 180.0,
+                                  height: 39,
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 34.0),
+                                    child: FloatingActionButton(
+                                      onPressed: () {
+                                        // Add your logic for the right FloatingActionButton
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Top-Up',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color.fromARGB(
+                                                  255, 156, 31, 181),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        side: BorderSide(
+                                            color: Colors.white, width: 1.0),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 16.0),
+                        ],
+                      ),
+                    // ),
+                  ),
+                ),
+                SizedBox(height: 30.0),
+                // New Row outside the Container
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      '₹ 0',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '₹ 0',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '₹ 0',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '₹ 0',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 2.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Cash Deposit',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Net Winnings',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Cashback',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Withdraw',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
-    );
-  }
-}
-
-class CustomCard extends StatelessWidget {
-  final String label1;
-  final String value1;
-  final String label2;
-  final String value2;
-  final String label3;
-  final String value3;
-  final String label4;
-  final String value4;
-
-  const CustomCard({
-    required this.label1,
-    required this.value1,
-    required this.label2,
-    required this.value2,
-    required this.label3,
-    required this.value3,
-    required this.label4,
-    required this.value4,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 8),
-          CardField(label: label1, value: value1),
-          SizedBox(height: 8),
-          CardField(label: label2, value: value2),
-          SizedBox(height: 8),
-          CardField(label: label3, value: value3),
-          SizedBox(height: 8),
-          CardField(label: label4, value: value4),
-        ],
-      ),
-    );
-  }
-}
-
-class CardField extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const CardField({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          value,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-
-        SizedBox(height: 2),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 10,
-          ),
-        ),
-
-      ],
+    
     );
   }
 }

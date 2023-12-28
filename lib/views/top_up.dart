@@ -11,69 +11,278 @@ class TopUpScreen extends StatefulWidget {
 class _TopUpScreenState extends State<TopUpScreen> {
   TextEditingController controller = TextEditingController();
 
+  TextEditingController _amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Top - Up',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.red,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'TOP - UP',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                Text(
-                  'Enter Amount (Min ₹1)',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-            TextField(
-              controller: controller,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                double enteredAmount = double.parse(controller.text);
-                if (enteredAmount >= 1) {
-                  _openRazorpay(enteredAmount);
-                } else {
-                  // Handle invalid amount
-                  // You can show an error message or perform other actions
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 50),
-                primary: Colors.yellow,
+      body: Stack(
+        children: [
+          Container(
+            color: Colors.white,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          Positioned(
+            top: 0,
+            height: 83.0,
+            left: 0,
+            right: 0,
+            child: AppBar(
+              backgroundColor: Colors.black,
+              elevation: 0,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Add navigation logic here
+                },
               ),
-              child: Text('Add Money'),
+              title: Padding(
+                padding: EdgeInsets.only(
+                  left: 7.0,
+                  top: 0.0,
+                ),
+                child: Text(
+                  'Top - Up',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
-          ],
+          ),
+          Positioned(
+            top: 82,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 300.0,
+                      width: 400.0,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xFF8745C0), Color(0xFF351A58)],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(50.0),
+                          bottomRight: Radius.circular(50.0),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 40,
+                      left: 21,
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 12.0,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(width: 15.0),
+                          Text(
+                            'TOP - UP',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 70,
+                      left: 21,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10.0),
+                          Text(
+                            'Enter Amount (Min ₹ 1 )',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 120,
+                      left: 21,
+                      right: 21,
+                      child: Container(
+                        width: 350.0,
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left:
+                                      40.0), // Adjust the left margin for the hintText
+                              child: VerticalDivider(
+                                color: Colors
+                                    .grey, // Adjust the color of the vertical divider
+                                width:
+                                    2.0, // Adjust the width of the vertical divider
+                              ),
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _amountController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Amount',
+                                  contentPadding: EdgeInsets.only(left: 10.0),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    Positioned(
+                      top: 190,
+                      left: 21,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10.0),
+                          Text(
+                            'Instant',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Buttons for ₹100, ₹200, ₹300, ₹400
+                    Positioned(
+                      top: 230,
+                      left: 21,
+                      child: Row(
+                        children: [
+                          _buildAmountButton('₹100'),
+                          SizedBox(width: 10.0),
+                          _buildAmountButton('₹200'),
+                          SizedBox(width: 10.0),
+                          _buildAmountButton('₹500'),
+                          SizedBox(width: 10.0),
+                          _buildAmountButton('₹2000'),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+    
+    
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text(
+    //       'Top - Up',
+    //       style: TextStyle(color: Colors.white),
+    //     ),
+    //     centerTitle: true,
+    //     backgroundColor: Colors.red,
+    //   ),
+    //   body: Padding(
+    //     padding: const EdgeInsets.all(16.0),
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.stretch,
+    //       children: [
+    //         Column(
+    //           crossAxisAlignment: CrossAxisAlignment.stretch,
+    //           children: [
+    //             Text(
+    //               'TOP - UP',
+    //               style: TextStyle(
+    //                 fontSize: 18.0,
+    //                 fontWeight: FontWeight.bold,
+    //               ),
+    //             ),
+    //             SizedBox(height: 8.0),
+    //             Text(
+    //               'Enter Amount (Min ₹1)',
+    //               style: TextStyle(
+    //                 fontSize: 16.0,
+    //                 color: Colors.grey,
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //         TextField(
+    //           controller: controller,
+    //           keyboardType: TextInputType.numberWithOptions(decimal: true),
+    //           inputFormatters: <TextInputFormatter>[
+    //             FilteringTextInputFormatter.digitsOnly,
+    //           ],
+    //         ),
+    //         SizedBox(
+    //           height: 20,
+    //         ),
+    //         ElevatedButton(
+    //           onPressed: () {
+    //             double enteredAmount = double.parse(controller.text);
+    //             if (enteredAmount >= 1) {
+    //               _openRazorpay(enteredAmount);
+    //             } else {
+    //               // Handle invalid amount
+    //               // You can show an error message or perform other actions
+    //             }
+    //           },
+    //           style: ElevatedButton.styleFrom(
+    //             minimumSize: Size(double.infinity, 50),
+    //             primary: Colors.yellow,
+    //           ),
+    //           child: Text('Add Money'),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+ 
+ 
+  }
+
+   Widget _buildAmountButton(String amount) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          _amountController.text = amount;
+        });
+      },
+      style: ElevatedButton.styleFrom(
+        primary: Colors.white, // Button background color
+        onPrimary: Colors.black, // Text color
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0), // Adjust the border radius
+        ),
+      ),
+      child: Text(
+        amount,
+        style: TextStyle(
+          fontWeight: FontWeight.bold, // Make the text bold
         ),
       ),
     );

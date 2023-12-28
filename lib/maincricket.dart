@@ -1,11 +1,8 @@
-import 'package:app/views/about_page.dart';
-import 'package:app/views/home_page.dart';
 import 'package:app/views/leage_page.dart';
-import 'package:app/views/news_page.dart';
-import 'package:app/views/table_page.dart';
 import 'package:app/views/home_page.dart';
+import 'package:app/views/sidenavbar.dart';
+import 'package:app/views/wallet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainPage extends StatefulWidget {
@@ -18,45 +15,53 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   final dynamic _pages = [
-    const AboutPage(),
+    const SideNavbar(),
+    const WalletScreen(),
     const LeagePage(),
-    const SidebarXExampleApp(),    
+    const SidebarXExampleApp(),
   ].reversed.toList();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 15, bottom: 5, left: 5, right: 5),
+        padding: const EdgeInsets.only(top: 0),
         child: _pages[_selectedIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        selectedIconTheme: const IconThemeData(size: 25),
-        unselectedIconTheme: const IconThemeData(size: 25),
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.futbol), 
-              label: "About Us "),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.tableList),
-            label: 'League Table',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF8443BA),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(10.0),
+            topRight: Radius.circular(10.0),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.basketball),
-            label: 'Games',
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(
+            4, // Number of icons
+            (index) => IconButton(
+              icon: Icon(
+                index == 0
+                    ? FontAwesomeIcons.futbol
+                    : index == 1
+                        ? FontAwesomeIcons.newspaper
+                        : index == 2
+                            ? FontAwesomeIcons.wallet
+                            : FontAwesomeIcons.navicon,
+                color: _selectedIndex == index
+                    ? Colors.white
+                    : Colors.grey,
+                size: _selectedIndex == index ? 30 : 25,
+              ),
+              onPressed: () {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+            ),
           ),
-        ].reversed.toList(),
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepOrange,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        ),
       ),
     );
   }
