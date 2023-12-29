@@ -9,7 +9,6 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
   runApp(MyApp());
 }
 
@@ -37,16 +36,35 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
   late Animation _animation;
 
-  void configOneSignel()
-  { 
+  Future<void> _initOneSignal() async {
+    // OneSignal initialization
     OneSignal.shared.setAppId("c97e076e-788e-49c4-8862-bff043f07115");
-    // OneSignal.shared.init('7d108336-42a4-4e9f-9a23-6105dd125a74');
+
+    // Set the handler for receiving notifications
+    // OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
+    //   // Handle received notification
+    // });
+
+    // Set the handler for handling notification opened event
+    OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      // Handle notification opened
+    });
+
+    // Request permission for notifications
+    await OneSignal.shared.promptUserForPushNotificationPermission();
   }
+
+  // void configOneSignel()
+  // { 
+  //   OneSignal.shared.setAppId("c97e076e-788e-49c4-8862-bff043f07115");
+  //   // OneSignal.shared.init('7d108336-42a4-4e9f-9a23-6105dd125a74');
+  // }
 
   @override
   void initState() {
     super.initState();
-    configOneSignel();
+    _initOneSignal();
+    // configOneSignel();
     Future.delayed(Duration(seconds: 1), () {
       _checkAuth();
     });
