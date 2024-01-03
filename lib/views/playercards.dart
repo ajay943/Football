@@ -51,6 +51,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
               skill: data['playing_role'].toString() ?? '',
               photo: 'assets/player8.jpg',
               point: data['fantasy_player_rating'].toString() ?? '',
+              fielding: data['fielding_position'].toString() ?? '',
             );
             apiPlayers.add(player);
           }
@@ -223,70 +224,166 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                       children: _getUniqueSkills().map((skill) {
                         return Column(
                           children: [
-                            // Text(
-                            //   'Select 1 - 8 your $skill team:',
-                            //   style: TextStyle(
-                            //     fontWeight: FontWeight.bold,
-                            //     fontSize: 16.0,
-                            //   ),
-                            // ),
                             Expanded(
                               child: ListView.builder(
                                 itemCount: _getPlayersBySkill(skill).length,
                                 itemBuilder: (context, index) {
                                   final player =
                                       _getPlayersBySkill(skill)[index];
-                                  return ListTile(
-                                    title: Row(
-                                      children: [
-                                        CircleAvatar(
-                                          backgroundImage:
-                                              AssetImage(player.photo),
-                                        ),
-                                        SizedBox(width: 16.0),
-                                        Text(player.name),
-                                      ],
+                                  return Card(
+                                    elevation: 0.5,
+                                    margin: EdgeInsets.all(0.0),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(0.0),
                                     ),
-                                    subtitle: Text(player.position),
-                                    trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(Icons.remove),
-                                          onPressed: () {
-                                            setState(() {
-                                              if (selectedPlayers
-                                                  .contains(player)) {
-                                                selectedPlayers.remove(player);
-                                                totalCredits +=
-                                                    int.parse(player.point);
-                                              }
-                                            });
-                                          },
-                                        ),
-                                        Text(player.point),
-                                        IconButton(
-                                          icon: Icon(Icons.add),
-                                          onPressed: () {
-                                            setState(() {
-                                              if (selectedPlayers.length <
-                                                      maxPlayers &&
-                                                  !selectedPlayers
-                                                      .contains(player) &&
-                                                  totalCredits >=
-                                                      int.parse(player.point)) {
-                                                selectedPlayers.add(player);
-                                                totalCredits -=
-                                                    int.parse(player.point);
-                                              }
-                                            });
-                                          },
-                                        ),
-                                      ],
+                                    color: player?.isSelected == true ? Colors.grey : null,
+                                    child: Container(
+                                      width: 400,
+                                      height: 150.0,
+                                      padding: const EdgeInsets.all(19.0),
+                                      child: Stack(
+                                        children: [
+                                          Positioned(
+                                            left: 0,
+                                            top: 0,
+                                            width: 55.0,
+                                            height:
+                                                100.0, // Adjusted height to cover full card height
+                                            child: Image.asset(
+                                              'assets/profileimage.png', // Replace with the actual path to your PNG image
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            left:
+                                                83.0, // Adjusted left position for the text content
+                                            top: 25,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  player.name,
+                                                  style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 3.0),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      player.fielding,
+                                                      style: TextStyle(
+                                                        fontSize: 11.0,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 75.0),
+                                                    Text(
+                                                      '92',
+                                                      style: TextStyle(
+                                                        fontSize: 13.0,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 45.0),
+                                                    Text(
+                                                      player.point,
+                                                      style: TextStyle(
+                                                        fontSize: 13.0,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 15.0),
+                                                    IconButton(
+                                                      icon:
+                                                          (player?.isSelected ==
+                                                                  true)
+                                                              ? Icon(
+                                                                  Icons.remove,
+                                                                  color: Colors
+                                                                      .red)
+                                                              : Icon(Icons.add,
+                                                                  color: Colors
+                                                                      .green),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          // Toggle the isSelected property
+                                                          if (player != null) {
+                                                            player.isSelected =
+                                                                !(player.isSelected ??
+                                                                    false);
+
+                                                            // Update the selectedPlayers list based on the selection
+                                                            if (player
+                                                                    .isSelected ??
+                                                                false) {
+                                                              if (selectedPlayers
+                                                                      .length <
+                                                                  maxPlayers) {
+                                                                selectedPlayers
+                                                                    .add(
+                                                                        player);
+                                                              } else {
+                                                                // You can display a message or handle the case when the maximum players are selected
+                                                                print(
+                                                                    'Maximum players reached');
+                                                                player.isSelected =
+                                                                    false; // Deselect the player
+                                                              }
+                                                            } else {
+                                                              selectedPlayers
+                                                                  .remove(
+                                                                      player);
+                                                            }
+                                                          }
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  'Played last match',
+                                                  style: TextStyle(
+                                                    fontSize: 12.0,
+                                                    color: Color.fromARGB(
+                                                        255, 223, 198, 35),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Positioned(
+                                            left:
+                                                0.0, // Adjusted left position for the rectangle text
+                                            bottom:
+                                                8.0, // Adjusted bottom position for the rectangle text
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.0,
+                                                  vertical: 2.0),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(
+                                                    10.0), // Adjust the border radius as needed
+                                                color: Colors
+                                                    .black, // Rectangle color
+                                              ),
+                                              child: Text(
+                                                'IND',
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    tileColor: selectedPlayers.contains(player)
-                                        ? Colors.blue.withOpacity(0.3)
-                                        : null,
                                   );
                                 },
                               ),
@@ -318,6 +415,8 @@ class Player {
   final String skill;
   final String photo;
   final String point;
+  final String fielding;
+  bool isSelected;
 
   Player({
     required this.name,
@@ -325,5 +424,7 @@ class Player {
     required this.skill,
     required this.photo,
     required this.point,
+    required this.fielding,
+    this.isSelected = false, // Default to unselected
   });
 }

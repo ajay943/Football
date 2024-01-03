@@ -1,4 +1,5 @@
 import 'package:app/phone.dart';
+import 'package:app/views/allNotification.dart';
 import 'package:app/views/wallet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/services/footbali_services.dart';
@@ -10,6 +11,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:loader_skeleton/loader_skeleton.dart';
+import 'package:intl/intl.dart';
 
 class SidebarXExampleApp extends StatefulWidget {
   const SidebarXExampleApp({Key? key}) : super(key: key);
@@ -29,6 +31,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
   ];
   bool isLoading = true;
   late String phone;
+  int? NotificationCount;
 
   _isLoggedIn() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -49,8 +52,10 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
     _isLoggedIn();
     _setLoggedIn();
     fetchData();
+    sendNotificationCountRequest();
     Future.delayed(Duration(seconds: 1), () {
       register();
+      sendNotificationCountRequest();
     });
   }
 
@@ -85,7 +90,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
 
   void fetchData() async {
     var url = Uri.parse(
-        'https://rest.entitysport.com/v2/competitions/121143/matches/?token=ec471071441bb2ac538a0ff901abd249&per_page=50&&paged=1');
+        'https://rest.entitysport.com/v2/matches/?status=1&token=444b8b1e48d9cd803ea3820c5c17ecc4');
     try {
       http.Response response = await http.get(url);
       if (response.statusCode == 200) {
@@ -103,6 +108,28 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
       }
     } catch (error) {
       print('Error: $error');
+    }
+  }
+
+  void sendNotificationCountRequest() async {
+    final phoneNumber = phone;
+    final url =
+        Uri.https('crickx.onrender.com', '/getNotificationCount/$phoneNumber');
+
+    var request = http.Request('POST', url);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonResponse =
+          json.decode(await response.stream.bytesToString());
+      setState(() {
+        NotificationCount = jsonResponse['count'];
+        print("notification$jsonResponse['count']");
+      });
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
     }
   }
 
@@ -147,6 +174,12 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                           color: Colors.white,
                         ),
                         onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AllNotification(),
+                            ),
+                          );
                           // Navigate to the notifications screen or perform any action
                         },
                       ),
@@ -163,14 +196,24 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                             minWidth: 16,
                             minHeight: 16,
                           ),
-                          child: Text(
-                            '5', // Replace this with your actual notification count
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
+                          child: NotificationCount == null
+                              ? null
+                              // Text(
+                              //     '',
+                              //     style: TextStyle(
+                              //       color: Colors.white,
+                              //       fontSize: 12,
+                              //     ),
+                              //     textAlign: TextAlign.center,
+                              //   )
+                              : Text(
+                                  "$NotificationCount", // Replace this with your actual notification count
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                         ),
                       ),
                     ],
@@ -188,19 +231,19 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                       Expanded(
                         child: Column(
                           children: [
-                            SizedBox(height: 20),
+                            SizedBox(height: 5),
                             CarouselSlider.builder(
                               itemCount: advertisements.length,
                               options: CarouselOptions(
-                                height: 80.0,
+                                height: 120.0,
                                 enlargeCenterPage: true,
                                 autoPlay: true,
-                                aspectRatio: 16 / 9,
+                                // aspectRatio: 16 / 5,
                                 autoPlayCurve: Curves.fastOutSlowIn,
                                 enableInfiniteScroll: true,
                                 autoPlayAnimationDuration:
                                     Duration(milliseconds: 800),
-                                viewportFraction: 0.8,
+                                viewportFraction: 1,
                                 onPageChanged: (index, reason) {
                                   setState(() {
                                     _currentIndex = index;
@@ -222,7 +265,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                 );
                               },
                             ),
-                            SizedBox(height: 12),
+                            SizedBox(height: 8),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: List.generate(
@@ -230,7 +273,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                 (index) => buildDot(index: index),
                               ),
                             ),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 10),
                             Text(
                               'Upcoming Matches',
                               style: TextStyle(
@@ -246,6 +289,30 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                 // itemCount: 1,
                                 itemBuilder: (context, index) {
                                   var element = competitions[index];
+                                  DateTime matchDateTime =
+                                      DateTime.parse(element['date_start_ist']);
+                                  // Format the date and time
+                                  String formattedDate =
+                                      DateFormat('dd MMM, h:mm a')
+                                          .format(matchDateTime);
+                                  Duration timeDifference =
+                                      matchDateTime.difference(DateTime.now());
+
+                                  //  String formattedTimer = '${timeDifference.inDays}d:${(timeDifference.inHours % 24)}h:${(timeDifference.inMinutes % 60)}m';
+
+                                  String formattedTimer;
+
+                                  if (timeDifference.inDays > 0) {
+                                    formattedTimer =
+                                        '${timeDifference.inDays}d:${(timeDifference.inHours % 24)}h:${(timeDifference.inMinutes % 60)}m';
+                                  } else if (timeDifference.inHours > 0) {
+                                    formattedTimer =
+                                        '${timeDifference.inHours}h:${(timeDifference.inMinutes % 60)}m';
+                                  } else {
+                                    formattedTimer =
+                                        '${timeDifference.inMinutes}m';
+                                  }
+
                                   return InkWell(
                                     onTap: () {
                                       Navigator.push(
@@ -253,284 +320,14 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                         MaterialPageRoute(
                                           builder: (context) => MatchDetailPage(
                                             matchId: element["match_id"],
+                                            short_title: element["short_title"],
+                                            date_start_ist: element["date_start_ist"]
+
                                           ),
                                           // builder: (context) => MatchDetailPage( matchId: 12345),
                                         ),
                                       );
                                     },
-                                    //  child: Padding(
-                                    //   padding:
-                                    //       const EdgeInsets.only(bottom: 10),
-                                    //   child: Center(
-                                    //     child: Container(
-                                    //       color: Colors.white,
-                                    //       height: 125,
-                                    //       width: 375,
-                                    //       child: Card(
-                                    //         elevation: 5,
-                                    //         // shadowColor: Colors.grey,
-                                    //         shape: RoundedRectangleBorder(
-                                    //           borderRadius:
-                                    //               BorderRadius.circular(10.0),
-                                    //         ),
-                                    //         color: Colors.white,
-                                    //         child: Padding(
-                                    //           padding:
-                                    //               const EdgeInsets.all(0.0),
-                                    //           child: Column(
-                                    //             crossAxisAlignment:
-                                    //                 CrossAxisAlignment.start,
-                                    //             children: [
-                                    //               Container(
-                                    //                 alignment: Alignment.center,
-                                    //                 child: Container(
-                                    //                   height: 31,
-                                    //                   width: 190,
-                                    //                   decoration: BoxDecoration(
-                                    //                     gradient:
-                                    //                         LinearGradient(
-                                    //                       colors: [
-                                    //                         Color.fromARGB(255,
-                                    //                             169, 74, 228),
-                                    //                         Color.fromARGB(255,
-                                    //                             51, 10, 86),
-                                    //                       ],
-                                    //                       begin: Alignment
-                                    //                           .topCenter,
-                                    //                       end: Alignment
-                                    //                           .bottomCenter,
-                                    //                     ),
-                                    //                     borderRadius:
-                                    //                         BorderRadius.only(
-                                    //                       bottomLeft:
-                                    //                           Radius.circular(
-                                    //                               10.0),
-                                    //                       bottomRight:
-                                    //                           Radius.circular(
-                                    //                               10.0),
-                                    //                     ),
-                                    //                   ),
-                                    //                   child: Stack(
-                                    //                     alignment:
-                                    //                         Alignment.center,
-                                    //                     children: [
-                                    //                       Align(
-                                    //                         alignment: Alignment
-                                    //                             .center,
-                                    //                         child: Container(
-                                    //                           width: 180,
-                                    //                           child: Center(
-                                    //                             child: Text(
-                                    //                               'ICC Mens ODI World Cup 2023',
-                                    //                               style:
-                                    //                                   TextStyle(
-                                    //                                 fontSize:
-                                    //                                     10,
-                                    //                                 color: Colors
-                                    //                                     .white,
-                                    //                               ),
-                                    //                             ),
-                                    //                           ),
-                                    //                         ),
-                                    //                       ),
-                                    //                     ],
-                                    //                   ),
-                                    //                 ),
-                                    //               ),
-                                    //               Row(
-                                    //                 mainAxisAlignment:
-                                    //                     MainAxisAlignment
-                                    //                         .spaceBetween,
-                                    //                 children: [
-                                    //                   Stack(
-                                    //                     alignment:
-                                    //                         Alignment.center,
-                                    //                     children: [
-                                    //                       Padding(
-                                    //                         padding:
-                                    //                             EdgeInsets.only(
-                                    //                                 bottom:
-                                    //                                     10.0), // Adjust the bottom margin as needed
-                                    //                         child: Container(
-                                    //                             margin: EdgeInsets
-                                    //                                 .only(
-                                    //                                     left:
-                                    //                                         20.0),
-                                    //                             child: Column(
-                                    //                               mainAxisAlignment:
-                                    //                                   MainAxisAlignment
-                                    //                                       .start,
-                                    //                               crossAxisAlignment:
-                                    //                                   CrossAxisAlignment
-                                    //                                       .center,
-                                    //                               children: [
-                                    //                                 Container(
-                                    //                                   width:
-                                    //                                       60, // Set your desired width
-                                    //                                   height:
-                                    //                                       50, // Set your desired height
-                                    //                                   decoration:
-                                    //                                       BoxDecoration(
-                                    //                                     borderRadius:
-                                    //                                         BorderRadius.circular(10), // Set border radius as needed
-                                    //                                     image:
-                                    //                                         DecorationImage(
-                                    //                                       image:
-                                    //                                           CachedNetworkImageProvider(
-                                    //                                             "https://i.pravatar.cc/100?img=0",
-                                    //                                       ),
-                                    //                                       fit: BoxFit
-                                    //                                           .cover,
-                                    //                                     ),
-                                    //                                   ),
-                                    //                                 ),
-                                    //                                 SizedBox(
-                                    //                                     height:
-                                    //                                         3),
-                                    //                                 Text( "IND",
-                                    //                                   style: TextStyle(
-                                    //                                       fontSize:
-                                    //                                           14),
-                                    //                                 ),
-                                    //                               ],
-                                    //                             )),
-                                    //                       ),
-                                    //                     ],
-                                    //                   ),
-                                    //                   SizedBox(
-                                    //                     width: 16,
-                                    //                   ),
-                                    //                   Stack(
-                                    //                     alignment:
-                                    //                         Alignment.center,
-                                    //                     children: [
-                                    //                       Container(
-                                    //                         child: Column(
-                                    //                           mainAxisAlignment:
-                                    //                               MainAxisAlignment
-                                    //                                   .start,
-                                    //                           crossAxisAlignment:
-                                    //                               CrossAxisAlignment
-                                    //                                   .center,
-                                    //                           children: [
-                                    //                             Container(
-                                    //                               width: 75,
-                                    //                               height: 30,
-                                    //                               decoration:
-                                    //                                   BoxDecoration(
-                                    //                                 color: Color
-                                    //                                     .fromARGB(
-                                    //                                         255,
-                                    //                                         240,
-                                    //                                         207,
-                                    //                                         207),
-                                    //                                 borderRadius:
-                                    //                                     BorderRadius.circular(
-                                    //                                         40.0),
-                                    //                               ),
-                                    //                               child: Center(
-                                    //                                 child: Text(
-                                    //                                   '1d:21m',
-                                    //                                   style:
-                                    //                                       TextStyle(
-                                    //                                     fontSize:
-                                    //                                         14,
-                                    //                                     fontWeight:
-                                    //                                         FontWeight.w700,
-                                    //                                     color: Colors
-                                    //                                         .red,
-                                    //                                   ),
-                                    //                                 ),
-                                    //                               ),
-                                    //                             ),
-                                    //                             SizedBox(
-                                    //                                 height: 12),
-                                    //                             Text(
-                                    //                               '14 Oct, 2:00 pm',
-                                    //                               style: TextStyle(
-                                    //                                   fontSize:
-                                    //                                       14,
-                                    //                                   color: const Color
-                                    //                                       .fromRGBO(
-                                    //                                       158,
-                                    //                                       158,
-                                    //                                       158,
-                                    //                                       1)),
-                                    //                             ),
-                                    //                           ],
-                                    //                         ),
-                                    //                       ),
-                                    //                     ],
-                                    //                   ),
-                                    //                   SizedBox(
-                                    //                     width: 16,
-                                    //                   ),
-                                    //                   Stack(
-                                    //                     alignment:
-                                    //                         Alignment.center,
-                                    //                     children: [
-                                    //                       Padding(
-                                    //                         padding:
-                                    //                             EdgeInsets.only(
-                                    //                                 bottom:
-                                    //                                     10.0), // Adjust the bottom margin as needed
-                                    //                         child: Container(
-                                    //                             margin: EdgeInsets
-                                    //                                 .only(
-                                    //                                     right:
-                                    //                                         20.0),
-                                    //                             child: Column(
-                                    //                               mainAxisAlignment:
-                                    //                                   MainAxisAlignment
-                                    //                                       .start,
-                                    //                               crossAxisAlignment:
-                                    //                                   CrossAxisAlignment
-                                    //                                       .center,
-                                    //                               children: [
-                                    //                                 Container(
-                                    //                                   width:
-                                    //                                       60, // Set your desired width
-                                    //                                   height:
-                                    //                                       50, // Set your desired height
-                                    //                                   decoration:
-                                    //                                       BoxDecoration(
-                                    //                                     borderRadius:
-                                    //                                         BorderRadius.circular(10), // Set border radius as needed
-                                    //                                     image:
-                                    //                                         DecorationImage(
-                                    //                                       image:
-                                    //                                           CachedNetworkImageProvider(
-                                    //                                         // element['teamb']['thumb_url'] ??
-                                    //                                             "https://i.pravatar.cc/100?img=80",
-                                    //                                       ),
-                                    //                                       fit: BoxFit
-                                    //                                           .cover,
-                                    //                                     ),
-                                    //                                   ),
-                                    //                                 ),
-                                    //                                 SizedBox(
-                                    //                                     height:
-                                    //                                         3),
-                                    //                                 Text("PAK",
-                                    //                                   style: TextStyle(
-                                    //                                       fontSize:
-                                    //                                           14),
-                                    //                                 ),
-                                    //                               ],
-                                    //                             )),
-                                    //                       ),
-                                    //                     ],
-                                    //                   ),
-                                    //                 ],
-                                    //               ),
-                                    //             ],
-                                    //           ),
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-
                                     child: Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 10),
@@ -594,7 +391,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                                               width: 180,
                                                               child: Center(
                                                                 child: Text(
-                                                                  'ICC Mens ODI World Cup 2023',
+                                                                  '${element['format_str']}',
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
@@ -650,7 +447,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                                                             DecorationImage(
                                                                           image:
                                                                               CachedNetworkImageProvider(
-                                                                            element['teama']['thumb_url'] ??
+                                                                            element['teama']['logo_url'] ??
                                                                                 "https://i.pravatar.cc/100?img=0",
                                                                           ),
                                                                           fit: BoxFit
@@ -710,7 +507,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                                                   ),
                                                                   child: Center(
                                                                     child: Text(
-                                                                      '1d:21m',
+                                                                      formattedTimer,
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
@@ -726,7 +523,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                                                 SizedBox(
                                                                     height: 12),
                                                                 Text(
-                                                                  '14 Oct, 2:00 pm',
+                                                                  formattedDate,
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           14,
@@ -780,7 +577,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                                                             DecorationImage(
                                                                           image:
                                                                               CachedNetworkImageProvider(
-                                                                            element['teamb']['thumb_url'] ??
+                                                                            element['teamb']['logo_url'] ??
                                                                                 "https://i.pravatar.cc/100?img=80",
                                                                           ),
                                                                           fit: BoxFit

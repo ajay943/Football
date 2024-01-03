@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-  // OneSignal.shared.setAppId("c97e076e-788e-49c4-8862-bff043f07115");
     return MaterialApp(
       initialRoute: 'splashScreen',
       debugShowCheckedModeBanner: false,
@@ -54,17 +53,10 @@ class _SplashScreenState extends State<SplashScreen>
     await OneSignal.shared.promptUserForPushNotificationPermission();
   }
 
-  // void configOneSignel()
-  // { 
-  //   OneSignal.shared.setAppId("c97e076e-788e-49c4-8862-bff043f07115");
-  //   // OneSignal.shared.init('7d108336-42a4-4e9f-9a23-6105dd125a74');
-  // }
-
   @override
   void initState() {
     super.initState();
     _initOneSignal();
-    // configOneSignel();
     Future.delayed(Duration(seconds: 1), () {
       _checkAuth();
     });

@@ -1,260 +1,256 @@
 import 'package:flutter/material.dart';
 
-class ResponsiblePlayPage extends StatelessWidget {
+class ResponsiblePlayPage extends StatefulWidget {
+  const ResponsiblePlayPage({Key? key}) : super(key: key);
+
+  @override
+  State<ResponsiblePlayPage> createState() => _ResponsiblePlayPageState();
+}
+
+class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Responsible Play'),
+        title: Text(
+          'Responsible Play',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Your banner widget here
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                'Responsible Play',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Text(
+                'At Funzy, we are always looking out for all our users. Responsible play policy is at the heart of our efforts to maintain a healthy, rewarding, and productive fantasy sports.',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
             Container(
-              height: 200.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/slider1.jpg'),
-                  fit: BoxFit.cover,
+              width: 350.0,
+              height: 163.0,
+              child: Card(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                color: Colors.transparent, // Set card color to transparent
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF7E41B3), // #7E41B3
+                        Color(0xFF371B5A), // #371B5A
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(21.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '1. Ensuring safety and security',
+                          style: TextStyle(
+                            fontSize: 21.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10.0), // Add space between the texts
+                        Text(
+                          'Transaction limits: We are committed to your financial security, which is why there a maximum cap of ₹ 725,000 that can be added to your Funzy account in a single transaction.',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 16.0), // Add space between the cards
+            Container(
+              width: 350.0,
+              height: 163.0,
+              child: Card(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                color: Colors.transparent, // Set card color to transparent
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF7E41B3), // #7E41B3
+                        Color(0xFF371B5A), // #371B5A
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '2. Making informed decisions',
+                          style: TextStyle(
+                            fontSize: 21.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10.0), // Add space between the texts
+                        Text(
+                          'Alerts.For any user going through a bad run of form,we have set up prompts that update them about their accumulated losses in a financial year.after all,when you have all the information,you use your skills better ',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
             SizedBox(height: 16.0),
-            // Your responsible play content
+            Container(
+              width: 350.0,
+              height: 163.0,
+              child: Card(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                color: Colors.transparent, // Set card color to transparent
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF7E41B3), // #7E41B3
+                        Color(0xFF371B5A), // #371B5A
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '3. Managing time better',
+                          style: TextStyle(
+                            fontSize: 21.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10.0), // Add space between the texts
+                        Text(
+                          'Timeouts: Even champions need a break sometimes.You can choose not to join all pay-to-participate contests for 1-7 days with our timeouts.During this period,you will be allowed to play practice contests only',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Container(
+              width: 350.0,
+              height: 163.0,
+              child: Card(
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                color: Colors.transparent, // Set card color to transparent
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF7E41B3), // #7E41B3
+                        Color(0xFF371B5A), // #371B5A
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '4.Abiding by regulations',
+                          style: TextStyle(
+                            fontSize: 21.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10.0), // Add space between the texts
+                        Text(
+                          'Age and Location Limits: To join pay-to-play contests on Funzy, you need to be eligible to play. Anyone under the age of 18 and anyone from Assam, Andhra Pradesh, Odisha, Telangana, Nagaland and Sikkim can play practice contests only.',
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'RESPONSIBLE PLAY',
-                    style: TextStyle(
-                      fontSize: 35.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
-                  ),
-
-                  Center(
-                    child: Text(
-                      ' POLICY',
-                      style: TextStyle(
-                        fontSize: 35.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 8.0),
-                  Text(
-                    'Crickpe is the ultimate cricket fantasy gaming'
-                    'App that lets you play online cricket and win'
-                    'rewards. We always have our users’ best'
-                    'interests in mind and our Responsible Play Policy'
-                    'aims to promote responsible gaming practices'
-                    'while ensuring that the platform remains a skill-'
-                    'based, legal, and well-managed experience.',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  SizedBox(height: 16.0),
-                  // Additional content within a Card
-                  Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Ensuring a Safe and Secure Gaming Experience',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 18.0),
-                          Text(
-                            'Users safety and security are vital to us.'
-                            'Certain measures have been adopted to'
-                            ' ensure each player financial security'
-                            ' while playing on cricket. We have set a'
-                            'transaction limit where users can add up.'
-                            'to ₹25,000 in a single transaction to their'
-                            ' Cricket account ',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          SizedBox(height: 18.0),
-                          // Add more content as needed
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 18.0),
-                  Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Promoting Skill-Based Gameplay',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Our gaming app is designed to be entirely skill-based.'
-                            'where success is determined by your knowledge of the game.'
-                            'and your strategic decisions. We encourage users to'
-                            'improve their cricket knowledge and'
-                            'analytical skills to enhance their gameplay experience.',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          SizedBox(height: 8.0),
-                          // Add more content as needed
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 18.0),
-                  Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Compliance with Applicable Laws',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'OOur platform operates within the bounds'
-                            'of local laws and regulations related to'
-                            'online gaming and are not available to'
-                            'those under the age of 18 or from Assam,'
-                            'Andhra Pradesh, Odisha, Telangana,'
-                            'Nagaland, or Sikkim.',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          SizedBox(height: 8.0),
-                          // Add more content as needed
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 18.0),
-                  Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Time and Money Management Skills',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'We encourage users to exercise'
-                            'responsible time and money'
-                            'management while using our app. Set'
-                            'limits on the time you spend on gaming'
-                            'and establish budgets to prevent'
-                            'excessive spending. Remember,'
-                            'responsible gaming is about enjoyment'
-                            'and entertainment, not excessive financial'
-                            'strain. ',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          SizedBox(height: 8.0),
-                          // Add more content as needed
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 18.0),
-                  Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Not a Regular Source of Income',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'While winning in our fantasy gaming app'
-                            'is possible through skillful gameplay, it is'
-                            'important to note that this is not a'
-                            'guaranteed source of income. Users'
-                            'should view the platform as a form of'
-                            'entertainment rather than a means to'
-                            'generate regular earnings.',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          SizedBox(height: 8.0),
-                          // Add more content as needed
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 18.0),
-                  Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Making Decisions Wisely',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(
-                            'Every decision you make in the game has'
-                            'an impact on your gameplay experience.'
-                            'We encourage users to make thoughtful'
-                            'and informed decisions, focusing on the'
-                            'strategic aspect of the game rather than'
-                            'solely aiming for financial gains. ',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                          SizedBox(height: 8.0),
-                          // Add more content as needed
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              padding: const EdgeInsets.all(30.0),
+              child: Text(
+                'This game may be habit-forming or financially risky. Please play responsibly. ',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.grey,
+                ),
               ),
             ),
           ],

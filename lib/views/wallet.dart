@@ -1,3 +1,4 @@
+import 'package:app/views/top_up.dart';
 import 'package:flutter/material.dart';
 class WalletScreen extends StatefulWidget {
   const WalletScreen({Key? key}) : super(key: key);
@@ -10,13 +11,11 @@ class _WalletScreenState extends State<WalletScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background widget
           Container(
             color: Colors.white, // Set the background color or use an image
             width: double.infinity,
             height: double.infinity,
           ),
-          // App Bar with back arrow icon and centered text
           Positioned(
             top: 0,
             height:83.0,
@@ -133,6 +132,13 @@ class _WalletScreenState extends State<WalletScreen> {
                                     margin: EdgeInsets.only(right: 34.0),
                                     child: FloatingActionButton(
                                       onPressed: () {
+                                        Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => TopUpScreen(),
+                                          // builder: (context) => MatchDetailPage( matchId: 12345),
+                                        ),
+                                      );
                                         // Add your logic for the right FloatingActionButton
                                       },
                                       child: Column(

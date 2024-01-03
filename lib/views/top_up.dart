@@ -1,21 +1,18 @@
-
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:flutter/material.dart';
 
 class TopUpScreen extends StatefulWidget {
+  const TopUpScreen({Key? key}) : super(key: key);
+
   @override
-  _TopUpScreenState createState() => _TopUpScreenState();
+  State<TopUpScreen> createState() => _TopUpScreenState();
 }
 
 class _TopUpScreenState extends State<TopUpScreen> {
-  TextEditingController controller = TextEditingController();
-
   TextEditingController _amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Stack(
         children: [
@@ -124,28 +121,56 @@ class _TopUpScreenState extends State<TopUpScreen> {
                         height: 50.0,
                         decoration: BoxDecoration(
                           color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(
+                              10.0), // Adjust the border radius
                         ),
                         child: Row(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left:
-                                      40.0), // Adjust the left margin for the hintText
-                              child: VerticalDivider(
-                                color: Colors
-                                    .grey, // Adjust the color of the vertical divider
-                                width:
-                                    2.0, // Adjust the width of the vertical divider
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //     left: 40.0,
+                            //   ), // Adjust the left margin for the hintText
+                            //   child: VerticalDivider(
+                            //     color: Colors.grey, // Adjust the color of the vertical divider
+                            //     width: 2.0, // Adjust the width of the vertical divider
+                            //   ),
+                            // ),
                             Expanded(
-                              child: TextFormField(
-                                controller: _amountController,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Amount',
-                                  contentPadding: EdgeInsets.only(left: 10.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      10.0), // Adjust the border radius
+                                  color: Colors
+                                      .transparent, // Background color of the entire row
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            left:
+                                                10.0), // Padding for the TextFormField
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              10.0), // Adjust the border radius
+                                          border: Border.all(
+                                            width:
+                                                2.0, // Adjust the width of the border
+                                            color: Colors
+                                                .grey, // Adjust the color of the border
+                                          ),
+                                        ),
+                                        child: TextFormField(
+                                          controller: _amountController,
+                                          decoration: InputDecoration(
+                                            border: InputBorder
+                                                .none, // No need for the default border
+                                            hintText: 'Amount',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -153,7 +178,6 @@ class _TopUpScreenState extends State<TopUpScreen> {
                         ),
                       ),
                     ),
-
                     Positioned(
                       top: 190,
                       left: 21,
@@ -171,7 +195,6 @@ class _TopUpScreenState extends State<TopUpScreen> {
                         ],
                       ),
                     ),
-                    // Buttons for ₹100, ₹200, ₹300, ₹400
                     Positioned(
                       top: 230,
                       left: 21,
@@ -192,80 +215,50 @@ class _TopUpScreenState extends State<TopUpScreen> {
               ],
             ),
           ),
+          // Container at the bottom
+          Positioned(
+            bottom: 36,
+            left: 21,
+            right: 21,
+            child: InkWell(
+              onTap:() {
+                 double enteredAmount = double.parse(_amountController.text);
+                if (enteredAmount >= 1) {
+                  _openRazorpay(enteredAmount);
+                } else {
+                  // Handle invalid amount
+                  // You can show an error message or perform other actions
+                }
+              },
+              child: Container(
+                height: 50.0,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF8745C0), Color(0xFF351A58)],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Center(
+                  child: Text(
+                    'Proceed',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
-    
-    
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text(
-    //       'Top - Up',
-    //       style: TextStyle(color: Colors.white),
-    //     ),
-    //     centerTitle: true,
-    //     backgroundColor: Colors.red,
-    //   ),
-    //   body: Padding(
-    //     padding: const EdgeInsets.all(16.0),
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.stretch,
-    //       children: [
-    //         Column(
-    //           crossAxisAlignment: CrossAxisAlignment.stretch,
-    //           children: [
-    //             Text(
-    //               'TOP - UP',
-    //               style: TextStyle(
-    //                 fontSize: 18.0,
-    //                 fontWeight: FontWeight.bold,
-    //               ),
-    //             ),
-    //             SizedBox(height: 8.0),
-    //             Text(
-    //               'Enter Amount (Min ₹1)',
-    //               style: TextStyle(
-    //                 fontSize: 16.0,
-    //                 color: Colors.grey,
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //         TextField(
-    //           controller: controller,
-    //           keyboardType: TextInputType.numberWithOptions(decimal: true),
-    //           inputFormatters: <TextInputFormatter>[
-    //             FilteringTextInputFormatter.digitsOnly,
-    //           ],
-    //         ),
-    //         SizedBox(
-    //           height: 20,
-    //         ),
-    //         ElevatedButton(
-    //           onPressed: () {
-    //             double enteredAmount = double.parse(controller.text);
-    //             if (enteredAmount >= 1) {
-    //               _openRazorpay(enteredAmount);
-    //             } else {
-    //               // Handle invalid amount
-    //               // You can show an error message or perform other actions
-    //             }
-    //           },
-    //           style: ElevatedButton.styleFrom(
-    //             minimumSize: Size(double.infinity, 50),
-    //             primary: Colors.yellow,
-    //           ),
-    //           child: Text('Add Money'),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
- 
- 
   }
 
-   Widget _buildAmountButton(String amount) {
+  Widget _buildAmountButton(String amount) {
     return ElevatedButton(
       onPressed: () {
         setState(() {
@@ -288,7 +281,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
     );
   }
 
-  void _openRazorpay(double amount) {
+   void _openRazorpay(double amount) {
     Razorpay razorpay = Razorpay();
     var options = {
       'key': 'rzp_test_kLcl21a6RHqZpK',
@@ -351,4 +344,5 @@ class _TopUpScreenState extends State<TopUpScreen> {
       },
     );
   }
+
 }

@@ -14,7 +14,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class MatchDetailPage extends StatefulWidget {
   final int matchId;
-  const MatchDetailPage({Key? key, required this.matchId}) : super(key: key);
+  final String short_title;
+  final String date_start_ist;
+  const MatchDetailPage({Key? key, required this.matchId, required this.short_title, required this.date_start_ist}) : super(key: key);
   @override
   State<MatchDetailPage> createState() => _MatchDetailPageState();
 }
@@ -24,11 +26,22 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
   bool isLoading = true;
   late final int totalSports;
   late final int filledSports;
+   late DateTime matchDateTime;
+  late Duration timeDifference;
+  late String formattedTimer;
+  
   // double progress = filledSports / totalSports;
   List<dynamic> suggestions = [];
   @override
   void initState() {
     super.initState();
+    matchDateTime = DateTime.parse(widget.date_start_ist);
+
+    // Calculate the difference between the current time and the match time
+    timeDifference = matchDateTime.difference(DateTime.now());
+
+    // Format the timer
+    formattedTimer = '${timeDifference.inDays}d:${(timeDifference.inHours % 24)}h:${(timeDifference.inMinutes % 60)}m';
     fetchData(widget.matchId);
   }
 
@@ -81,7 +94,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                 top: 70.0,
                 left: 140.0,
                 child: Text(
-                  'IND vs ENG',
+                  '${widget.short_title}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 26.0,
@@ -93,7 +106,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                 top: 100.0,
                 left: 160.0,
                 child: Text(
-                  '1d:21m left',
+                  formattedTimer,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -123,6 +136,17 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
               ),
             ],
           ),
+          isLoading
+          ? CardSkeleton(
+              isCircularImage: true,
+              isBottomLinesActive: true,
+            )
+          : suggestions.isEmpty ? Padding(
+            padding: const EdgeInsets.only(top: 200),
+            child: Center(
+              child: Text("Please Wait For Some Time"),
+            ),
+          ):
           Expanded(
             child: ListView.builder(
               itemCount: suggestions.length,
@@ -388,6 +412,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                         ),
                       ),
                       SizedBox(height: 10),
+                      
                     ],
                   ),
                 );
@@ -395,7 +420,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
             ),
           ),
         ],
-      ),
+      ),     
       floatingActionButton: Stack(
         children: [
           Row(
