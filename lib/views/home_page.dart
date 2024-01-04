@@ -321,7 +321,8 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                           builder: (context) => MatchDetailPage(
                                             matchId: element["match_id"],
                                             short_title: element["short_title"],
-                                            date_start_ist: element["date_start_ist"]
+                                            date_start_ist: element["date_start_ist"],
+                                            competition : element["competition"]["cid"]
 
                                           ),
                                           // builder: (context) => MatchDetailPage( matchId: 12345),

@@ -14,9 +14,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class MatchDetailPage extends StatefulWidget {
   final int matchId;
+  final int competition;
   final String short_title;
   final String date_start_ist;
-  const MatchDetailPage({Key? key, required this.matchId, required this.short_title, required this.date_start_ist}) : super(key: key);
+  const MatchDetailPage({Key? key, required this.matchId, required this.short_title, required this.date_start_ist, required this.competition}) : super(key: key);
   @override
   State<MatchDetailPage> createState() => _MatchDetailPageState();
 }
@@ -165,6 +166,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                               MaterialPageRoute(
                                 builder: (context) => YourNewScreen(
                                   contestId: element["_id"],
+                                  
                                 ),
                               ),
                             );
@@ -493,7 +495,10 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                         Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => TeamSelectionScreen(),
+                                builder: (context) => TeamSelectionScreen(
+                                  matchId : widget.matchId,
+                                  competitionId : widget.competition
+                                ),
                               ),
                             );
                     },
