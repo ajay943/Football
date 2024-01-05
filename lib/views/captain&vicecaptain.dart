@@ -291,8 +291,6 @@ class _CaptainState extends State<Captain> {
             visible: isSubmitButtonVisible(),
             child: ElevatedButton(
               onPressed: () {
-                // Handle the submit logic here
-                // You can access selectedCaptainId and selectedViceCaptainId
                 print("selectedCaptainId$selectedCaptainId");
                 print("selectedViceCaptainId$selectedViceCaptainId");
                 print("selectedPlayerNames$selectedPlayerNames");
