@@ -183,7 +183,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/packages/flutter",
+      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -225,13 +225,13 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -597,7 +597,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -812,7 +812,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2024-01-04T06:52:24.990589Z",
+  "generated": "2024-01-04T08:59:52.314978Z",
   "generator": "pub",
-  "generatorVersion": "3.2.3"
+  "generatorVersion": "3.2.0"
 }

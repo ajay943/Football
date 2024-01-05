@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app/views/captain&vicecaptain.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:percent_indicator/percent_indicator.dart';
@@ -483,6 +484,9 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                             int.tryParse(player['pid'].toString()) ??
                             0) // handle potential null or non-integer values
                         .toList();
+                    List<String> selectedPlayerNames = selectedPlayersJson.map((player) => player['name'].toString()).toList();
+                    List<String> selectedPlayerSkill = selectedPlayersJson.map((player) => player['skill'].toString()).toList();
+                    List<String> selectedPlayerPoint = selectedPlayersJson.map((player) => player['point'].toString()).toList();
 
                     print("playername123$selectedPlayerIds");
                     try {
@@ -495,7 +499,10 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                         "match_id": 72581,
                         "poolContestId": "657a9d5b69a7b17d04b7e306",
                         "phoneNumber": "+91808080457123",
-                        'players': selectedPlayerIds,
+                        'playersID': selectedPlayerIds,
+                        'playersName': selectedPlayerNames,
+                        'playersSkill': selectedPlayerSkill,
+                        'playersPoint': selectedPlayerPoint,
                         // Add other necessary fields if required by your API
                       });
 
@@ -507,6 +514,15 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
 
                       if (response.statusCode == 200) {
                         print("players${response.body}");
+                        Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Captain(
+                                            selectedPlayers: selectedPlayers
+                                          ),
+                                          // builder: (context) => MatchDetailPage( matchId: 12345),
+                                        ),
+                                      );
                       } else {
                         print(response.reasonPhrase);
                       }
@@ -538,6 +554,9 @@ class Player {
   final String photo;
   final String point;
   final String fielding;
+   bool isCaptain;
+  bool isViceCaptain;
+
   bool isSelected;
   Player({
     required this.pid,
@@ -547,12 +566,17 @@ class Player {
     required this.photo,
     required this.point,
     required this.fielding,
-    this.isSelected = false, // Default to unselected
+    this.isSelected = false,
+    this.isCaptain = false,
+    this.isViceCaptain = false, // Default to unselected
   });
 
   Map<String, dynamic> toJson() {
     return {
       "pid": pid.toString(),
+      "name": name,
+      "skill": skill,
+      "point": point
     };
   }
 }
