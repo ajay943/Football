@@ -47,25 +47,18 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
 
       if (response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
-        // print("${jsonResponse['response']['squads']}");
         if (jsonResponse.containsKey('response')) {
           List<Player> apiPlayers = [];
           for (int i = 0; i < jsonResponse['response']['squads'].length; i++) {
             for (int j = 0;
                 j < jsonResponse['response']['squads'][i]["players"].length;
                 j++) {
-              // print(
-              //     "player${jsonResponse['response']['squads'][i]["players"][j]["pid"]}");
               Player player = Player(
-                pid: jsonResponse['response']['squads'][i]["players"][j]
-                        ["pid"] ??
+                pid: jsonResponse['response']['squads'][i]["players"][j]["pid"]
+                        .toString() ??
                     '',
                 name: jsonResponse['response']['squads'][i]["players"][j]
                             ["first_name"]
-                        .toString() ??
-                    '',
-                position: jsonResponse['response']['squads'][i]["players"][j]
-                            ["playing_role"]
                         .toString() ??
                     '',
                 skill: jsonResponse['response']['squads'][i]["players"][j]
@@ -469,67 +462,15 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                   right: 140), // Set the desired margin from the top
               child: ElevatedButton(
                 onPressed: () async {
-                  // print("12345$selectedPlayers");
                   if (selectedPlayers.length == maxPlayers) {
-                    List<Map<String, dynamic>> selectedPlayersJson =
-                        selectedPlayers
-                            .map((player) => player.toJson())
-                            .toList();
-
-                    print("12345$selectedPlayersJson");
-
-                    // Extract only the names from selectedPlayersJson as List<String>
-                    List<int> selectedPlayerIds = selectedPlayersJson
-                        .map((player) =>
-                            int.tryParse(player['pid'].toString()) ??
-                            0) // handle potential null or non-integer values
-                        .toList();
-                    List<String> selectedPlayerNames = selectedPlayersJson.map((player) => player['name'].toString()).toList();
-                    List<String> selectedPlayerSkill = selectedPlayersJson.map((player) => player['skill'].toString()).toList();
-                    List<String> selectedPlayerPoint = selectedPlayersJson.map((player) => player['point'].toString()).toList();
-
-                    print("playername123$selectedPlayerIds");
-                    try {
-                      var url = Uri.parse('https://crickx.onrender.com/team');
-                      var headers = {
-                        'Content-Type': 'application/json',
-                      };
-
-                      var body = jsonEncode({
-                        "match_id": 72581,
-                        "poolContestId": "657a9d5b69a7b17d04b7e306",
-                        "phoneNumber": "+91808080457123",
-                        'playersID': selectedPlayerIds,
-                        'playersName': selectedPlayerNames,
-                        'playersSkill': selectedPlayerSkill,
-                        'playersPoint': selectedPlayerPoint,
-                        // Add other necessary fields if required by your API
-                      });
-
-                      var response = await http.post(
-                        url,
-                        headers: headers,
-                        body: body,
-                      );
-
-                      if (response.statusCode == 200) {
-                        print("players${response.body}");
-                        Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Captain(
-                                            selectedPlayers: selectedPlayers
-                                          ),
-                                          // builder: (context) => MatchDetailPage( matchId: 12345),
-                                        ),
-                                      );
-                      } else {
-                        print(response.reasonPhrase);
-                      }
-                    } catch (e) {
-                      print('Error: $e');
-                      // Handle any exceptions during the HTTP request
-                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            Captain(selectedPlayers: selectedPlayers,
+                             matchId : widget.matchId,),
+                      ),
+                    );
                   } else {
                     final snackBar = SnackBar(
                       content:
@@ -547,21 +488,19 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
 }
 
 class Player {
-  final int pid;
+  final String pid;
   final String name;
-  final String position;
   final String skill;
   final String photo;
   final String point;
   final String fielding;
-   bool isCaptain;
+  bool isCaptain;
   bool isViceCaptain;
 
   bool isSelected;
   Player({
     required this.pid,
     required this.name,
-    required this.position,
     required this.skill,
     required this.photo,
     required this.point,
@@ -572,11 +511,6 @@ class Player {
   });
 
   Map<String, dynamic> toJson() {
-    return {
-      "pid": pid.toString(),
-      "name": name,
-      "skill": skill,
-      "point": point
-    };
+    return {"pid": pid, "name": name, "skill": skill, "point": point};
   }
 }

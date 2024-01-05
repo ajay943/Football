@@ -2,24 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:app/views/playercards.dart';
 
 class Captain extends StatefulWidget {
+  final int matchId;
   final List<Player> selectedPlayers;
-
-  const Captain({Key? key, required this.selectedPlayers}) : super(key: key);
-
+  const Captain(
+      {Key? key, required this.selectedPlayers, required this.matchId})
+      : super(key: key);
   @override
   State<Captain> createState() => _CaptainState();
 }
 
 class _CaptainState extends State<Captain> {
-  late Player selectedCaptain;
-  late Player selectedViceCaptain;
+  late String selectedCaptainId;
+  late String selectedViceCaptainId;
+  late List<String> selectedPlayerNames;
+  late List<String> selectedPlayerSkill;
+  late List<String> selectedPlayerPoint;
+  late List<String> selectedPlayerIds;
 
   @override
   void initState() {
     super.initState();
-    // Initialize to the first player in the list
-    selectedCaptain = widget.selectedPlayers[0];
-    selectedViceCaptain = widget.selectedPlayers[0];
+    // Initialize to an empty string
+    selectedCaptainId = '';
+    selectedViceCaptainId = '';
+    List<Map<String, dynamic>> selectedPlayersJson =
+        widget.selectedPlayers.map((player) => player.toJson()).toList();
+    selectedPlayerNames =
+        selectedPlayersJson.map((player) => player['name'].toString()).toList();
+    selectedPlayerSkill = selectedPlayersJson
+        .map((player) => player['skill'].toString())
+        .toList();
+    selectedPlayerPoint = selectedPlayersJson
+        .map((player) => player['point'].toString())
+        .toList();
+    selectedPlayerIds =
+        selectedPlayersJson.map((player) => player['pid'].toString()).toList();
+  }
+
+  bool isSubmitButtonVisible() {
+    // Check if both captain and vice-captain positions are filled
+    return selectedCaptainId.isNotEmpty && selectedViceCaptainId.isNotEmpty;
   }
 
   @override
@@ -132,142 +154,153 @@ class _CaptainState extends State<Captain> {
               itemCount: widget.selectedPlayers.length,
               itemBuilder: (context, index) {
                 final player = widget.selectedPlayers[index];
-                return GestureDetector(
-                  onTap: () {
-                    // Set the selected player as captain
-                    setState(() {
-                      selectedCaptain = player;
-                      // Check if the vice-captain is the same as the captain
-                      // If yes, reset the vice-captain to the first player in the list
-                      if (selectedViceCaptain == selectedCaptain) {
-                        selectedViceCaptain = widget.selectedPlayers[0];
-                      }
-                    });
-                  },
-                  child: Card(
-                    elevation: 0.5,
-                    margin: EdgeInsets.all(0.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0),
-                    ),
-                    child: Container(
-                      width: double.infinity,
-                      height: 80.0,
-                      padding:
-                          const EdgeInsets.only(bottom: 4, left: 19, right: 19),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            width: 67.0,
-                            height: 80.0,
-                            child: Image.asset(
-                              'assets/image.png',
-                              fit: BoxFit.cover,
-                            ),
+                return Card(
+                  elevation: 0.5,
+                  margin: EdgeInsets.all(0.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0.0),
+                  ),
+                  child: Container(
+                    width: double.infinity,
+                    height: 80.0,
+                    padding:
+                        const EdgeInsets.only(bottom: 4, left: 19, right: 19),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          width: 67.0,
+                          height: 80.0,
+                          child: Image.asset(
+                            'assets/image.png',
+                            fit: BoxFit.cover,
                           ),
-                          Positioned(
-                            left: 83.0,
-                            top: 20,
-                            child: Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          player.name,
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            left: 83.0,
-                            top: 40,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      
-                                      child: Container(
-                                        width: 30.0,
-                                        height: 30.0,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: selectedCaptain == player
-                                              ? Colors.green
-                                              : null,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'C',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.black,
-                                            ),
-                                          ),
+                        ),
+                        Positioned(
+                          left: 83.0,
+                          top: 20,
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        player.name,
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          left: 83.0,
+                          top: 40,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      // Set the selected player's pid as captain if not already selected
+                                      if (selectedCaptainId != player.pid &&
+                                          selectedViceCaptainId != player.pid) {
+                                        setState(() {
+                                          selectedCaptainId = player.pid;
+                                        });
+                                      }
+                                    },
+                                    child: Container(
                                       width: 30.0,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        // Check if the selected vice-captain is the same as the captain
-                                        // If yes, reset the vice-captain to the first player in the list
-                                        if (selectedCaptain != player) {
-                                          setState(() {
-                                            selectedViceCaptain = player;
-                                          });
-                                        }
-                                      },
-                                      child: Container(
-                                        width: 30.0,
-                                        height: 30.0,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: selectedViceCaptain == player
-                                              ? Colors.blue
-                                              : null,
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'VC',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.black,
-                                            ),
+                                      height: 30.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: selectedCaptainId == player.pid
+                                            ? Colors.green
+                                            : null,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'C',
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.black,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                  SizedBox(
+                                    width: 30.0,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      // Set the selected player's pid as vice-captain if not already selected
+                                      if (selectedViceCaptainId != player.pid &&
+                                          selectedCaptainId != player.pid) {
+                                        setState(() {
+                                          selectedViceCaptainId = player.pid;
+                                        });
+                                      }
+                                    },
+                                    child: Container(
+                                      width: 30.0,
+                                      height: 30.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color:
+                                            selectedViceCaptainId == player.pid
+                                                ? Colors.blue
+                                                : null,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'VC',
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 );
               },
+            ),
+          ),
+          Visibility(
+            visible: isSubmitButtonVisible(),
+            child: ElevatedButton(
+              onPressed: () {
+                // Handle the submit logic here
+                // You can access selectedCaptainId and selectedViceCaptainId
+                print("selectedCaptainId$selectedCaptainId");
+                print("selectedViceCaptainId$selectedViceCaptainId");
+                print("selectedPlayerNames$selectedPlayerNames");
+                print("selectedPlayerSkill$selectedPlayerSkill");
+                print("selectedPlayerPoint$selectedPlayerPoint");
+                print("selectedPlayerIds$selectedPlayerIds");
+              },
+              child: Text('Submit'),
             ),
           ),
         ],
