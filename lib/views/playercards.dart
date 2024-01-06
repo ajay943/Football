@@ -146,77 +146,120 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Players',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 15.0,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left:
+                                        50.0), // Adjust left padding as needed
+                                child: CircleAvatar(
+                                  radius: 20.0,
+                                  backgroundImage:
+                                      AssetImage('assets/india_flag.png'),
                                 ),
                               ),
-                              CircleAvatar(
-                                radius: 20.0,
-                                backgroundImage:
-                                    AssetImage('assets/india_flag.png'),
+                              Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 20.0),
+                                  child: Text(
+                                    'vs',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30.0,
+                                    ),
+                                  ),
+                                ),
                               ),
                               SizedBox(width: 1.0),
-                              CircleAvatar(
-                                radius: 20.0,
-                                backgroundImage:
-                                    AssetImage('assets/usa_flag.png'),
-                              ),
-                              Text(
-                                'Credits Left',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 15.0,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right:
+                                        50.0), // Adjust right padding as needed
+                                child: CircleAvatar(
+                                  radius: 20.0,
+                                  backgroundImage:
+                                      AssetImage('assets/usa_flag.png'),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 5.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '${selectedPlayers.length}/$maxPlayers',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                              Text(
-                                '$totalCredits',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10.0),
+                          SizedBox(height: 30.0),
                           Center(
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                LinearPercentIndicator(
-                                  width: 310.0,
-                                  lineHeight: 27.0,
-                                  percent: (selectedPlayers.length / maxPlayers)
-                                      .toDouble(),
-                                  center: Text(
-                                    '${(selectedPlayers.length / maxPlayers * 100).toStringAsFixed(1)}%',
-                                    style: TextStyle(fontSize: 12.0),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 40.0), // Adjust left padding as needed
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  LinearPercentIndicator(
+                                    width: 280.0,
+                                    lineHeight: 27.0,
+                                    percent:
+                                        (selectedPlayers.length / maxPlayers)
+                                            .toDouble(),
+                                    center: Text(
+                                      '${(selectedPlayers.length / maxPlayers * 100).toStringAsFixed(1)}%',
+                                      style: TextStyle(fontSize: 12.0),
+                                    ),
+                                    linearStrokeCap: LinearStrokeCap.roundAll,
+                                    backgroundColor: Colors.grey,
+                                    progressColor: Colors.white,
                                   ),
-                                  linearStrokeCap: LinearStrokeCap.roundAll,
-                                  backgroundColor: Colors.grey,
-                                  progressColor: Colors.white,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           SizedBox(height: 10.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Players ',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 10.0,
+                                      ),
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      '${selectedPlayers.length}/$maxPlayers',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Credits Left ',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 10.0,
+                                      ),
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      '$totalCredits',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 12.0),
                           Text(
-                            'Maximum of 10 players from one team',
+                            'Maximum of 10 players from a team',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12.0,
@@ -513,7 +556,8 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
       floatingActionButton: selectedPlayers.length == maxPlayers
           ? Container(
               margin: EdgeInsets.only(
-                  right: 140), // Set the desired margin from the top
+                right: 120,
+              ), // Set the desired margin from the top
               child: ElevatedButton(
                 onPressed: () async {
                   if (selectedPlayers.length == maxPlayers) {
@@ -534,7 +578,22 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
-                child: Text('Submit'),
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(
+                      255, 88, 13, 123), // Set the desired button color
+                  minimumSize: Size(150, 35), // Set the desired width and height
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        10.0), // Set the desired border radius
+                  ),
+                ),
+                child: Text(
+                  'Next',
+                  style: TextStyle(
+                    color: Colors.white,
+                    // Add other text styles as needed
+                  ),
+                ),
               ),
             )
           : SizedBox.shrink(),

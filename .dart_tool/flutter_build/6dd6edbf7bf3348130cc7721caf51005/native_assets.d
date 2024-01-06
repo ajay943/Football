@@ -1,0 +1,1 @@
+ /Users/apple/Documents/Football/.dart_tool/flutter_build/6dd6edbf7bf3348130cc7721caf51005/native_assets.yaml: 

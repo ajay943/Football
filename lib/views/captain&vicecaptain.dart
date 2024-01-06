@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class Captain extends StatefulWidget {
   final int matchId;
-  
+
   final List<Player> selectedPlayers;
   const Captain(
       {Key? key, required this.selectedPlayers, required this.matchId})
@@ -24,7 +24,7 @@ class _CaptainState extends State<Captain> {
   late List<String> selectedPlayerPoint;
   late List<String> selectedPlayerIds;
 
-   _isLoggedIn() async {
+  _isLoggedIn() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var phoneNumber = pref.getString('phoneNumber');
     setState(() {
@@ -33,44 +33,44 @@ class _CaptainState extends State<Captain> {
   }
 
   Future<void> submitTeam() async {
-  var headers = {
-    'Content-Type': 'application/json',
-  };
+    var headers = {
+      'Content-Type': 'application/json',
+    };
 
-  var request = http.Request(
-    'POST',
-    Uri.parse('https://crickx.onrender.com/team'),
-  );
+    var request = http.Request(
+      'POST',
+      Uri.parse('https://crickx.onrender.com/team'),
+    );
 
-  request.headers.addAll(headers);
+    request.headers.addAll(headers);
 
-  // Replace the following with your actual data
-  Map<String, dynamic> requestBody = {
-    "match_id": widget.matchId,
-    "poolContestId": "657a9d5b69a7b17d04b7e306",
-    "phoneNumber": phone,
-    "playersID": selectedPlayerIds,
-    "playersName": selectedPlayerNames,
-    "playersSkill": selectedPlayerSkill,
-    "playersPoint": selectedPlayerPoint,
-    "c": selectedCaptainId,
-    "vc": selectedViceCaptainId,
-  };
+    // Replace the following with your actual data
+    Map<String, dynamic> requestBody = {
+      "match_id": widget.matchId,
+      "poolContestId": "657a9d5b69a7b17d04b7e306",
+      "phoneNumber": phone,
+      "playersID": selectedPlayerIds,
+      "playersName": selectedPlayerNames,
+      "playersSkill": selectedPlayerSkill,
+      "playersPoint": selectedPlayerPoint,
+      "c": selectedCaptainId,
+      "vc": selectedViceCaptainId,
+    };
 
-  request.body = json.encode(requestBody);
+    request.body = json.encode(requestBody);
 
-  try {
-    http.StreamedResponse response = await request.send();
+    try {
+      http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
-    } else {
-      print(response.reasonPhrase);
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+      } else {
+        print(response.reasonPhrase);
+      }
+    } catch (e) {
+      print('Error: $e');
     }
-  } catch (e) {
-    print('Error: $e');
   }
-}
 
   @override
   void initState() {
@@ -216,7 +216,7 @@ class _CaptainState extends State<Captain> {
                   ),
                   child: Container(
                     width: double.infinity,
-                    height: 80.0,
+                    height: 70.0,
                     padding:
                         const EdgeInsets.only(bottom: 4, left: 19, right: 19),
                     child: Stack(
@@ -260,76 +260,79 @@ class _CaptainState extends State<Captain> {
                         ),
                         Positioned(
                           left: 83.0,
-                          top: 40,
+                          top: 30,
                           child: Column(
                             children: [
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      // Set the selected player's pid as captain if not already selected
-                                      if (selectedCaptainId != player.pid &&
-                                          selectedViceCaptainId != player.pid) {
-                                        setState(() {
-                                          selectedCaptainId = player.pid;
-                                        });
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 30.0,
-                                      height: 30.0,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: selectedCaptainId == player.pid
-                                            ? Colors.green
-                                            : null,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'C',
-                                          style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.black,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 175),
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Set the selected player's pid as captain if not already selected
+                                        if (selectedCaptainId != player.pid &&
+                                            selectedViceCaptainId != player.pid) {
+                                          setState(() {
+                                            selectedCaptainId = player.pid;
+                                          });
+                                        }
+                                      },
+                                      child: Container(
+                                        width: 30.0,
+                                        height: 30.0,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: selectedCaptainId == player.pid
+                                              ? Colors.green
+                                              : null,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'C',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 30.0,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      // Set the selected player's pid as vice-captain if not already selected
-                                      if (selectedViceCaptainId != player.pid &&
-                                          selectedCaptainId != player.pid) {
-                                        setState(() {
-                                          selectedViceCaptainId = player.pid;
-                                        });
-                                      }
-                                    },
-                                    child: Container(
+                                    SizedBox(
                                       width: 30.0,
-                                      height: 30.0,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color:
-                                            selectedViceCaptainId == player.pid
-                                                ? Colors.blue
-                                                : null,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'VC',
-                                          style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.black,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Set the selected player's pid as vice-captain if not already selected
+                                        if (selectedViceCaptainId != player.pid &&
+                                            selectedCaptainId != player.pid) {
+                                          setState(() {
+                                            selectedViceCaptainId = player.pid;
+                                          });
+                                        }
+                                      },
+                                      child: Container(
+                                        width: 30.0,
+                                        height: 30.0,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color:
+                                              selectedViceCaptainId == player.pid
+                                                  ? Colors.blue
+                                                  : null,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'VC',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -346,14 +349,24 @@ class _CaptainState extends State<Captain> {
             child: ElevatedButton(
               onPressed: () {
                 submitTeam();
-                // print("selectedCaptainId$selectedCaptainId");
-                // print("selectedViceCaptainId$selectedViceCaptainId");
-                // print("selectedPlayerNames$selectedPlayerNames");
-                // print("selectedPlayerSkill$selectedPlayerSkill");
-                // print("selectedPlayerPoint$selectedPlayerPoint");
-                // print("selectedPlayerIds$selectedPlayerIds");
+                // Additional code as needed
               },
-              child: Text('Submit'),
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(
+                    255, 88, 13, 123), // Set the desired button color
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      10.0), // Set the desired border radius
+                ),
+                minimumSize: Size(150, 35), // Set the desired width and height
+              ),
+              child: Text(
+                'Submit',
+                style: TextStyle(
+                  color: Colors.white,
+                  // Add other text styles as needed
+                ),
+              ),
             ),
           ),
         ],

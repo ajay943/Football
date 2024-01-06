@@ -21,11 +21,21 @@ class _PointsSystemPageState extends State<PointsSystemPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Points System'),
+         backgroundColor: Colors.black,
+        title: Text(
+          'Points System',
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Tab(text: 'One Day'),
+            Tab(text: 'One Day',),
             Tab(text: 'Test'),
             Tab(text: 'T20'),
             Tab(text: 'T10'),
@@ -63,18 +73,8 @@ class _PointsListState extends State<PointsList> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.only(left: 10, right: 10, top: 16, bottom: 16),
       children: [
-        // Your banner widget here
-        Container(
-          height: 200.0,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/slider2.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
         SizedBox(height: 16.0),
         InkWell(
           onTap: () {
@@ -85,21 +85,29 @@ class _PointsListState extends State<PointsList> {
               _isOtherExpanded = false;
             });
           },
-          child: Row(
-            children: [
-              Text(
-                '${widget.category} - Batting Points',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          child: Container(
+            color: const Color(0xFF8443BA),
+            height: 45,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 5),
+              child: Row(
+                children: [
+                  Text(
+                    '${widget.category} - Batting Points',
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white),
+                  ),
+                  Expanded(child: Container()),
+                  Icon(
+                    _isBattingExpanded ? Icons.expand_less : Icons.expand_more,
+                    size: 30.0, color: Colors.white,
+                  ),
+                  SizedBox(width: 8.0),
+                ],
               ),
-              Expanded(child: Container()),
-              Icon(
-                _isBattingExpanded ? Icons.expand_less : Icons.expand_more,
-                size: 30.0,
-              ),
-              SizedBox(width: 8.0),
-            ],
+            ),
           ),
         ),
+        
         if (_isBattingExpanded)
           // Integration of the Accordion widget
           Accordion(
@@ -123,7 +131,7 @@ class _PointsListState extends State<PointsList> {
                 leftIcon:
                     const Icon(Icons.text_fields_rounded, color: Colors.white),
                 header: const Text(
-                  'POINTS TYPE',
+                  '',
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold, // Make text bold
@@ -292,29 +300,36 @@ class _PointsListState extends State<PointsList> {
               _isOtherExpanded = false;
             });
           },
-          child: Row(
-            children: [
-              Text(
-                '${widget.category} - Bowling Points',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          child: Container(
+            color: const Color(0xFF8443BA),
+            height: 45,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 5),
+              child: Row(
+                children: [
+                  Text(
+                    '${widget.category} - Bowling Points',
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white),
+                  ),
+                  Expanded(child: Container()),
+                  Icon(
+                    _isBowlingExpanded ? Icons.expand_less : Icons.expand_more,
+                    size: 30.0, color: Colors.white
+                  ),
+                  SizedBox(width: 8.0),
+                ],
               ),
-              Expanded(child: Container()),
-              Icon(
-                _isBowlingExpanded ? Icons.expand_less : Icons.expand_more,
-                size: 30.0,
-              ),
-              SizedBox(width: 8.0),
-            ],
+            ),
           ),
         ),
         if (_isBowlingExpanded)
           // Integration of the Accordion widget
           Accordion(
-            headerBorderColor: const Color.fromARGB(255, 191, 194, 196),
-            headerBorderColorOpened: Colors.grey,
-            // headerBackgroundColorOpened: Colors.green,
-            // contentBackgroundColor: Colors.white,
-            // contentBorderColor: Colors.green,
+             headerBorderColor: Colors.blueGrey,
+            headerBorderColorOpened: Colors.transparent,
+            headerBackgroundColorOpened: Colors.white,
+            contentBackgroundColor: Colors.white,
+            contentBorderColor: Colors.grey,
             contentBorderWidth: 3,
             contentHorizontalPadding: 20,
             scaleWhenAnimating: true,
@@ -457,29 +472,36 @@ class _PointsListState extends State<PointsList> {
               _isOtherExpanded = false;
             });
           },
-          child: Row(
-            children: [
-              Text(
-                '${widget.category} - Fielding Points',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          child: Container(
+            color: const Color(0xFF8443BA),
+            height: 45,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 5),
+              child: Row(
+                children: [
+                  Text(
+                    '${widget.category} - Fielding Points',
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white),
+                  ),
+                  Expanded(child: Container()),
+                  Icon(
+                    _isFieldingExpanded ? Icons.expand_less : Icons.expand_more,
+                    size: 30.0, color: Colors.white
+                  ),
+                  SizedBox(width: 8.0),
+                ],
               ),
-              Expanded(child: Container()),
-              Icon(
-                _isFieldingExpanded ? Icons.expand_less : Icons.expand_more,
-                size: 30.0,
-              ),
-              SizedBox(width: 8.0),
-            ],
+            ),
           ),
         ),
         if (_isFieldingExpanded)
           // Integration of the Accordion widget
           Accordion(
-            headerBorderColor: Colors.blueGrey,
+             headerBorderColor: Colors.blueGrey,
             headerBorderColorOpened: Colors.transparent,
-            headerBackgroundColorOpened: Colors.green,
+            headerBackgroundColorOpened: Colors.white,
             contentBackgroundColor: Colors.white,
-            contentBorderColor: Colors.green,
+            contentBorderColor: Colors.grey,
             contentBorderWidth: 3,
             contentHorizontalPadding: 20,
             scaleWhenAnimating: true,
@@ -639,19 +661,26 @@ class _PointsListState extends State<PointsList> {
               _isFieldingExpanded = false;
             });
           },
-          child: Row(
-            children: [
-              Text(
-                '${widget.category} - Other Points',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          child: Container(
+            color: const Color(0xFF8443BA),
+            height: 45,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 5),
+              child: Row(
+                children: [
+                  Text(
+                    '${widget.category} - Other Points',
+                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white),
+                  ),
+                  Expanded(child: Container()),
+                  Icon(
+                    _isOtherExpanded ? Icons.expand_less : Icons.expand_more,
+                    size: 30.0, color: Colors.white,
+                  ),
+                  SizedBox(width: 8.0),
+                ],
               ),
-              Expanded(child: Container()),
-              Icon(
-                _isOtherExpanded ? Icons.expand_less : Icons.expand_more,
-                size: 30.0,
-              ),
-              SizedBox(width: 8.0),
-            ],
+            ),
           ),
         ),
         if (_isOtherExpanded)
@@ -659,9 +688,9 @@ class _PointsListState extends State<PointsList> {
           Accordion(
             headerBorderColor: Colors.blueGrey,
             headerBorderColorOpened: Colors.transparent,
-            headerBackgroundColorOpened: Colors.green,
+            headerBackgroundColorOpened: Colors.white,
             contentBackgroundColor: Colors.white,
-            contentBorderColor: Colors.green,
+            contentBorderColor: Colors.grey,
             contentBorderWidth: 3,
             contentHorizontalPadding: 20,
             scaleWhenAnimating: true,

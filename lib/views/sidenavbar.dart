@@ -1,6 +1,7 @@
 import 'package:app/phone.dart';
 import 'package:app/views/chat.dart';
 import 'package:app/views/pointsystem.dart';
+import 'package:app/views/profile.dart';
 import 'package:app/views/responsibleplay.dart';
 import 'package:app/views/termsandconditions.dart';
 import 'package:app/views/wallet.dart';
@@ -28,31 +29,11 @@ class _SideNavbarState extends State<SideNavbar> {
                   right: 0,
                   child: Image.asset(
                     'assets/ball.png',
-                    width: 400,
+                    width: double.infinity,
                     height: 200,
                     fit: BoxFit.cover,
                   ),
                 ),
-                // Positioned(
-                //   top: 55,
-                //   left: 16,
-                //   child: Container(
-                //     height: 40,
-                //     width: 40,
-                //     decoration: BoxDecoration(
-                //       color: Colors.black54,
-                //       borderRadius: BorderRadius.circular(
-                //           100.0), // Adjust the radius as needed
-                //     ),
-                //     padding: EdgeInsets.all(1.0),
-                //     child: IconButton(
-                //       icon: Icon(Icons.arrow_back, color: Colors.white),
-                //       onPressed: () {
-                //         Navigator.of(context).pop();
-                //       },
-                //     ),
-                //   ),
-                // ),
                 Positioned(
                   top: 150,
                   left: 0,
@@ -112,23 +93,32 @@ class _SideNavbarState extends State<SideNavbar> {
                                     height: 8.0,
                                     width: 20,
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 16.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'SEE PROFILE',
-                                          style: TextStyle(
-                                            color: const Color(0xFF8443BA),
-                                            fontWeight: FontWeight.bold,
+                                  InkWell(
+                                    onTap: (() => 
+                                     Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ProfilePage(),
+                                        ),
+                                      )),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 16.0),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'SEE PROFILE',
+                                            style: TextStyle(
+                                              color: const Color(0xFF8443BA),
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(width: 8.0),
-                                        Icon(
-                                          Icons.forward,
-                                          color: const Color(0xFF8443BA),
-                                        ),
-                                      ],
+                                          SizedBox(width: 8.0),
+                                          Icon(
+                                            Icons.forward,
+                                            color: const Color(0xFF8443BA),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
