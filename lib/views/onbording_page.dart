@@ -1,5 +1,6 @@
 import 'package:app/phone.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TestScreen extends StatefulWidget {
   @override
@@ -66,84 +67,88 @@ class _TestScreenState extends State<TestScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          PageView.builder(
-            controller: _pageController,
-            itemCount: pages.length,
-            itemBuilder: (context, index) {
-              return OnboardingPageWidget(
-                title: pages[index].title,
-                subTitle: pages[index].subTitle,
-                imageUrl: pages[index].imageUrl,
-              );
-            },
-            onPageChanged: (index) {
-              // Handle page changes
-            },
-          ),
-          Positioned(
-            top: 40,
-            right: 20,
-            child: ElevatedButton(
-              onPressed: () {
-                // Handle skip button tap
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignInNewScreen()),
-                );
-              },
-              child: Text('Skip'),
-            ),
-          ),
-          Positioned(
-            bottom: 70,
-            left: 160,
-            child: Container(
-              width: 80,
-              height: 80,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  
-                  Transform.scale(
-                    scale: 2,
-                    child: CircularProgressIndicator(
-                      value: _animation.value,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      strokeWidth: 4,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_pageController.page! < pages.length - 1) {
-                        _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease,
-                        );
-                        _animationController.reset();
-                        _animationController.forward();
-                      } else {
-                        // Handle button action when on the last page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignInNewScreen()),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(16),
-                      primary: const Color(0xFF8443BA),
-                    ),
-                    child: Icon(Icons.arrow_forward, color: Colors.white),
-                  ),
-                ],
+      body: ScreenUtilInit(
+        child: Expanded(
+          child: Stack(
+            children: [
+              PageView.builder(
+                controller: _pageController,
+                itemCount: pages.length,
+                itemBuilder: (context, index) {
+                  return OnboardingPageWidget(
+                    title: pages[index].title,
+                    subTitle: pages[index].subTitle,
+                    imageUrl: pages[index].imageUrl,
+                  );
+                },
+                onPageChanged: (index) {
+                  // Handle page changes
+                },
               ),
-            ),
+              Positioned(
+                top: 40,
+                right: 20,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle skip button tap
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignInNewScreen()),
+                    );
+                  },
+                  child: Text('Skip'),
+                ),
+              ),
+              Positioned(
+                bottom: 70,
+                left: 160,
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      
+                      Transform.scale(
+                        scale: 2,
+                        child: CircularProgressIndicator(
+                          value: _animation.value,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          strokeWidth: 4,
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_pageController.page! < pages.length - 1) {
+                            _pageController.nextPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease,
+                            );
+                            _animationController.reset();
+                            _animationController.forward();
+                          } else {
+                            // Handle button action when on the last page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignInNewScreen()),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(16),
+                          primary: const Color(0xFF8443BA),
+                        ),
+                        child: Icon(Icons.arrow_forward, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

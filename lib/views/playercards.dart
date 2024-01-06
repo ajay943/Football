@@ -581,7 +581,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(
                       255, 88, 13, 123), // Set the desired button color
-                  minimumSize: Size(150, 35), // Set the desired width and height
+                  minimumSize: Size(150, 3), // Set the desired width and height
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                         10.0), // Set the desired border radius

@@ -49,7 +49,7 @@ dependencies:
   flutter_svg: ^2.0.9
   carousel_slider: ^4.2.1
   sidebarx: ^0.16.3
-  google_fonts: ^4.0.0
+  google_fonts: ^4.0.4
   intl: ^0.17.0
   shared_preferences: ^2.0.15
   webview_flutter: ^3.0.0
@@ -67,6 +67,9 @@ dependencies:
   onesignal_flutter: ^3.2.7
   firebase_core: ^1.10.6
   cloud_firestore: ^2.5.0
+  flutter_screenutil: ^5.9.0
+  pixel_perfect: ^1.1.3
+ 
   
  
 
