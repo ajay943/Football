@@ -20,7 +20,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
   late TabController _tabController;
   List<Player> players = [];
   List<Player> selectedPlayers = [];
-  int totalCredits = 100;
+  double totalCredits = 100;
   int maxPlayers = 11;
   bool isLoading = true;
 
@@ -372,6 +372,49 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                                     ),
                                                   ),
                                                   SizedBox(width: 20.0),
+                                                  // IconButton(
+                                                  //   icon: (player?.isSelected ==
+                                                  //           true)
+                                                  //       ? Icon(Icons.remove,
+                                                  //           color: Colors.red)
+                                                  //       : Icon(Icons.add,
+                                                  //           color:
+                                                  //               Colors.green),
+                                                  //   onPressed: () {
+                                                  //     setState(() {
+                                                  //       if (player != null) {
+                                                  //         if (player
+                                                  //                 .isSelected ??
+                                                  //             false) {
+                                                  //           // Remove the player
+                                                  //           totalCredits +=
+                                                  //               double.parse(player
+                                                  //                   .point);
+                                                  //           selectedPlayers
+                                                  //               .remove(player);
+                                                  //         } else {
+                                                  //           // Add the player
+                                                  //           if (selectedPlayers
+                                                  //                   .length <
+                                                  //               maxPlayers) {
+                                                  //             totalCredits -= double
+                                                  //                 .parse(player
+                                                  //                     .point);
+                                                  //             selectedPlayers
+                                                  //                 .add(player);
+                                                  //           } else {
+                                                  //             // Maximum players reached
+                                                  //             print(
+                                                  //                 'Maximum players reached');
+                                                  //           }
+                                                  //         }
+                                                  //         player.isSelected =
+                                                  //             !(player.isSelected ??
+                                                  //                 false);
+                                                  //       }
+                                                  //     });
+                                                  //   },
+                                                  // ),
                                                   IconButton(
                                                     icon: (player?.isSelected ==
                                                             true)
@@ -382,32 +425,43 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                                                 Colors.green),
                                                     onPressed: () {
                                                       setState(() {
-                                                        // Toggle the isSelected property
                                                         if (player != null) {
-                                                          player.isSelected =
-                                                              !(player.isSelected ??
-                                                                  false);
-
-                                                          // Update the selectedPlayers list based on the selection
                                                           if (player
                                                                   .isSelected ??
                                                               false) {
+                                                            totalCredits +=
+                                                                double.parse(
+                                                                    player
+                                                                        .point);
+                                                            selectedPlayers
+                                                                .remove(player);
+                                                          } else {
                                                             if (selectedPlayers
                                                                     .length <
                                                                 maxPlayers) {
+                                                              totalCredits -=
+                                                                  double.parse(
+                                                                      player
+                                                                          .point);
                                                               selectedPlayers
                                                                   .add(player);
                                                             } else {
-                                                              // You can display a message or handle the case when the maximum players are selected
-                                                              print(
-                                                                  'Maximum players reached');
-                                                              player.isSelected =
-                                                                  false; // Deselect the player
+                                                              final snackBar =
+                                                                  SnackBar(
+                                                                content: Text(
+                                                                    'Maximum players reached (11 players)'),
+                                                              );
+                                                              ScaffoldMessenger
+                                                                      .of(
+                                                                          context)
+                                                                  .showSnackBar(
+                                                                      snackBar);
+                                                              return; // Do not proceed further
                                                             }
-                                                          } else {
-                                                            selectedPlayers
-                                                                .remove(player);
                                                           }
+                                                          player.isSelected =
+                                                              !(player.isSelected ??
+                                                                  false);
                                                         }
                                                       });
                                                     },
@@ -466,9 +520,10 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            Captain(selectedPlayers: selectedPlayers,
-                             matchId : widget.matchId,),
+                        builder: (context) => Captain(
+                          selectedPlayers: selectedPlayers,
+                          matchId: widget.matchId,
+                        ),
                       ),
                     );
                   } else {

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:app/views/playercards.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Captain extends StatefulWidget {
   final int matchId;
+  
   final List<Player> selectedPlayers;
   const Captain(
       {Key? key, required this.selectedPlayers, required this.matchId})
@@ -13,15 +17,65 @@ class Captain extends StatefulWidget {
 
 class _CaptainState extends State<Captain> {
   late String selectedCaptainId;
+  late String phone;
   late String selectedViceCaptainId;
   late List<String> selectedPlayerNames;
   late List<String> selectedPlayerSkill;
   late List<String> selectedPlayerPoint;
   late List<String> selectedPlayerIds;
 
+   _isLoggedIn() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var phoneNumber = pref.getString('phoneNumber');
+    setState(() {
+      phone = phoneNumber!;
+    });
+  }
+
+  Future<void> submitTeam() async {
+  var headers = {
+    'Content-Type': 'application/json',
+  };
+
+  var request = http.Request(
+    'POST',
+    Uri.parse('https://crickx.onrender.com/team'),
+  );
+
+  request.headers.addAll(headers);
+
+  // Replace the following with your actual data
+  Map<String, dynamic> requestBody = {
+    "match_id": widget.matchId,
+    "poolContestId": "657a9d5b69a7b17d04b7e306",
+    "phoneNumber": phone,
+    "playersID": selectedPlayerIds,
+    "playersName": selectedPlayerNames,
+    "playersSkill": selectedPlayerSkill,
+    "playersPoint": selectedPlayerPoint,
+    "c": selectedCaptainId,
+    "vc": selectedViceCaptainId,
+  };
+
+  request.body = json.encode(requestBody);
+
+  try {
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
   @override
   void initState() {
     super.initState();
+    _isLoggedIn();
     // Initialize to an empty string
     selectedCaptainId = '';
     selectedViceCaptainId = '';
@@ -291,12 +345,13 @@ class _CaptainState extends State<Captain> {
             visible: isSubmitButtonVisible(),
             child: ElevatedButton(
               onPressed: () {
-                print("selectedCaptainId$selectedCaptainId");
-                print("selectedViceCaptainId$selectedViceCaptainId");
-                print("selectedPlayerNames$selectedPlayerNames");
-                print("selectedPlayerSkill$selectedPlayerSkill");
-                print("selectedPlayerPoint$selectedPlayerPoint");
-                print("selectedPlayerIds$selectedPlayerIds");
+                submitTeam();
+                // print("selectedCaptainId$selectedCaptainId");
+                // print("selectedViceCaptainId$selectedViceCaptainId");
+                // print("selectedPlayerNames$selectedPlayerNames");
+                // print("selectedPlayerSkill$selectedPlayerSkill");
+                // print("selectedPlayerPoint$selectedPlayerPoint");
+                // print("selectedPlayerIds$selectedPlayerIds");
               },
               child: Text('Submit'),
             ),
