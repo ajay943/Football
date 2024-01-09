@@ -1,3 +1,4 @@
+import 'package:app/views/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app/views/playercards.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,16 +7,25 @@ import 'package:http/http.dart' as http;
 
 class Captain extends StatefulWidget {
   final int matchId;
+  final int competitionId;
+  final String short_title;
+  final String date_start_ist;
 
   final List<Player> selectedPlayers;
-  const Captain(
-      {Key? key, required this.selectedPlayers, required this.matchId})
-      : super(key: key);
+  const Captain({
+    Key? key,
+    required this.selectedPlayers,
+    required this.matchId,
+    required this.competitionId,
+    required this.short_title,
+    required this.date_start_ist,
+  }) : super(key: key);
   @override
   State<Captain> createState() => _CaptainState();
 }
 
 class _CaptainState extends State<Captain> {
+  bool isLoading = false;
   late String selectedCaptainId;
   late String phone;
   late String selectedViceCaptainId;
@@ -33,6 +43,9 @@ class _CaptainState extends State<Captain> {
   }
 
   Future<void> submitTeam() async {
+    setState(() {
+      isLoading = true;
+    });
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -64,6 +77,20 @@ class _CaptainState extends State<Captain> {
 
       if (response.statusCode == 200) {
         print(await response.stream.bytesToString());
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MatchDetailPage(
+                matchId: widget.matchId,
+                short_title: widget.short_title,
+                date_start_ist: widget.date_start_ist,
+                competition: widget.competitionId),
+            // builder: (context) => MatchDetailPage( matchId: 12345),
+          ),
+        );
       } else {
         print(response.reasonPhrase);
       }
@@ -271,7 +298,8 @@ class _CaptainState extends State<Captain> {
                                       onTap: () {
                                         // Set the selected player's pid as captain if not already selected
                                         if (selectedCaptainId != player.pid &&
-                                            selectedViceCaptainId != player.pid) {
+                                            selectedViceCaptainId !=
+                                                player.pid) {
                                           setState(() {
                                             selectedCaptainId = player.pid;
                                           });
@@ -303,7 +331,8 @@ class _CaptainState extends State<Captain> {
                                     GestureDetector(
                                       onTap: () {
                                         // Set the selected player's pid as vice-captain if not already selected
-                                        if (selectedViceCaptainId != player.pid &&
+                                        if (selectedViceCaptainId !=
+                                                player.pid &&
                                             selectedCaptainId != player.pid) {
                                           setState(() {
                                             selectedViceCaptainId = player.pid;
@@ -315,10 +344,10 @@ class _CaptainState extends State<Captain> {
                                         height: 30.0,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color:
-                                              selectedViceCaptainId == player.pid
-                                                  ? Colors.blue
-                                                  : null,
+                                          color: selectedViceCaptainId ==
+                                                  player.pid
+                                              ? Colors.blue
+                                              : null,
                                         ),
                                         child: Center(
                                           child: Text(
@@ -344,31 +373,36 @@ class _CaptainState extends State<Captain> {
               },
             ),
           ),
-          Visibility(
-            visible: isSubmitButtonVisible(),
-            child: ElevatedButton(
-              onPressed: () {
-                submitTeam();
-                // Additional code as needed
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(
-                    255, 88, 13, 123), // Set the desired button color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                      10.0), // Set the desired border radius
+          isLoading
+              ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                )
+              : Visibility(
+                  visible: isSubmitButtonVisible(),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      submitTeam();
+                      // Additional code as needed
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(
+                          255, 88, 13, 123), // Set the desired button color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            10.0), // Set the desired border radius
+                      ),
+                      minimumSize:
+                          Size(150, 35), // Set the desired width and height
+                    ),
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        color: Colors.white,
+                        // Add other text styles as needed
+                      ),
+                    ),
+                  ),
                 ),
-                minimumSize: Size(150, 35), // Set the desired width and height
-              ),
-              child: Text(
-                'Submit',
-                style: TextStyle(
-                  color: Colors.white,
-                  // Add other text styles as needed
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

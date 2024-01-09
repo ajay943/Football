@@ -8,8 +8,10 @@ import 'package:loader_skeleton/loader_skeleton.dart';
 class TeamSelectionScreen extends StatefulWidget {
   final int matchId;
   final int competitionId;
+  final String short_title;
+  final String date_start_ist;
   const TeamSelectionScreen(
-      {Key? key, required this.matchId, required this.competitionId})
+      {Key? key, required this.matchId, required this.competitionId, required this.short_title, required this.date_start_ist,})
       : super(key: key);
   @override
   _TeamSelectionScreenState createState() => _TeamSelectionScreenState();
@@ -556,7 +558,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
       floatingActionButton: selectedPlayers.length == maxPlayers
           ? Container(
               margin: EdgeInsets.only(
-                right: 120,
+                right: 100,
               ), // Set the desired margin from the top
               child: ElevatedButton(
                 onPressed: () async {
@@ -567,6 +569,9 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                         builder: (context) => Captain(
                           selectedPlayers: selectedPlayers,
                           matchId: widget.matchId,
+                          competitionId : widget.competitionId,
+                          short_title : widget.short_title,
+                          date_start_ist : widget.date_start_ist
                         ),
                       ),
                     );
@@ -581,7 +586,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(
                       255, 88, 13, 123), // Set the desired button color
-                  minimumSize: Size(150, 3), // Set the desired width and height
+                  minimumSize: Size(150, 35), // Set the desired width and height
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                         10.0), // Set the desired border radius
