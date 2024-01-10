@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:app/views/stadium.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/views/detail_page.dart';
 import 'package:app/views/playercards.dart';
@@ -112,43 +113,47 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
+        print("1234567890");
         String responseString = await response.stream.bytesToString();
         var jsonResponse = json.decode(responseString);
-        print("0bjkbd${jsonResponse['balance']}");
-        int teamslength = jsonResponse['teams'].length;
-        setState(() {
-          teams = jsonResponse['teams'];
+        print("0bjkbd$jsonResponse");
+        bool balance = jsonResponse['balance'];
+        print("balance$balance");
+        // int teamslength = jsonResponse['teams'].length;
+        // setState(() {
+        //   teams = jsonResponse['teams'];
 
-          // isLoading = false;
-        });
-        if (jsonResponse['balance'] == true) {
-           print("object12345");
-          if (teamslength == 0) {
-            print("object123");
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TeamSelectionScreen(
-                  matchId: widget.matchId,
-                  competitionId: widget.competition,
-                  short_title: widget.short_title,
-                  date_start_ist: widget.date_start_ist,
-                ),
-              ),
-            );
-          } else if (teamslength == 1) {
-            
+        //   // isLoading = false;
+        // });
+        if (balance == true) {
+          //    print("object12345");
+          //   if (teamslength == 0) {
+          //     print("object123");
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => TeamSelectionScreen(
+          //           matchId: widget.matchId,
+          //           competitionId: widget.competition,
+          //           short_title: widget.short_title,
+          //           date_start_ist: widget.date_start_ist,
+          //         ),
+          //       ),
+          //     );
+          //   } else if (teamslength == 1) {
 
-          } else {
+          //   } else {
 
-          }
-        } else {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => WalletScreen(),
-              ),
-            );
+          //   }
+        } else if (balance == false) {
+          print("123456789011");
+          _showBottomSheet(context);
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => WalletScreen(),
+          //     ),
+          //   );
         }
         print("Teams: $jsonResponse");
       } else {
@@ -693,6 +698,158 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(0.0),
+          child: Stack(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Content of the bottom sheet
+                  SizedBox(height: 12.0),
+                  Center(
+                      child: Text(
+                    'CONFIRMATION',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )),
+                  SizedBox(height: 4.0),
+                  Container(
+                    height: 1,
+                    width: double.infinity,
+                    color: Colors.grey,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                  ),
+                  SizedBox(height: 8.0),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20, left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Entry',
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          '0',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                 Padding(
+                   padding: const EdgeInsets.only(left: 20, right: 20),
+                   child: Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: Colors.grey,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                    ),
+                 ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20, left: 20, top: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'To Pay',
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          '0',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 24.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("I agree with the standard T&Cs"),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        // _submitForm();
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 16),
+                        height: 40,
+                        width: MediaQuery.of(context).size.width * .85,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF8443BA),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'JION CONTEST',
+                            style: GoogleFonts.notoSans(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                              color: const Color(0xffFFFFFF),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.of(context).pop();
+                  //   },
+                  //   child: Text('Close'),
+                  // ),
+                ],
+              ),
+              // Close button at top left
+              Positioned(
+                top: 4.0,
+                left: 4.0,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
