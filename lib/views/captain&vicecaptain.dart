@@ -60,7 +60,6 @@ class _CaptainState extends State<Captain> {
     // Replace the following with your actual data
     Map<String, dynamic> requestBody = {
       "match_id": widget.matchId,
-      "poolContestId": "657a9d5b69a7b17d04b7e306",
       "phoneNumber": phone,
       "playersID": selectedPlayerIds,
       "playersName": selectedPlayerNames,

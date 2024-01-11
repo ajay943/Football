@@ -226,7 +226,8 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                     isCircularImage: true,
                     isBottomLinesActive: true,
                   )
-                : Row(
+                : 
+                Row(
                     children: [
                       Expanded(
                         child: Column(
@@ -623,6 +624,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                       ),
                     ],
                   ),
+          
           );
         },
       ),

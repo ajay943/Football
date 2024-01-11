@@ -33,13 +33,15 @@ class MatchDetailPage extends StatefulWidget {
 class _MatchDetailPageState extends State<MatchDetailPage> {
   var MatchData;
   bool isLoading = true;
-  late final int totalSports;
-  late final int filledSports;
+  late  int totalSports;
+  late  int filledSports;
   late DateTime matchDateTime;
   late String phone;
-  late String contest_id;
+  String? contest_id;
   late Duration timeDifference;
   late String formattedTimer;
+  int? balance;
+
 
   // double progress = filledSports / totalSports;
   List<dynamic> suggestions = [];
@@ -99,7 +101,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
     var headers = {
       'Content-Type': 'application/json',
     };
-
     var request = http.Request(
         'POST', Uri.parse('https://crickx.onrender.com/getCreatedTeam'));
     request.body = json.encode({
@@ -108,7 +109,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
       "phoneNumber": phone,
     });
     request.headers.addAll(headers);
-
     try {
       http.StreamedResponse response = await request.send();
 
@@ -119,32 +119,30 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
         print("0bjkbd$jsonResponse");
         bool balance = jsonResponse['balance'];
         print("balance$balance");
-        // int teamslength = jsonResponse['teams'].length;
-        // setState(() {
-        //   teams = jsonResponse['teams'];
-
-        //   // isLoading = false;
-        // });
+        int teamslength = jsonResponse['teams']?.length ?? 0;
+        setState(() {
+          teams = jsonResponse['teams']?? [];
+        });
         if (balance == true) {
           //    print("object12345");
-          //   if (teamslength == 0) {
-          //     print("object123");
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         builder: (context) => TeamSelectionScreen(
-          //           matchId: widget.matchId,
-          //           competitionId: widget.competition,
-          //           short_title: widget.short_title,
-          //           date_start_ist: widget.date_start_ist,
-          //         ),
-          //       ),
-          //     );
-          //   } else if (teamslength == 1) {
+            if (teamslength == 0) {
+              print("object123");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TeamSelectionScreen(
+                    matchId: widget.matchId,
+                    competitionId: widget.competition,
+                    short_title: widget.short_title,
+                    date_start_ist: widget.date_start_ist,
+                  ),
+                ),
+              );
+            } else if (teamslength == 1) {
+               _showBottomSheet(context);
+            } else {
 
-          //   } else {
-
-          //   }
+            }
         } else if (balance == false) {
           print("123456789011");
           _showBottomSheet(context);
@@ -349,7 +347,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                                 height: 2,
                                                               ),
                                                               Text(
-                                                                '₹ 25000',
+                                                                '₹ ${element['price_pool'].toString()}',
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 25,
@@ -380,6 +378,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                                   contest_id =
                                                                       element[
                                                                           "_id"];
+                                                                          balance = element['entry_fee'];
                                                                 });
                                                                 makePostRequest();
                                                                 print(
@@ -404,7 +403,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                               ),
                                                               child: RichText(
                                                                 text: TextSpan(
-                                                                  text: '₹',
+                                                                  text: '₹ ',
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
@@ -418,7 +417,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                                   children: <TextSpan>[
                                                                     TextSpan(
                                                                       text:
-                                                                          " 50",
+                                                                         element['entry_fee'].toString() ,
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
@@ -477,7 +476,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                                   .spaceBetween,
                                                           children: [
                                                             Text(
-                                                              '1,567 spots left',
+                                                              '${(element['total_spots'] - element['done_spots']).toString()} spots left',
                                                               style: TextStyle(
                                                                 fontSize: 12,
                                                                 fontWeight:
@@ -488,7 +487,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                               ),
                                                             ),
                                                             Text(
-                                                              '2,000 spots',
+                                                              '${element['total_spots'].toString()} spots',
                                                               style: TextStyle(
                                                                 fontSize: 12,
                                                                 fontWeight:
@@ -746,7 +745,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                           ),
                         ),
                         Text(
-                          '0',
+                          '₹ ${ balance.toString()}',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.0,
@@ -779,7 +778,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                           ),
                         ),
                         Text(
-                          '0',
+                          '₹ ${ balance.toString()}',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.0,
