@@ -85,7 +85,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 380,
+                  top: MediaQuery.of(context).size.height * .46,
                   left: 0,
                   right: 0,
                   bottom: 0,
@@ -188,8 +188,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
+                          Center(
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               margin: const EdgeInsets.only(left: 45, right: 45),
@@ -198,7 +197,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   Text(
                                     "Didn't receive OTP?",
                                     style: GoogleFonts.notoSans(
-                                      fontSize: 12,
+                                      fontSize: MediaQuery.of(context).size.width * 0.032,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white,
                                     ),
@@ -234,7 +233,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                             style: GoogleFonts.notoSans(
                                               decoration:
                                                   TextDecoration.underline,
-                                              fontSize: 12,
+                                              fontSize: MediaQuery.of(context).size.width * 0.032,
                                               fontWeight: FontWeight.w700,
                                               color: Colors.white,
                                             ),
@@ -243,7 +242,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                       : Text(
                                           " Resend in $_currentSecond Seconds",
                                           style: GoogleFonts.notoSans(
-                                            fontSize: 12,
+                                            fontSize: MediaQuery.of(context).size.width * 0.032,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.white,
                                           ),
@@ -258,7 +257,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 _submitForm();
                               },
                               child: Container(
-                                margin: const EdgeInsets.only(top: 60),
+                                margin: const EdgeInsets.only(top: 45),
                                 height: 40,
                                 width: MediaQuery.of(context).size.width * .50,
                                 decoration: const BoxDecoration(

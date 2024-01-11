@@ -55,7 +55,8 @@ class _WalletScreenState extends State<WalletScreen> {
                   width: 400.0,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF8745C0), Color(0xFF351A58)],
+                      colors: [Color(0xFF8745C0),
+                       Color(0xFF351A58)],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
@@ -72,16 +73,16 @@ class _WalletScreenState extends State<WalletScreen> {
                             'Available Balance',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                           Text(
                             '₹ 5,000.00',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           SizedBox(height: 16.0),
@@ -107,7 +108,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                             'Withdraw',
                                             style: TextStyle(
                                               fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w600,
                                               color: Colors.white,
                                             ),
                                           ),

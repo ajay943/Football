@@ -24,23 +24,24 @@ class _SideNavbarState extends State<SideNavbar> {
             child: Stack(
               children: [
                 Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
+                  top: MediaQuery.of(context).size.width * 0.00,
+                  left: MediaQuery.of(context).size.width * 0.00,
+                  right: MediaQuery.of(context).size.width * 0.00,
                   child: Image.asset(
                     'assets/ball.png',
                     width: double.infinity,
-                    height: 200,
+                    // height:200,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     fit: BoxFit.cover,
                   ),
                 ),
                 Positioned(
-                  top: 150,
-                  left: 0,
-                  right: 0,
+                  top: MediaQuery.of(context).size.height * 0.22,
+                  left: MediaQuery.of(context).size.width * 0.00,
+                  right: MediaQuery.of(context).size.width * 0.00,
                   child: Container(
                     width: double.infinity,
-                    height: 700,
+                    height: MediaQuery.of(context).size.height * 0.7,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -56,12 +57,12 @@ class _SideNavbarState extends State<SideNavbar> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                left: 16.0,
-                                top: 20.0,
+                                left: MediaQuery.of(context).size.width * 0.03,
+                                top: MediaQuery.of(context).size.width * 0.030,
                               ),
                               child: Container(
-                                width: 80,
-                                height: 80,
+                                width: MediaQuery.of(context).size.width * 0.2,
+                                height: MediaQuery.of(context).size.width * 0.2,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100.0),
                                   color: Colors.blue,
@@ -94,13 +95,12 @@ class _SideNavbarState extends State<SideNavbar> {
                                     width: 20,
                                   ),
                                   InkWell(
-                                    onTap: (() => 
-                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ProfilePage(),
-                                        ),
-                                      )),
+                                    onTap: (() => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ProfilePage(),
+                                          ),
+                                        )),
                                     child: Padding(
                                       padding: EdgeInsets.only(left: 16.0),
                                       child: Row(
@@ -266,7 +266,10 @@ class _SideNavbarState extends State<SideNavbar> {
                             );
                           },
                           child: Padding(
-                            padding: EdgeInsets.only(left: 50.0, top: 8.0),
+                            padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width *0.15, // Adjust as needed
+                              top: MediaQuery.of(context).size.height *0.01,
+                            ),
                             child: Row(
                               children: [
                                 Icon(
@@ -387,3 +390,4 @@ class _SideNavbarState extends State<SideNavbar> {
     );
   }
 }
+

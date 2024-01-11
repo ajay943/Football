@@ -106,7 +106,7 @@ class _SignInNewScreenState extends State<SignInNewScreen> {
                           ),
                         ),
                         Positioned(
-                          top: 380,
+                          top: MediaQuery.of(context).size.height * .46,
                           left: 0,
                           right: 0,
                           bottom: 0,
@@ -217,9 +217,11 @@ class _SignInNewScreenState extends State<SignInNewScreen> {
                                         // Set the background color of the Checkbox
                                       ),
                                       Text(
-                                        'I confirm that I am Indian Citizen of 18 + age\n and do not belong to the states of Assam,\n Odisha , Nagaland, Sikkim, Andhra Pradesh\n and Telengana. And I agree to Funzy’s T&C.',
+                                        'I confirm that I am Indian Citizen of \n18 + age and do not belong to the\nstates of Assam, Odisha , Nagaland,\nSikkim, Andhra Pradesh and Telengana.\nAnd I agree to Funzys T&C.',
                                         style: TextStyle(
+                                          fontSize: MediaQuery.of(context).size.width * 0.034,
                                             color: Colors.white),
+                                            // textAlign: TextAlign.center,
                                       ),
                                     ],
                                   ),
@@ -296,7 +298,7 @@ class _SignInNewScreenState extends State<SignInNewScreen> {
                                       child: Container(
                                         margin:
                                             const EdgeInsets.only(top: 30),
-                                        height: 30,
+                                        height: 40,
                                         width: MediaQuery.of(context)
                                                 .size
                                                 .width *

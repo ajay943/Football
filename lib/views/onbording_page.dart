@@ -86,17 +86,26 @@ class _TestScreenState extends State<TestScreen>
                 },
               ),
               Positioned(
-                top: 40,
+                top: MediaQuery.of(context).size.height * 0.070,
                 right: 20,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle skip button tap
+                width:40,
+                child: GestureDetector(
+                  onTap: () {
+                    // Handle skip text tap
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignInNewScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => SignInNewScreen()),
                     );
                   },
-                  child: Text('Skip'),
+                  child: Text(
+                    'Skip',
+                    style: TextStyle(
+                      color: Colors.white, // Set the desired text color
+                      decoration:
+                          TextDecoration.underline, // Add underline to the text
+                    ),
+                  ),
                 ),
               ),
               Positioned(
@@ -188,7 +197,7 @@ class OnboardingPageWidget extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 470,
+          top: MediaQuery.of(context).size.height * .58,
           left: 0,
           right: 0,
           bottom: 0,

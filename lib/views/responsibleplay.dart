@@ -34,7 +34,7 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
                 'Responsible Play',
                 style: TextStyle(
                   fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
@@ -50,7 +50,7 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
             ),
             Container(
               width: 350.0,
-              height: 163.0,
+              height: 218.0,
               child: Card(
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
@@ -79,7 +79,7 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
                           style: TextStyle(
                             fontSize: 21.0,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         SizedBox(height: 10.0), // Add space between the texts
@@ -99,9 +99,9 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
             SizedBox(height: 16.0), // Add space between the cards
             Container(
               width: 350.0,
-              height: 163.0,
+              height: 218.0,
               child: Card(
-                elevation: 5.0,
+                // elevation: 5.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -148,7 +148,7 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
             SizedBox(height: 16.0),
             Container(
               width: 350.0,
-              height: 163.0,
+              height: 210.0,
               child: Card(
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
@@ -177,7 +177,7 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
                           style: TextStyle(
                             fontSize: 21.0,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         SizedBox(height: 10.0), // Add space between the texts
@@ -197,7 +197,7 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
             SizedBox(height: 16.0),
             Container(
               width: 350.0,
-              height: 163.0,
+              height: 218.0,
               child: Card(
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
