@@ -270,7 +270,7 @@ class _PointsListState extends State<PointsList> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Note:- Any Player scoring century will only',
+                          'Note:- Any Player scoring\ncentury will only',
                           style: TextStyle(
                               // Make text bold
                               ),
@@ -278,7 +278,7 @@ class _PointsListState extends State<PointsList> {
                       ],
                     ),
                     Text(
-                      'get points for century.No points will be awarded as their half century bonus. if any runs are scored on an overthyrow,point for those runs will be creditted to batter on strike for that ball however if overthrow, points',
+                      'get points for century.No points will be\nawarded as their half century bonus. if any runs are\nscored on an overthyrow,point for those\nruns will be creditted to batter on strike for that\nball however if overthrow, points',
                       style: TextStyle(
                           // Make text bold
                           ),
@@ -632,7 +632,7 @@ class _PointsListState extends State<PointsList> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Note:- A Direct hit is inflicted by the fielder',
+                          'Note:- A Direct hit is inflicted\nby the fielder',
                           style: TextStyle(
                               // Make text bold
                               ),
@@ -640,7 +640,7 @@ class _PointsListState extends State<PointsList> {
                       ],
                     ),
                     Text(
-                      'who is only one to touch the ball after the batter faces the delivery .in all other cases,points will be awarded only to the last 2 fieldwers who touch the ball Players taking more than 3 catches  will also get 4 points as 3 catch bonus',
+                      'who is only one to touch the ball after the\nbatter faces the delivery .in all other cases\npoints will be awarded only\nto the last 2 fieldwers who touch the ball\nPlayers taking more than 3 catches  will\nalso get 4 points as 3 catch bonus',
                       style: TextStyle(
                           // Make text bold
                           ),
@@ -957,7 +957,7 @@ class _PointsListState extends State<PointsList> {
                           ),
                         ),
                         Text(
-                          '(Min 20 Balls to be played)',
+                          '(Min 20 Ball\nto beplayed)',
                           style: TextStyle(
                             color: Colors.black, // Make text bold
                           ),

@@ -81,18 +81,21 @@ class _DetailNotificationState extends State<DetailNotification> {
           },
         ),
       ),
-       body:isLoading
-          ? CardSkeleton(
-              isCircularImage: true,
-              isBottomLinesActive: true,
-            ) 
-          : Padding(
+       body:
+      //  isLoading
+      //     ? CardSkeleton(
+      //         isCircularImage: true,
+      //         isBottomLinesActive: true,
+      //       ) 
+      //     : 
+          Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "$title",
+              // "$title",
+              "tijmnxcfjkv",
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -100,7 +103,8 @@ class _DetailNotificationState extends State<DetailNotification> {
             ),
             SizedBox(height: 8.0),
             Text(
-              "$message",
+              // "$message",
+              'hbfgbh',
               style: TextStyle(
                 fontSize: 14.0,
               ),
@@ -110,3 +114,4 @@ class _DetailNotificationState extends State<DetailNotification> {
       ), );
   }
 }
+

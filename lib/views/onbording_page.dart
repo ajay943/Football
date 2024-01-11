@@ -110,7 +110,7 @@ class _TestScreenState extends State<TestScreen>
               ),
               Positioned(
                 bottom: 70,
-                left: 160,
+                left: MediaQuery.of(context).size.width * .40,
                 child: Container(
                   width: 80,
                   height: 80,

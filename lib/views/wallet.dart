@@ -1,24 +1,29 @@
 import 'package:app/views/top_up.dart';
 import 'package:flutter/material.dart';
+
 class WalletScreen extends StatefulWidget {
   const WalletScreen({Key? key}) : super(key: key);
+
   @override
   State<WalletScreen> createState() => _WalletScreenState();
 }
+
 class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Stack(
         children: [
           Container(
-            color: Colors.white, // Set the background color or use an image
+            color: Colors.white,
             width: double.infinity,
             height: double.infinity,
           ),
           Positioned(
             top: 0,
-            height:83.0,
+            height: 83.0,
             left: 0,
             right: 0,
             child: AppBar(
@@ -27,13 +32,12 @@ class _WalletScreenState extends State<WalletScreen> {
               leading: IconButton(
                 icon: Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
-                  Navigator.of(context).pop(); // Add navigation logic here
+                  Navigator.of(context).pop();
                 },
               ),
-              // centerTitle: true,
               title: Padding(
                 padding: EdgeInsets.only(
-                  left: 77.0,
+                  left: screenWidth < 400 ? 24.0 : 77.0,
                   top: 0.0,
                 ),
                 child: Text(
@@ -43,7 +47,6 @@ class _WalletScreenState extends State<WalletScreen> {
               ),
             ),
           ),
-          // Container on top with specified height, width, and border radius at the bottom
           Positioned(
             top: 82,
             left: 0,
@@ -51,12 +54,14 @@ class _WalletScreenState extends State<WalletScreen> {
             child: Column(
               children: [
                 Container(
-                  height: 217.0,
-                  width: 400.0,
+                  height: screenWidth < 400 ? 217.0 : 217.0,
+                  width: screenWidth < 400 ? screenWidth : 400.0,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF8745C0),
-                       Color(0xFF351A58)],
+                      colors: [
+                        Color(0xFF8745C0),
+                        Color(0xFF351A58),
+                      ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
@@ -66,116 +71,112 @@ class _WalletScreenState extends State<WalletScreen> {
                     ),
                   ),
                   child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Available Balance',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w400,
-                            ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Available Balance',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w400,
                           ),
-                          Text(
-                            '₹ 5,000.00',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w700,
-                            ),
+                        ),
+                        Text(
+                          '₹ 5,000.00',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w700,
                           ),
-                          SizedBox(height: 16.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Positioned(
-                                left: 16.0,
-                                child: SizedBox(
-                                  width: 180.0,
-                                  height: 39,
-                                  child: Container(
-                                    margin: EdgeInsets.only(left: 34.0),
-                                    child: FloatingActionButton(
-                                      onPressed: () {
-                                        // Add your logic for the left FloatingActionButton
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Withdraw',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      backgroundColor: Colors.transparent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                        side: BorderSide(
-                                            color: Colors.white, width: 1.0),
-                                      ),
-                                    ),
-                                  ),
+                        ),
+                        SizedBox(height: 16.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: screenWidth < 400 ? screenWidth / 2 - 24 : 170.0,
+                              height: 39,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  left: screenWidth < 400 ? 24.0 : 34.0,
                                 ),
-                              ),
-                              Positioned(
-                                right: 16.0,
-                                child: SizedBox(
-                                  width: 180.0,
-                                  height: 39,
-                                  child: Container(
-                                    margin: EdgeInsets.only(right: 34.0),
-                                    child: FloatingActionButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => TopUpScreen(),
-                                          // builder: (context) => MatchDetailPage( matchId: 12345),
+                                child: FloatingActionButton(
+                                  onPressed: () {
+                                    // Add your logic for the left FloatingActionButton
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Withdraw',
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
                                         ),
-                                      );
-                                        // Add your logic for the right FloatingActionButton
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'Top-Up',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 156, 31, 181),
-                                            ),
-                                          ),
-                                        ],
                                       ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                        side: BorderSide(
-                                            color: Colors.white, width: 1.0),
-                                      ),
+                                    ],
+                                  ),
+                                  backgroundColor: Colors.transparent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    side: BorderSide(
+                                      color: Colors.white,
+                                      width: 1.0,
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(height: 16.0),
-                        ],
-                      ),
-                    // ),
+                            ),
+                            SizedBox(
+                              width: screenWidth < 400 ? screenWidth / 2 - 24 : 180.0,
+                              height: 39,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  right: screenWidth < 400 ? 24.0 : 34.0,
+                                ),
+                                child: FloatingActionButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => TopUpScreen(),
+                                      ),
+                                    );
+                                    // Add your logic for the right FloatingActionButton
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Top-Up',
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromARGB(255, 156, 31, 181),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    side: BorderSide(
+                                      color: Colors.white,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16.0),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 30.0),
-                // New Row outside the Container
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -256,7 +257,6 @@ class _WalletScreenState extends State<WalletScreen> {
           ),
         ],
       ),
-    
     );
   }
 }

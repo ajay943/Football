@@ -10,6 +10,13 @@ class ResponsiblePlayPage extends StatefulWidget {
 class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double containerWidth = screenWidth < 350.0 ? screenWidth : 350.0;
+    double containerHeight1 = screenWidth < 350.0 ? screenWidth / 350.0 * 218.0 : 218.0;
+    double containerHeight2 = screenWidth < 350.0 ? screenWidth / 350.0 * 218.0 : 218.0;
+    double containerHeight3 = screenWidth < 350.0 ? screenWidth / 350.0 * 210.0 : 218.0;
+    double containerHeight4 = screenWidth < 350.0 ? screenWidth / 350.0 * 218.0 : 218.0;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -49,8 +56,8 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
               ),
             ),
             Container(
-              width: 350.0,
-              height: 218.0,
+              width: containerWidth,
+              height: containerHeight1,
               child: Card(
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
@@ -84,7 +91,7 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
                         ),
                         SizedBox(height: 10.0), // Add space between the texts
                         Text(
-                          'Transaction limits: We are committed to your financial security, which is why there a maximum cap of ₹ 725,000 that can be added to your Funzy account in a single transaction.',
+                          'Transaction limits: We are committed to your financial security, which is why there is a maximum cap of ₹ 725,000 that can be added to your Funzy account in a single transaction.',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: Colors.white,
@@ -98,10 +105,10 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
             ),
             SizedBox(height: 16.0), // Add space between the cards
             Container(
-              width: 350.0,
-              height: 218.0,
+              width: containerWidth,
+              height: containerHeight2,
               child: Card(
-                // elevation: 5.0,
+                elevation: 5.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -128,12 +135,12 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
                           style: TextStyle(
                             fontSize: 21.0,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         SizedBox(height: 10.0), // Add space between the texts
                         Text(
-                          'Alerts.For any user going through a bad run of form,we have set up prompts that update them about their accumulated losses in a financial year.after all,when you have all the information,you use your skills better ',
+                          'Alerts. For any user going through a bad run of form, we have set up prompts that update them about their accumulated losses in a financial year. After all, when you have all the information, you use your skills better.',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: Colors.white,
@@ -147,8 +154,8 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
             ),
             SizedBox(height: 16.0),
             Container(
-              width: 350.0,
-              height: 210.0,
+              width: containerWidth,
+              height: containerHeight3,
               child: Card(
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
@@ -182,7 +189,7 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
                         ),
                         SizedBox(height: 10.0), // Add space between the texts
                         Text(
-                          'Timeouts: Even champions need a break sometimes.You can choose not to join all pay-to-participate contests for 1-7 days with our timeouts.During this period,you will be allowed to play practice contests only',
+                          'Timeouts: Even champions need a break sometimes. You can choose not to join all pay-to-participate contests for 1-7 days with our timeouts. During this period, you will be allowed to play practice contests only.',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: Colors.white,
@@ -196,8 +203,8 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
             ),
             SizedBox(height: 16.0),
             Container(
-              width: 350.0,
-              height: 218.0,
+              width: containerWidth,
+              height: containerHeight4,
               child: Card(
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
@@ -222,16 +229,16 @@ class _ResponsiblePlayPageState extends State<ResponsiblePlayPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '4.Abiding by regulations',
+                          '4. Abiding by regulations',
                           style: TextStyle(
                             fontSize: 21.0,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         SizedBox(height: 10.0), // Add space between the texts
                         Text(
-                          'Age and Location Limits: To join pay-to-play contests on Funzy, you need to be eligible to play. Anyone under the age of 18 and anyone from Assam, Andhra Pradesh, Odisha, Telangana, Nagaland and Sikkim can play practice contests only.',
+                          'Age and Location Limits: To join pay-to-play contests on Funzy, you need to be eligible to play. Anyone under the age of 18 and anyone from Assam, Andhra Pradesh, Odisha, Telangana, Nagaland, and Sikkim can play practice contests only.',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: Colors.white,

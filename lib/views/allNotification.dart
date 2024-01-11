@@ -16,6 +16,8 @@ class _AllNotificationState extends State<AllNotification> {
   late String phone;
   List competitions = [];
   bool isLoading = true;
+  String body =
+      "hjdgsfgds bfgeguf gufiuegw gfgugw efgiuw bgifguewirug ikgufiuerw ";
 
   _isLoggedIn() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -84,99 +86,112 @@ class _AllNotificationState extends State<AllNotification> {
           },
         ),
       ),
-      body: isLoading
-          ? CardSkeleton(
-              isCircularImage: true,
-              isBottomLinesActive: true,
-            )
-          : competitions.isEmpty ? Center(
-            child: Text("No notifications availabel"),
-          ): Expanded(
-              child: ListView.builder(
-                itemCount: competitions.length,
-                // itemCount: 4,
-                itemBuilder: (context, index) {
-                  var element = competitions[index];
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailNotification(
-                            notificationId: element["_id"],
-                          ),
-                          // builder: (context) => MatchDetailPage( matchId: 12345),
+      body:
+          // isLoading
+          //     ? CardSkeleton(
+          //         isCircularImage: true,
+          //         isBottomLinesActive: true,
+          //       )
+          //     : competitions.isEmpty ? Center(
+          //       child: Text("No notifications availabel"),
+          //     ):
+          Expanded(
+        child: ListView.builder(
+          // itemCount: competitions.length,
+          itemCount: 1,
+          itemBuilder: (context, index) {
+            // var element = competitions[index];
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailNotification(
+                      // notificationId: element["_id"],
+                      notificationId: "1233",
+                    ),
+                    // builder: (context) => MatchDetailPage( matchId: 12345),
+                  ),
+                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => DetailNotification(notificationId: '',),
+                //   ),
+                // );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height *
+                          0.15, // 30% of screen height
+                      child: Card(
+                        elevation: 5.0,
+                        margin: EdgeInsets.all(0.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                      );
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => DetailNotification(),
-                      //   ),
-                      // );
-                    },
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(right: 16, left: 16, top: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Container(
-                            height: 110.0,
-                            child: Card(
-                              elevation: 5.0,
-                              margin: EdgeInsets.all(0.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      MediaQuery.of(context).size.width *
+                                          0.03, // 3% of screen width
+                                    ),
+                                    child: Image.asset(
+                                      'assets/notification.png',
+                                      width: MediaQuery.of(context).size.width *
+                                          0.07, // 7% of screen width
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.07, // 7% of screen width
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.0),
+                                  Text(
+                                    "IND-W vs AUS-W | Lineups Out",
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.phone_android,
-                                          size: 24.0,
-                                          color:
-                                              Color.fromARGB(255, 113, 13, 167),
-                                        ),
-                                        SizedBox(width: 8.0),
-                                        Text(
-                                          element['title'],
-                                          style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left:
-                                              30.0), // Adjust the left margin as needed
-                                      child: Text(
-                                        element['message'],
-                                        style: TextStyle(
-                                          fontSize: 14.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                              SizedBox(height: 8.0),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left:
+                                        30.0), // Adjust the left margin as needed
+                                child: Text(
+                                  // 'element['message']',
+                                  '${body.split(' ').take(5).join(' ')}...',
+
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                          // SizedBox(height: 16.0),
-                        ],
+                        ),
                       ),
                     ),
-                  );
-                },
+                    // SizedBox(height: 16.0),
+                  ],
+                ),
               ),
-            ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
