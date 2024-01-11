@@ -1,28 +1,61 @@
 import 'dart:convert';
+import 'package:app/views/playercards.dart';
 import 'package:app/views/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:loader_skeleton/loader_skeleton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class YourNewScreen extends StatefulWidget {
+   final int matchId;
   final String contestId;
-  const YourNewScreen({Key? key, required this.contestId}) : super(key: key);
+  final String short_title;
+  final String date_start_ist;
+  const YourNewScreen({Key? key,required this.matchId, required this.contestId, required this.short_title,
+      required this.date_start_ist,}) : super(key: key);
   @override
   _YourNewScreenState createState() => _YourNewScreenState();
 }
 
 class _YourNewScreenState extends State<YourNewScreen> {
   String responseData = "";
+  late String phone;
   // bool rankData = true;
   bool isLoading = true;
   List<dynamic> suggestions = [];
+  int? poolprize;
+  int? joinamount;
+  late Duration timeDifference;
+  late String formattedTimer;
+  late DateTime matchDateTime;
+   List<dynamic> teams = [];
+
   @override
   void initState() {
     super.initState();
+     _isLoggedIn();
+     matchDateTime = DateTime.parse(widget.date_start_ist);
+
+    // Calculate the difference between the current time and the match time
+    timeDifference = matchDateTime.difference(DateTime.now());
+
+    // Format the timer
+    formattedTimer =
+        '${timeDifference.inDays}d:${(timeDifference.inHours % 24)}h:${(timeDifference.inMinutes % 60)}m';
     fetchPool(widget.contestId);
     fetchData(widget.contestId);
   }
+
+   _isLoggedIn() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var phoneNumber = pref.getString('phoneNumber');
+    setState(() {
+      phone = phoneNumber!;
+    });
+  }
+
 
   void fetchPool(String contestId) async {
     var headers = {
@@ -39,8 +72,37 @@ class _YourNewScreenState extends State<YourNewScreen> {
     print("response$response[data]");
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
+      if (jsonResponse.containsKey('data') && jsonResponse['data'] is List) {
+        var poolList = jsonResponse['data'];
+
+        if (poolList.isNotEmpty) {
+          var firstPool = poolList[0];
+
+          // Now you can access properties of the first pool object
+          var pricePool = firstPool['price_pool'];
+          var entryfee = firstPool['entry_fee'];
+          print("pricePool: $pricePool");
+          setState(() {
+            
+            poolprize = pricePool;
+            joinamount = entryfee;
+            // print("hello${jsonResponse['data']['price_pool']}");
+            // isLoading = false;
+          });
+        } else {
+          print("Empty 'pool' array in the JSON response.");
+        }
+      } else {
+        print("Missing or invalid 'pool' key in the JSON response.");
+      }
+      // var data = jsonResponse['data'];
+      // var pricePool = data['price_pool'];
+
       setState(() {
         suggestions = jsonResponse['data'];
+        // poolprize = jsonResponse['data']['price_pool'];
+        // joinamount = jsonResponse['data']['entry_fee'];
+        // print("hello${jsonResponse['data']['price_pool']}");
         // isLoading = false;
       });
       print("hello$suggestions");
@@ -75,6 +137,72 @@ class _YourNewScreenState extends State<YourNewScreen> {
     }
   }
 
+  Future<void> makePostRequest() async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var request = http.Request(
+        'POST', Uri.parse('https://crickx.onrender.com/getCreatedTeam'));
+    request.body = json.encode({
+      "match_id": widget.matchId,
+      "contest_id": widget.contestId,
+      "phoneNumber": phone,
+    });
+    request.headers.addAll(headers);
+    try {
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print("1234567890");
+        String responseString = await response.stream.bytesToString();
+        var jsonResponse = json.decode(responseString);
+        print("0bjkbd$jsonResponse");
+        bool balance = jsonResponse['balance'];
+        print("balance$balance");
+        int teamslength = jsonResponse['teams']?.length ?? 0;
+        setState(() {
+          teams = jsonResponse['teams']?? [];
+        });
+        if (balance == true) {
+          //    print("object12345");
+            if (teamslength == 0) {
+              print("object123");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TeamSelectionScreen(
+                    matchId: widget.matchId,
+                    competitionId: int.parse(widget.contestId),
+                    short_title: widget.short_title,
+                    date_start_ist: widget.date_start_ist,
+                  ),
+                ),
+              );
+            } else if (teamslength == 1) {
+               _showBottomSheet(context);
+            } else {
+
+            }
+        } else if (balance == false) {
+          print("123456789011");
+          _showBottomSheet(context);
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => WalletScreen(),
+          //     ),
+          //   );
+        }
+        print("Teams: $jsonResponse");
+      } else {
+        print(
+            'Request failed with status: ${response.statusCode}, ${response.reasonPhrase}');
+      }
+    } catch (error) {
+      print('Error making the request: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -86,7 +214,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 65),
               child: Text(
-                'IND vs ENG',
+                '${widget.short_title}',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -97,7 +225,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 65),
               child: Text(
-                '1d:21m left',
+                '$formattedTimer',
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -194,7 +322,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                                   height: 2,
                                                 ),
                                                 Text(
-                                                  '₹ 25000',
+                                                  "$poolprize",
                                                   style: TextStyle(
                                                     fontSize: 25,
                                                     fontWeight: FontWeight.w900,
@@ -265,6 +393,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                             width: 250,
                                             child: ElevatedButton(
                                               onPressed: () {
+                                                makePostRequest();
                                                 print("Button Pressed");
                                               },
                                               style: ElevatedButton.styleFrom(
@@ -287,7 +416,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                                   ),
                                                   children: <TextSpan>[
                                                     TextSpan(
-                                                      text: "50",
+                                                      text: " $joinamount",
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                         fontWeight:
@@ -471,6 +600,163 @@ class _YourNewScreenState extends State<YourNewScreen> {
     });
 
     return tableRows;
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(0.0),
+          child: Stack(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Content of the bottom sheet
+                  SizedBox(height: 12.0),
+                  Center(
+                      child: Text(
+                    'CONFIRMATION',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )),
+                  SizedBox(height: 4.0),
+                  Container(
+                    height: 1,
+                    width: double.infinity,
+                    color: Colors.grey,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                  ),
+                  SizedBox(height: 8.0),
+                  InkWell(
+                    onTap: (){
+                      makePostRequest();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20, left: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Entry',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            '₹ ${ joinamount.toString()}',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                 Padding(
+                   padding: const EdgeInsets.only(left: 20, right: 20),
+                   child: Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: Colors.grey,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                    ),
+                 ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20, left: 20, top: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'To Pay',
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          '₹ ${ joinamount.toString()}',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 24.0),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("I agree with the standard T&Cs"),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        // _submitForm();
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 16),
+                        height: 40,
+                        width: MediaQuery.of(context).size.width * .85,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF8443BA),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'JION CONTEST',
+                            style: GoogleFonts.notoSans(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                              color: const Color(0xffFFFFFF),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.of(context).pop();
+                  //   },
+                  //   child: Text('Close'),
+                  // ),
+                ],
+              ),
+              // Close button at top left
+              Positioned(
+                top: 4.0,
+                left: 4.0,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Map<String, dynamic> getRanksAndPricesFromResponse() {

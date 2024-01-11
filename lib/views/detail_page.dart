@@ -257,7 +257,10 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => YourNewScreen(
+                                            matchId: widget.matchId,
                                             contestId: element["_id"],
+                                            short_title: widget.short_title,
+                                            date_start_ist: widget.date_start_ist,
                                           ),
                                         ),
                                       );
@@ -581,12 +584,12 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => StadiumPage(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => StadiumPage(),
+                      //   ),
+                      // );
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.black,

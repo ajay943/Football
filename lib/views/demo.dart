@@ -138,14 +138,14 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                         // padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => YourNewScreen(
-                                  contestId: element["_id"],
-                                ),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => YourNewScreen(
+                            //       contestId: element["_id"],
+                            //     ),
+                            //   ),
+                            // );
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 0),
