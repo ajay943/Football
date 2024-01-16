@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:app/views/home_page.dart';
 import 'package:app/views/stadium.dart';
+import 'package:app/views/team.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/views/detail_page.dart';
@@ -19,13 +21,21 @@ class MatchDetailPage extends StatefulWidget {
   final int competition;
   final String short_title;
   final String date_start_ist;
-  const MatchDetailPage(
-      {Key? key,
-      required this.matchId,
-      required this.short_title,
-      required this.date_start_ist,
-      required this.competition})
-      : super(key: key);
+  final bool fromContest;
+  final String teamId;
+  final int balance;
+  final String contestId;
+  const MatchDetailPage({
+    Key? key,
+    required this.matchId,
+    required this.short_title,
+    required this.date_start_ist,
+    required this.competition,
+    required this.fromContest,
+    required this.teamId,
+    required this.balance,
+    required this.contestId,
+  }) : super(key: key);
   @override
   State<MatchDetailPage> createState() => _MatchDetailPageState();
 }
@@ -33,15 +43,14 @@ class MatchDetailPage extends StatefulWidget {
 class _MatchDetailPageState extends State<MatchDetailPage> {
   var MatchData;
   bool isLoading = true;
-  late  int totalSports;
-  late  int filledSports;
+  late int totalSports;
+  late int filledSports;
   late DateTime matchDateTime;
   late String phone;
-  String? contest_id;
+  late String contest_id;
   late Duration timeDifference;
   late String formattedTimer;
-  int? balance;
-
+  late int balance;
 
   // double progress = filledSports / totalSports;
   List<dynamic> suggestions = [];
@@ -50,17 +59,59 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
   @override
   void initState() {
     super.initState();
-
+    setState(() {
+      balance = widget.balance;
+      contest_id = widget.contestId;
+    });
+    // balance = widget.balance;
+    // contest_id = widget.contestId;
     _isLoggedIn();
     matchDateTime = DateTime.parse(widget.date_start_ist);
-
-    // Calculate the difference between the current time and the match time
     timeDifference = matchDateTime.difference(DateTime.now());
-
-    // Format the timer
     formattedTimer =
         '${timeDifference.inDays}d:${(timeDifference.inHours % 24)}h:${(timeDifference.inMinutes % 60)}m';
     fetchData(widget.matchId);
+    Future.delayed(Duration(seconds: 1), () {
+      _isPayment();
+    });
+  }
+
+  void submitPayment() async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = {
+      "poolContestId": contest_id,
+      "phoneNumber": phone,
+      "teamID": widget.teamId
+    };
+
+    var uri = Uri.parse('https://crickx.onrender.com/joinContest');
+
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SidebarXExampleApp(),
+          // builder: (context) => MatchDetailPage( matchId: 12345),
+        ),
+      );
+      print(response.body);
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  _isPayment() {
+    if (widget.fromContest == true) {
+      _showBottomSheet(context);
+    }
   }
 
   _isLoggedIn() async {
@@ -111,49 +162,57 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
     request.headers.addAll(headers);
     try {
       http.StreamedResponse response = await request.send();
-
       if (response.statusCode == 200) {
-        print("1234567890");
         String responseString = await response.stream.bytesToString();
         var jsonResponse = json.decode(responseString);
-        print("0bjkbd$jsonResponse");
-        bool balance = jsonResponse['balance'];
-        print("balance$balance");
+        bool balanc = jsonResponse['balance'];
         int teamslength = jsonResponse['teams']?.length ?? 0;
         setState(() {
-          teams = jsonResponse['teams']?? [];
+          teams = jsonResponse['teams'] ?? [];
         });
-        if (balance == true) {
-          //    print("object12345");
-            if (teamslength == 0) {
-              print("object123");
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TeamSelectionScreen(
-                    matchId: widget.matchId,
-                    competitionId: widget.competition,
-                    short_title: widget.short_title,
-                    date_start_ist: widget.date_start_ist,
-                  ),
+        if (balanc == true) {
+          if (teamslength == 0) {
+            print("object123");
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TeamSelectionScreen(
+                  matchId: widget.matchId,
+                  competitionId: widget.competition,
+                  short_title: widget.short_title,
+                  date_start_ist: widget.date_start_ist,
+                  fromContest: true,
+                  balance: balance,
+                  contestId: contest_id,
                 ),
-              );
-            } else if (teamslength == 1) {
-               _showBottomSheet(context);
-            } else {
-
-            }
-        } else if (balance == false) {
-          print("123456789011");
-          _showBottomSheet(context);
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => WalletScreen(),
-          //     ),
-          //   );
+              ),
+            );
+          } else if (teamslength == 1) {
+            _showBottomSheet(context);
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MyTeam(
+                  matchId: widget.matchId,
+                  competition: widget.competition,
+                  short_title: widget.short_title,
+                  date_start_ist: widget.date_start_ist,
+                  fromContest: true,
+                  balance: balance,
+                  contestId: contest_id,
+                ),
+              ),
+            );
+          }
+        } else if (balanc == false) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WalletScreen(),
+            ),
+          );
         }
-        print("Teams: $jsonResponse");
       } else {
         print(
             'Request failed with status: ${response.statusCode}, ${response.reasonPhrase}');
@@ -250,7 +309,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(top: 0),
-                                  // padding: EdgeInsets.symmetric(horizontal: 15.0),
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.push(
@@ -258,9 +316,12 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                         MaterialPageRoute(
                                           builder: (context) => YourNewScreen(
                                             matchId: widget.matchId,
+                                            competition: widget.competition,
                                             contestId: element["_id"],
                                             short_title: widget.short_title,
-                                            date_start_ist: widget.date_start_ist,
+                                            date_start_ist:
+                                                widget.date_start_ist,
+                                            balance: balance,
                                           ),
                                         ),
                                       );
@@ -381,7 +442,8 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                                   contest_id =
                                                                       element[
                                                                           "_id"];
-                                                                          balance = element['entry_fee'];
+                                                                  balance = element[
+                                                                      'entry_fee'];
                                                                 });
                                                                 makePostRequest();
                                                                 print(
@@ -419,8 +481,9 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                                   ),
                                                                   children: <TextSpan>[
                                                                     TextSpan(
-                                                                      text:
-                                                                         element['entry_fee'].toString() ,
+                                                                      text: element[
+                                                                              'entry_fee']
+                                                                          .toString(),
                                                                       style:
                                                                           TextStyle(
                                                                         fontSize:
@@ -650,6 +713,9 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                             competitionId: widget.competition,
                             short_title: widget.short_title,
                             date_start_ist: widget.date_start_ist,
+                            fromContest: false,
+                            balance: balance,
+                            contestId: contest_id,
                           ),
                         ),
                       );
@@ -748,7 +814,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                           ),
                         ),
                         Text(
-                          '₹ ${ balance.toString()}',
+                          '₹ ${balance.toString()}',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.0,
@@ -758,15 +824,15 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                       ],
                     ),
                   ),
-                 Padding(
-                   padding: const EdgeInsets.only(left: 20, right: 20),
-                   child: Container(
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Container(
                       height: 1,
                       width: double.infinity,
                       color: Colors.grey,
                       margin: const EdgeInsets.symmetric(vertical: 8),
                     ),
-                 ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(right: 20, left: 20, top: 5),
                     child: Row(
@@ -781,7 +847,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                           ),
                         ),
                         Text(
-                          '₹ ${ balance.toString()}',
+                          '₹ ${balance.toString()}',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.0,
@@ -804,7 +870,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        // _submitForm();
+                        submitPayment();
                       },
                       child: Container(
                         margin: const EdgeInsets.only(top: 16),

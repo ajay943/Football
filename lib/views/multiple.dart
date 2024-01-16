@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:app/views/home_page.dart';
 import 'package:app/views/playercards.dart';
+import 'package:app/views/team.dart';
 import 'package:app/views/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,12 +11,22 @@ import 'package:loader_skeleton/loader_skeleton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class YourNewScreen extends StatefulWidget {
-   final int matchId;
+  final int matchId;
+  final int competition;
   final String contestId;
   final String short_title;
   final String date_start_ist;
-  const YourNewScreen({Key? key,required this.matchId, required this.contestId, required this.short_title,
-      required this.date_start_ist,}) : super(key: key);
+  final int balance;
+
+  const YourNewScreen({
+    Key? key,
+    required this.matchId,
+    required this.contestId,
+    required this.short_title,
+    required this.balance,
+    required this.competition,
+    required this.date_start_ist,
+  }) : super(key: key);
   @override
   _YourNewScreenState createState() => _YourNewScreenState();
 }
@@ -30,13 +42,13 @@ class _YourNewScreenState extends State<YourNewScreen> {
   late Duration timeDifference;
   late String formattedTimer;
   late DateTime matchDateTime;
-   List<dynamic> teams = [];
+  List<dynamic> teams = [];
 
   @override
   void initState() {
     super.initState();
-     _isLoggedIn();
-     matchDateTime = DateTime.parse(widget.date_start_ist);
+    _isLoggedIn();
+    matchDateTime = DateTime.parse(widget.date_start_ist);
 
     // Calculate the difference between the current time and the match time
     timeDifference = matchDateTime.difference(DateTime.now());
@@ -48,7 +60,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
     fetchData(widget.contestId);
   }
 
-   _isLoggedIn() async {
+  _isLoggedIn() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var phoneNumber = pref.getString('phoneNumber');
     setState(() {
@@ -56,6 +68,38 @@ class _YourNewScreenState extends State<YourNewScreen> {
     });
   }
 
+  void submitPayment() async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+
+    var body = {
+      "poolContestId": widget.contestId,
+      "phoneNumber": phone,
+       "teamID": ""
+    };
+
+    var uri = Uri.parse('https://crickx.onrender.com/joinContest');
+
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SidebarXExampleApp(),
+          // builder: (context) => MatchDetailPage( matchId: 12345),
+        ),
+      );
+      print(response.body);
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
 
   void fetchPool(String contestId) async {
     var headers = {
@@ -83,7 +127,6 @@ class _YourNewScreenState extends State<YourNewScreen> {
           var entryfee = firstPool['entry_fee'];
           print("pricePool: $pricePool");
           setState(() {
-            
             poolprize = pricePool;
             joinamount = entryfee;
             // print("hello${jsonResponse['data']['price_pool']}");
@@ -138,6 +181,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
   }
 
   Future<void> makePostRequest() async {
+    print("object");
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -151,49 +195,57 @@ class _YourNewScreenState extends State<YourNewScreen> {
     request.headers.addAll(headers);
     try {
       http.StreamedResponse response = await request.send();
-
       if (response.statusCode == 200) {
-        print("1234567890");
         String responseString = await response.stream.bytesToString();
         var jsonResponse = json.decode(responseString);
-        print("0bjkbd$jsonResponse");
-        bool balance = jsonResponse['balance'];
-        print("balance$balance");
+        bool balanc = jsonResponse['balance'];
         int teamslength = jsonResponse['teams']?.length ?? 0;
         setState(() {
-          teams = jsonResponse['teams']?? [];
+          teams = jsonResponse['teams'] ?? [];
         });
-        if (balance == true) {
-          //    print("object12345");
-            if (teamslength == 0) {
-              print("object123");
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TeamSelectionScreen(
-                    matchId: widget.matchId,
-                    competitionId: int.parse(widget.contestId),
-                    short_title: widget.short_title,
-                    date_start_ist: widget.date_start_ist,
-                  ),
+        if (balanc == true) {
+          if (teamslength == 0) {
+            print("object123");
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TeamSelectionScreen(
+                  matchId: widget.matchId,
+                  competitionId: widget.competition,
+                  short_title: widget.short_title,
+                  date_start_ist: widget.date_start_ist,
+                  fromContest: true,
+                  balance: widget.balance,
+                  contestId: widget.contestId,
                 ),
-              );
-            } else if (teamslength == 1) {
-               _showBottomSheet(context);
-            } else {
-
-            }
-        } else if (balance == false) {
-          print("123456789011");
-          _showBottomSheet(context);
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => WalletScreen(),
-          //     ),
-          //   );
+              ),
+            );
+          } else if (teamslength == 1) {
+            _showBottomSheet(context);
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MyTeam(
+                  matchId: widget.matchId,
+                  competition: widget.matchId,
+                  short_title: widget.short_title,
+                  date_start_ist: widget.date_start_ist,
+                  fromContest: true,
+                  balance: widget.balance,
+                  contestId: widget.contestId,
+                ),
+              ),
+            );
+          }
+        } else if (balanc == false) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WalletScreen(),
+            ),
+          );
         }
-        print("Teams: $jsonResponse");
       } else {
         print(
             'Request failed with status: ${response.statusCode}, ${response.reasonPhrase}');
@@ -634,7 +686,8 @@ class _YourNewScreenState extends State<YourNewScreen> {
                   ),
                   SizedBox(height: 8.0),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
+                      print("object");
                       makePostRequest();
                     },
                     child: Padding(
@@ -651,7 +704,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                             ),
                           ),
                           Text(
-                            '₹ ${ joinamount.toString()}',
+                            '₹ ${joinamount.toString()}',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 14.0,
@@ -662,15 +715,15 @@ class _YourNewScreenState extends State<YourNewScreen> {
                       ),
                     ),
                   ),
-                 Padding(
-                   padding: const EdgeInsets.only(left: 20, right: 20),
-                   child: Container(
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Container(
                       height: 1,
                       width: double.infinity,
                       color: Colors.grey,
                       margin: const EdgeInsets.symmetric(vertical: 8),
                     ),
-                 ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(right: 20, left: 20, top: 5),
                     child: Row(
@@ -685,7 +738,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                           ),
                         ),
                         Text(
-                          '₹ ${ joinamount.toString()}',
+                          '₹ ${joinamount.toString()}',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.0,
@@ -709,6 +762,8 @@ class _YourNewScreenState extends State<YourNewScreen> {
                     child: GestureDetector(
                       onTap: () {
                         // _submitForm();
+                        print("hello");
+                        submitPayment();
                       },
                       child: Container(
                         margin: const EdgeInsets.only(top: 16),

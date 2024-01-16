@@ -10,7 +10,9 @@ class Captain extends StatefulWidget {
   final int competitionId;
   final String short_title;
   final String date_start_ist;
-
+  final bool fromContest;
+  final int balance;
+  final String contestId;
   final List<Player> selectedPlayers;
   const Captain({
     Key? key,
@@ -19,6 +21,9 @@ class Captain extends StatefulWidget {
     required this.competitionId,
     required this.short_title,
     required this.date_start_ist,
+    required this.fromContest,
+    required this.balance,
+    required this.contestId,
   }) : super(key: key);
   @override
   State<Captain> createState() => _CaptainState();
@@ -49,15 +54,11 @@ class _CaptainState extends State<Captain> {
     var headers = {
       'Content-Type': 'application/json',
     };
-
     var request = http.Request(
       'POST',
       Uri.parse('https://crickx.onrender.com/team'),
     );
-
     request.headers.addAll(headers);
-
-    // Replace the following with your actual data
     Map<String, dynamic> requestBody = {
       "match_id": widget.matchId,
       "phoneNumber": phone,
@@ -68,17 +69,14 @@ class _CaptainState extends State<Captain> {
       "c": selectedCaptainId,
       "vc": selectedViceCaptainId,
     };
-
     request.body = json.encode(requestBody);
-
     try {
       http.StreamedResponse response = await request.send();
-
       if (response.statusCode == 200) {
         print(await response.stream.bytesToString());
         setState(() {
           isLoading = false;
-        });
+        });      
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -86,7 +84,12 @@ class _CaptainState extends State<Captain> {
                 matchId: widget.matchId,
                 short_title: widget.short_title,
                 date_start_ist: widget.date_start_ist,
-                competition: widget.competitionId),
+                competition: widget.competitionId,
+                fromContest: widget.fromContest,
+                teamId: "",
+                balance: widget.balance,
+                contestId: widget.contestId,
+                ),
             // builder: (context) => MatchDetailPage( matchId: 12345),
           ),
         );
@@ -102,7 +105,6 @@ class _CaptainState extends State<Captain> {
   void initState() {
     super.initState();
     _isLoggedIn();
-    // Initialize to an empty string
     selectedCaptainId = '';
     selectedViceCaptainId = '';
     List<Map<String, dynamic>> selectedPlayersJson =
@@ -120,7 +122,6 @@ class _CaptainState extends State<Captain> {
   }
 
   bool isSubmitButtonVisible() {
-    // Check if both captain and vice-captain positions are filled
     return selectedCaptainId.isNotEmpty && selectedViceCaptainId.isNotEmpty;
   }
 
@@ -188,7 +189,7 @@ class _CaptainState extends State<Captain> {
                         width: 90.0,
                         height: 15.0,
                         margin: EdgeInsets.only(
-                            left: 8.0), // Adjust the padding value as needed
+                            left: 8.0),
                         child: Text(
                           'SELECTED BY',
                           style: TextStyle(
@@ -295,7 +296,6 @@ class _CaptainState extends State<Captain> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        // Set the selected player's pid as captain if not already selected
                                         if (selectedCaptainId != player.pid &&
                                             selectedViceCaptainId !=
                                                 player.pid) {
@@ -329,7 +329,6 @@ class _CaptainState extends State<Captain> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        // Set the selected player's pid as vice-captain if not already selected
                                         if (selectedViceCaptainId !=
                                                 player.pid &&
                                             selectedCaptainId != player.pid) {

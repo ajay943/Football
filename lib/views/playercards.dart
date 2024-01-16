@@ -8,10 +8,13 @@ import 'package:loader_skeleton/loader_skeleton.dart';
 class TeamSelectionScreen extends StatefulWidget {
   final int matchId;
   final int competitionId;
+  final int balance;
   final String short_title;
   final String date_start_ist;
+  final bool fromContest;
+  final String contestId;
   const TeamSelectionScreen(
-      {Key? key, required this.matchId, required this.competitionId, required this.short_title, required this.date_start_ist,})
+      {Key? key, required this.matchId, required this.competitionId, required this.short_title, required this.fromContest, required this.date_start_ist,required this.balance,required this.contestId,})
       : super(key: key);
   @override
   _TeamSelectionScreenState createState() => _TeamSelectionScreenState();
@@ -571,7 +574,10 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                           matchId: widget.matchId,
                           competitionId : widget.competitionId,
                           short_title : widget.short_title,
-                          date_start_ist : widget.date_start_ist
+                          date_start_ist : widget.date_start_ist,
+                          fromContest: widget.fromContest,
+                          balance: widget.balance,
+                          contestId: widget.contestId,
                         ),
                       ),
                     );
