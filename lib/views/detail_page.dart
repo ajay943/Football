@@ -51,7 +51,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
   late Duration timeDifference;
   late String formattedTimer;
   late int balance;
-
   // double progress = filledSports / totalSports;
   List<dynamic> suggestions = [];
   List<dynamic> teams = [];
@@ -63,8 +62,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
       balance = widget.balance;
       contest_id = widget.contestId;
     });
-    // balance = widget.balance;
-    // contest_id = widget.contestId;
     _isLoggedIn();
     matchDateTime = DateTime.parse(widget.date_start_ist);
     timeDifference = matchDateTime.difference(DateTime.now());
@@ -98,9 +95,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SidebarXExampleApp(),
-          // builder: (context) => MatchDetailPage( matchId: 12345),
-        ),
+          builder: (context) => SidebarXExampleApp(),),
       );
       print(response.body);
     } else {
@@ -113,7 +108,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
       _showBottomSheet(context);
     }
   }
-
+  
   _isLoggedIn() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var phoneNumber = pref.getString('phoneNumber');
@@ -137,7 +132,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
     print("response$response[data]");
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
-
       setState(() {
         suggestions = jsonResponse['data'];
         isLoading = false;
@@ -311,6 +305,9 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                   padding: EdgeInsets.only(top: 0),
                                   child: GestureDetector(
                                     onTap: () {
+                                      setState(() {
+                                        balance = element['entry_fee'];
+                                      });
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -781,7 +778,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Content of the bottom sheet
                   SizedBox(height: 12.0),
                   Center(
                       child: Text(
@@ -894,13 +890,6 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                     ),
                   ),
                   SizedBox(height: 16.0),
-
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     Navigator.of(context).pop();
-                  //   },
-                  //   child: Text('Close'),
-                  // ),
                 ],
               ),
               // Close button at top left

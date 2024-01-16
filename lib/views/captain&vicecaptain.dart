@@ -90,7 +90,6 @@ class _CaptainState extends State<Captain> {
                 balance: widget.balance,
                 contestId: widget.contestId,
                 ),
-            // builder: (context) => MatchDetailPage( matchId: 12345),
           ),
         );
       } else {
@@ -254,7 +253,7 @@ class _CaptainState extends State<Captain> {
                           width: 67.0,
                           height: 80.0,
                           child: Image.asset(
-                            'assets/image.png',
+                            'assets/profileimage.png',
                             fit: BoxFit.cover,
                           ),
                         ),

@@ -72,28 +72,22 @@ class _YourNewScreenState extends State<YourNewScreen> {
     var headers = {
       'Content-Type': 'application/json',
     };
-
     var body = {
       "poolContestId": widget.contestId,
       "phoneNumber": phone,
        "teamID": ""
     };
-
     var uri = Uri.parse('https://crickx.onrender.com/joinContest');
-
     http.Response response = await http.post(
       uri,
       headers: headers,
       body: jsonEncode(body),
     );
-
     if (response.statusCode == 200) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SidebarXExampleApp(),
-          // builder: (context) => MatchDetailPage( matchId: 12345),
-        ),
+          builder: (context) => SidebarXExampleApp(),),
       );
       print(response.body);
     } else {
@@ -113,24 +107,17 @@ class _YourNewScreenState extends State<YourNewScreen> {
         "contest_id": contestId,
       }),
     );
-    print("response$response[data]");
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
       if (jsonResponse.containsKey('data') && jsonResponse['data'] is List) {
         var poolList = jsonResponse['data'];
-
         if (poolList.isNotEmpty) {
           var firstPool = poolList[0];
-
-          // Now you can access properties of the first pool object
           var pricePool = firstPool['price_pool'];
           var entryfee = firstPool['entry_fee'];
-          print("pricePool: $pricePool");
           setState(() {
             poolprize = pricePool;
             joinamount = entryfee;
-            // print("hello${jsonResponse['data']['price_pool']}");
-            // isLoading = false;
           });
         } else {
           print("Empty 'pool' array in the JSON response.");
@@ -138,15 +125,8 @@ class _YourNewScreenState extends State<YourNewScreen> {
       } else {
         print("Missing or invalid 'pool' key in the JSON response.");
       }
-      // var data = jsonResponse['data'];
-      // var pricePool = data['price_pool'];
-
       setState(() {
         suggestions = jsonResponse['data'];
-        // poolprize = jsonResponse['data']['price_pool'];
-        // joinamount = jsonResponse['data']['entry_fee'];
-        // print("hello${jsonResponse['data']['price_pool']}");
-        // isLoading = false;
       });
       print("hello$suggestions");
     } else {
@@ -181,7 +161,6 @@ class _YourNewScreenState extends State<YourNewScreen> {
   }
 
   Future<void> makePostRequest() async {
-    print("object");
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -205,7 +184,6 @@ class _YourNewScreenState extends State<YourNewScreen> {
         });
         if (balanc == true) {
           if (teamslength == 0) {
-            print("object123");
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -608,7 +586,6 @@ class _YourNewScreenState extends State<YourNewScreen> {
     );
 
     ranksAndPrices.entries.forEach((entry) {
-      // Add a TableRow
       tableRows.add(
         TableRow(
           children: [
@@ -627,8 +604,6 @@ class _YourNewScreenState extends State<YourNewScreen> {
           ],
         ),
       );
-
-      // Add a Divider as a separate TableRow with two cells
       tableRows.add(
         TableRow(
           children: [
@@ -650,7 +625,6 @@ class _YourNewScreenState extends State<YourNewScreen> {
         ),
       );
     });
-
     return tableRows;
   }
 
@@ -666,7 +640,6 @@ class _YourNewScreenState extends State<YourNewScreen> {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Content of the bottom sheet
                   SizedBox(height: 12.0),
                   Center(
                       child: Text(
@@ -761,8 +734,6 @@ class _YourNewScreenState extends State<YourNewScreen> {
                   Center(
                     child: GestureDetector(
                       onTap: () {
-                        // _submitForm();
-                        print("hello");
                         submitPayment();
                       },
                       child: Container(
@@ -787,13 +758,6 @@ class _YourNewScreenState extends State<YourNewScreen> {
                     ),
                   ),
                   SizedBox(height: 16.0),
-
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     Navigator.of(context).pop();
-                  //   },
-                  //   child: Text('Close'),
-                  // ),
                 ],
               ),
               // Close button at top left

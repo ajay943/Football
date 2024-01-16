@@ -12,9 +12,16 @@ class MyTeam extends StatefulWidget {
   final String date_start_ist;
   final int balance;
   final String contestId;
-  const MyTeam({Key? key, required this.matchId,required this.contestId, required this.competition, required this.fromContest, required this.short_title, required this.balance,
-      required this.date_start_ist,})
-      : super(key: key);
+  const MyTeam({
+    Key? key,
+    required this.matchId,
+    required this.contestId,
+    required this.competition,
+    required this.fromContest,
+    required this.short_title,
+    required this.balance,
+    required this.date_start_ist,
+  }) : super(key: key);
 
   @override
   State<MyTeam> createState() => _MyTeamState();
@@ -25,7 +32,7 @@ class _MyTeamState extends State<MyTeam> {
   late String phone;
   late String teamId;
   List teams = [];
-Future<void> makePostRequest() async {
+  Future<void> makePostRequest() async {
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -38,23 +45,23 @@ Future<void> makePostRequest() async {
     });
     request.headers.addAll(headers);
 
-   try {
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      String responseString = await response.stream.bytesToString();
-      var jsonResponse = json.decode(responseString);
-      print("Response: $jsonResponse"); // Add this line
-      setState(() {
-        teams = jsonResponse['teams'] ?? [];
-      });
-      print("Teams: $teams");
-    } else {
-      print(
-          'Request failed with status: ${response.statusCode}, ${response.reasonPhrase}');
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        String responseString = await response.stream.bytesToString();
+        var jsonResponse = json.decode(responseString);
+        print("Response: $jsonResponse"); // Add this line
+        setState(() {
+          teams = jsonResponse['teams'] ?? [];
+        });
+        print("Teams: $teams");
+      } else {
+        print(
+            'Request failed with status: ${response.statusCode}, ${response.reasonPhrase}');
+      }
+    } catch (error) {
+      print('Error making the request: $error');
     }
-  } catch (error) {
-    print('Error making the request: $error');
-  }
   }
 
   String _getCaptainName(Map<String, dynamic> team) {
@@ -90,7 +97,7 @@ Future<void> makePostRequest() async {
     super.initState();
     _isLoggedIn();
     Future.delayed(Duration(seconds: 1), () {
-     makePostRequest();
+      makePostRequest();
     });
     makePostRequest();
   }
@@ -202,7 +209,8 @@ Future<void> makePostRequest() async {
                                                                   : null;
                                                           _selectedCheckboxIndex =
                                                               index;
-                                                              teamId = element['_id'];
+                                                          teamId =
+                                                              element['_id'];
                                                         });
                                                       },
                                                       checkColor: Colors.black,
@@ -256,7 +264,7 @@ Future<void> makePostRequest() async {
                                                     ),
                                                   ),
                                                 ),
-                                                 Padding(
+                                                Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 40),
@@ -320,30 +328,6 @@ Future<void> makePostRequest() async {
                                             ),
                                           ],
                                         ),
-                                        // Padding(
-                                        //   padding: const EdgeInsets.only(
-                                        //       left: 40, right: 40),
-                                        //   child: Text(
-                                        //     "Captain: ${_getCaptainName(element)}",
-                                        //     style: TextStyle(
-                                        //       color: Colors.white,
-                                        //       fontWeight: FontWeight.bold,
-                                        //       fontSize: 14.0,
-                                        //     ),
-                                        //   ),
-                                        // ),
-                                        // Padding(
-                                        //   padding: const EdgeInsets.only(
-                                        //       left: 40, right: 40),
-                                        //   child: Text(
-                                        //     "Vice-Captain: ${_getViceCaptainName(element)}",
-                                        //     style: TextStyle(
-                                        //       color: Colors.white,
-                                        //       fontWeight: FontWeight.bold,
-                                        //       fontSize: 14.0,
-                                        //     ),
-                                        //   ),
-                                        // ),
                                       ],
                                     ),
                                   ),
@@ -358,30 +342,27 @@ Future<void> makePostRequest() async {
                   if (_selectedCheckboxIndex != null)
                     ElevatedButton(
                       onPressed: () {
-                         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MatchDetailPage(
-                matchId: widget.matchId,
-                short_title: widget.short_title,
-                date_start_ist: widget.date_start_ist,
-                competition: widget.competition,
-                fromContest: widget.fromContest,
-                teamId: teamId, 
-                balance: widget.balance,
-                contestId: widget.contestId,
-                ),
-            // builder: (context) => MatchDetailPage( matchId: 12345),
-          ),);
-                        // Add the logic to proceed
-                        // print("Proceed button pressed!");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MatchDetailPage(
+                              matchId: widget.matchId,
+                              short_title: widget.short_title,
+                              date_start_ist: widget.date_start_ist,
+                              competition: widget.competition,
+                              fromContest: widget.fromContest,
+                              teamId: teamId,
+                              balance: widget.balance,
+                              contestId: widget.contestId,
+                            ),
+                          ),
+                        );
                       },
                       child: Text('Proceed'),
                     ),
                 ],
               ),
             ),
-          
           ],
         ),
       ),

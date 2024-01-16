@@ -36,20 +36,12 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation _animation;
 
   Future<void> _initOneSignal() async {
-    // OneSignal initialization
     OneSignal.shared.setAppId("c97e076e-788e-49c4-8862-bff043f07115");
 
-    // Set the handler for receiving notifications
-    // OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
-    //   // Handle received notification
-    // });
-
-    // Set the handler for handling notification opened event
-    OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+    OneSignal.shared
+        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
       // Handle notification opened
     });
-
-    // Request permission for notifications
     await OneSignal.shared.promptUserForPushNotificationPermission();
   }
 
@@ -77,11 +69,8 @@ class _SplashScreenState extends State<SplashScreen>
       Timer(
         const Duration(seconds: 3),
         () {
-          // Navigator.of(context).pushReplacement(MaterialPageRoute(
-          //   builder: (context) => MainPage(),
-          // ));
           Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => TestScreen(),
+            builder: (context) => MainPage(),
           ));
         },
       );

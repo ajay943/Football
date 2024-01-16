@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:app/views/captain&vicecaptain.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:percent_indicator/percent_indicator.dart';
@@ -13,9 +14,16 @@ class TeamSelectionScreen extends StatefulWidget {
   final String date_start_ist;
   final bool fromContest;
   final String contestId;
-  const TeamSelectionScreen(
-      {Key? key, required this.matchId, required this.competitionId, required this.short_title, required this.fromContest, required this.date_start_ist,required this.balance,required this.contestId,})
-      : super(key: key);
+  const TeamSelectionScreen({
+    Key? key,
+    required this.matchId,
+    required this.competitionId,
+    required this.short_title,
+    required this.fromContest,
+    required this.date_start_ist,
+    required this.balance,
+    required this.contestId,
+  }) : super(key: key);
   @override
   _TeamSelectionScreenState createState() => _TeamSelectionScreenState();
 }
@@ -28,6 +36,10 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
   double totalCredits = 100;
   int maxPlayers = 11;
   bool isLoading = true;
+  String? teamAlogo;
+  String? teamBlogo;
+  String? teamAname;
+  String? teamBname;
 
   @override
   void initState() {
@@ -54,6 +66,26 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
         var jsonResponse = json.decode(response.body);
         if (jsonResponse.containsKey('response')) {
           List<Player> apiPlayers = [];
+          for (int i = 0;
+              i < jsonResponse['response']['squads'].length - 1;
+              i++) {
+            setState(() {
+              teamAlogo =
+                  jsonResponse['response']['squads'][i]['team']['logo_url'];
+              teamAname = jsonResponse['response']['squads'][i]['team']['abbr'];
+            });
+            print(
+                "object${jsonResponse['response']['squads'][i]['team']['logo_url']}");
+          }
+          for (int i = 1; i < jsonResponse['response']['squads'].length; i++) {
+            setState(() {
+              teamBlogo =
+                  jsonResponse['response']['squads'][i]['team']['logo_url'];
+              teamBname = jsonResponse['response']['squads'][i]['team']['abbr'];
+            });
+            print(
+                "object${jsonResponse['response']['squads'][i]['team']['logo_url']}");
+          }
           for (int i = 0; i < jsonResponse['response']['squads'].length; i++) {
             for (int j = 0;
                 j < jsonResponse['response']['squads'][i]["players"].length;
@@ -79,6 +111,10 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                             ["fielding_position"]
                         .toString() ??
                     '',
+                country: jsonResponse['response']['squads'][i]["players"][j]
+                            ["country"]
+                        .toString() ??
+                    '',
               );
               apiPlayers.add(player);
             }
@@ -86,7 +122,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
           setState(() {
             players = apiPlayers;
             isLoading = false;
-            print("hello$players");
+            // print("hello$players");
           });
         } else {
           print('Error: Data not found in API response');
@@ -140,139 +176,179 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
               children: [
                 Container(
                   height: 200.0,
-                  width: 700.0,
+                  width: double.infinity,
                   child: Card(
                     color: const Color(0xFF8443BA),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left:
-                                        50.0), // Adjust left padding as needed
-                                child: CircleAvatar(
-                                  radius: 20.0,
-                                  backgroundImage:
-                                      AssetImage('assets/india_flag.png'),
-                                ),
-                              ),
-                              Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 20.0),
-                                  child: Text(
-                                    'vs',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 30.0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                  left: 50.0), // Adjust right padding as needed
+                                  child: Container(
+                                    width: 45, // Set your desired width
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          0), // Set border radius as needed
+                                      image: DecorationImage(
+                                        image: CachedNetworkImageProvider(
+                                            teamAlogo!),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(width: 1.0),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right:
-                                        50.0), // Adjust right padding as needed
-                                child: CircleAvatar(
-                                  radius: 20.0,
-                                  backgroundImage:
-                                      AssetImage('assets/usa_flag.png'),
+                                Padding(
+                                   padding: const EdgeInsets.only(
+                                  left: 50.0),
+                                  child: Text(
+                                    teamAname!,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Text(
+                                  'vs',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30.0,
+                                  ),
                                 ),
                               ),
-                            ],
-                          ),
-                          SizedBox(height: 30.0),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 40.0), // Adjust left padding as needed
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  LinearPercentIndicator(
-                                    width: 280.0,
-                                    lineHeight: 27.0,
-                                    percent:
-                                        (selectedPlayers.length / maxPlayers)
-                                            .toDouble(),
-                                    center: Text(
-                                      '${(selectedPlayers.length / maxPlayers * 100).toStringAsFixed(1)}%',
-                                      style: TextStyle(fontSize: 12.0),
+                            ),
+                            SizedBox(width: 1.0),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right:
+                                          60.0), // Adjust right padding as needed
+                                  child: Container(
+                                    width: 45, // Set your desired width
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          0), // Set border radius as needed
+                                      image: DecorationImage(
+                                        image: CachedNetworkImageProvider(
+                                            teamBlogo!),
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                    linearStrokeCap: LinearStrokeCap.roundAll,
-                                    backgroundColor: Colors.grey,
-                                    progressColor: Colors.white,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 60.0),
+                                  child: Text(
+                                    teamBname!,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15.0),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 40.0), // Adjust left padding as needed
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                LinearPercentIndicator(
+                                  width: 280.0,
+                                  lineHeight: 27.0,
+                                  percent: (selectedPlayers.length / maxPlayers)
+                                      .toDouble(),
+                                  center: Text(
+                                    '${(selectedPlayers.length / maxPlayers * 100).toStringAsFixed(1)}%',
+                                    style: TextStyle(fontSize: 12.0),
+                                  ),
+                                  linearStrokeCap: LinearStrokeCap.roundAll,
+                                  backgroundColor: Colors.grey,
+                                  progressColor: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Players ',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 10.0,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    '${selectedPlayers.length}/$maxPlayers',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.0,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                          SizedBox(height: 10.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20.0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Players ',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 10.0,
-                                      ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Credits Left ',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 10.0,
                                     ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '${selectedPlayers.length}/$maxPlayers',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                      ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    '$totalCredits',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.0,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20.0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Credits Left ',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 10.0,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '$totalCredits',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 12.0),
-                          Text(
-                            'Maximum of 10 players from a team',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
                             ),
+                          ],
+                        ),
+                        SizedBox(height: 12.0),
+                        Text(
+                          'Maximum of 10 players from a team',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -366,7 +442,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                       : null,
                                   child: Container(
                                     width: 400,
-                                    height: 110.0,
+                                    height: 90.0,
                                     padding: const EdgeInsets.only(
                                         left: 19, right: 19, bottom: 8),
                                     child: Stack(
@@ -420,49 +496,6 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                                     ),
                                                   ),
                                                   SizedBox(width: 20.0),
-                                                  // IconButton(
-                                                  //   icon: (player?.isSelected ==
-                                                  //           true)
-                                                  //       ? Icon(Icons.remove,
-                                                  //           color: Colors.red)
-                                                  //       : Icon(Icons.add,
-                                                  //           color:
-                                                  //               Colors.green),
-                                                  //   onPressed: () {
-                                                  //     setState(() {
-                                                  //       if (player != null) {
-                                                  //         if (player
-                                                  //                 .isSelected ??
-                                                  //             false) {
-                                                  //           // Remove the player
-                                                  //           totalCredits +=
-                                                  //               double.parse(player
-                                                  //                   .point);
-                                                  //           selectedPlayers
-                                                  //               .remove(player);
-                                                  //         } else {
-                                                  //           // Add the player
-                                                  //           if (selectedPlayers
-                                                  //                   .length <
-                                                  //               maxPlayers) {
-                                                  //             totalCredits -= double
-                                                  //                 .parse(player
-                                                  //                     .point);
-                                                  //             selectedPlayers
-                                                  //                 .add(player);
-                                                  //           } else {
-                                                  //             // Maximum players reached
-                                                  //             print(
-                                                  //                 'Maximum players reached');
-                                                  //           }
-                                                  //         }
-                                                  //         player.isSelected =
-                                                  //             !(player.isSelected ??
-                                                  //                 false);
-                                                  //       }
-                                                  //     });
-                                                  //   },
-                                                  // ),
                                                   IconButton(
                                                     icon: (player?.isSelected ==
                                                             true)
@@ -523,7 +556,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                           left:
                                               0.0, // Adjusted left position for the rectangle text
                                           bottom:
-                                              8.0, // Adjusted bottom position for the rectangle text
+                                              0.0, // Adjusted bottom position for the rectangle text
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.0,
@@ -535,7 +568,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                                   .black, // Rectangle color
                                             ),
                                             child: Text(
-                                              'IND',
+                                               player.country,
                                               style: TextStyle(
                                                 fontSize: 15.0,
                                                 color: Colors.white,
@@ -572,9 +605,9 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                         builder: (context) => Captain(
                           selectedPlayers: selectedPlayers,
                           matchId: widget.matchId,
-                          competitionId : widget.competitionId,
-                          short_title : widget.short_title,
-                          date_start_ist : widget.date_start_ist,
+                          competitionId: widget.competitionId,
+                          short_title: widget.short_title,
+                          date_start_ist: widget.date_start_ist,
                           fromContest: widget.fromContest,
                           balance: widget.balance,
                           contestId: widget.contestId,
@@ -592,7 +625,8 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(
                       255, 88, 13, 123), // Set the desired button color
-                  minimumSize: Size(150, 35), // Set the desired width and height
+                  minimumSize:
+                      Size(150, 35), // Set the desired width and height
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                         10.0), // Set the desired border radius
@@ -602,7 +636,6 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                   'Next',
                   style: TextStyle(
                     color: Colors.white,
-                    // Add other text styles as needed
                   ),
                 ),
               ),
@@ -619,6 +652,7 @@ class Player {
   final String photo;
   final String point;
   final String fielding;
+  final String country;
   bool isCaptain;
   bool isViceCaptain;
 
@@ -630,6 +664,7 @@ class Player {
     required this.photo,
     required this.point,
     required this.fielding,
+    required this.country,
     this.isSelected = false,
     this.isCaptain = false,
     this.isViceCaptain = false, // Default to unselected

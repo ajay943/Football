@@ -91,7 +91,6 @@ class _TestScreenState extends State<TestScreen>
                 width:40,
                 child: GestureDetector(
                   onTap: () {
-                    // Handle skip text tap
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -136,7 +135,6 @@ class _TestScreenState extends State<TestScreen>
                             _animationController.reset();
                             _animationController.forward();
                           } else {
-                            // Handle button action when on the last page
                             Navigator.push(
                               context,
                               MaterialPageRoute(

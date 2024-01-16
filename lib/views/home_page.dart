@@ -60,7 +60,6 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
   }
 
   void register() async {
-    print(phone);
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -115,11 +114,8 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
     final phoneNumber = phone;
     final url =
         Uri.https('crickx.onrender.com', '/getNotificationCount/$phoneNumber');
-
     var request = http.Request('POST', url);
-
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse =
           json.decode(await response.stream.bytesToString());
@@ -136,7 +132,6 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // title: 'SidebarX Example',
       debugShowCheckedModeBanner: false,
       home: Builder(
         builder: (context) {
@@ -292,17 +287,12 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                   var element = competitions[index];
                                   DateTime matchDateTime =
                                       DateTime.parse(element['date_start_ist']);
-                                  // Format the date and time
                                   String formattedDate =
                                       DateFormat('dd MMM, h:mm a')
                                           .format(matchDateTime);
                                   Duration timeDifference =
-                                      matchDateTime.difference(DateTime.now());
-
-                                  //  String formattedTimer = '${timeDifference.inDays}d:${(timeDifference.inHours % 24)}h:${(timeDifference.inMinutes % 60)}m';
-
+                                      matchDateTime.difference(DateTime.now());                   
                                   String formattedTimer;
-
                                   if (timeDifference.inDays > 0) {
                                     formattedTimer =
                                         '${timeDifference.inDays}d:${(timeDifference.inHours % 24)}h:${(timeDifference.inMinutes % 60)}m';
@@ -329,7 +319,6 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                             balance: 0,
                                             contestId: "123",
                                           ),
-                                          // builder: (context) => MatchDetailPage( matchId: 12345),
                                         ),
                                       );
                                     },
@@ -343,7 +332,6 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                           width: 375,
                                           child: Card(
                                             elevation: 5,
-                                            // shadowColor: Colors.grey,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10.0),
@@ -447,7 +435,7 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                                                                       decoration:
                                                                           BoxDecoration(
                                                                         borderRadius:
-                                                                            BorderRadius.circular(10), // Set border radius as needed
+                                                                            BorderRadius.circular(0), // Set border radius as needed
                                                                         image:
                                                                             DecorationImage(
                                                                           image:
