@@ -181,7 +181,7 @@ class _MyTeamState extends State<MyTeam> {
                                             color: Colors.black,
                                             child: Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 20),
+                                                  left: 10),
                                               child: Row(
                                                 children: [
                                                   Text(
@@ -196,7 +196,7 @@ class _MyTeamState extends State<MyTeam> {
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            left: 240),
+                                                            left: 220),
                                                     child: Checkbox(
                                                       value:
                                                           _selectedCheckboxIndex ==

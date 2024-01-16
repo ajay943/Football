@@ -318,7 +318,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                         Container(
                                           child: Container(
                                             height: 60,
-                                            width: 362,
+                                            width: 350,
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(
                                                 colors: [
@@ -354,7 +354,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                                 Text(
                                                   "$poolprize",
                                                   style: TextStyle(
-                                                    fontSize: 25,
+                                                    fontSize: 22,
                                                     fontWeight: FontWeight.w900,
                                                     color: Colors.white,
                                                   ),
@@ -465,7 +465,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                     SizedBox(height: 12),
                                     Container(
                                       child: Container(
-                                        height: 34,
+                                        height: 31,
                                         width: 370,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(

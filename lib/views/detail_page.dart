@@ -353,7 +353,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                       Container(
                                                         child: Container(
                                                           height: 60,
-                                                          width: 130,
+                                                          width: 160,
                                                           decoration:
                                                               BoxDecoration(
                                                             gradient:
@@ -411,7 +411,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                                 '₹ ${element['price_pool'].toString()}',
                                                                 style:
                                                                     TextStyle(
-                                                                  fontSize: 25,
+                                                                  fontSize: 22,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w900,
@@ -569,7 +569,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                 ),
                                                 Container(
                                                   child: Container(
-                                                    height: 31,
+                                                    height: 27,
                                                     width: 370,
                                                     decoration: BoxDecoration(
                                                       gradient: LinearGradient(
@@ -600,7 +600,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                     child: Column(
                                                       children: [
                                                         SizedBox(
-                                                          height: 6,
+                                                          height: 5,
                                                         ),
                                                         Text(
                                                           'Max Prize Pool',
@@ -661,8 +661,8 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                       ),
                     ),
                     child: Container(
-                      height: 30,
-                      width: 95,
+                      height: 40,
+                      width: 120,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -673,7 +673,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                 children: [
                                   Image.asset(
                                     'assets/detailfloatingicon2.png',
-                                    height: 18,
+                                    height: 20,
                                   ),
                                   SizedBox(
                                     width: 5,
@@ -682,7 +682,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                     'CONTESTS',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 14.0,
+                                      fontSize: 12.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -727,7 +727,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                       ),
                     ),
                     child: Container(
-                      height: 30,
+                      height: 40,
                       width: 120,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -746,7 +746,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                 'CREATE TEAM',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 14.0,
+                                  fontSize: 12.0,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),

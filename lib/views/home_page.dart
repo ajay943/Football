@@ -140,11 +140,11 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
             key: _key,
             appBar: AppBar(
               title: Padding(
-                padding: const EdgeInsets.only(right: 170),
+                padding: const EdgeInsets.only(right: 190),
                 child: Text(
                   'FUNZY',
                   style: TextStyle(
-                      fontSize: 40,
+                      fontSize: 22,
                       fontWeight: FontWeight.w900,
                       color: Colors.white),
                 ),
