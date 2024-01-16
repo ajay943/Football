@@ -1,7 +1,6 @@
-
-
 import 'package:app/views/leage_page.dart';
 import 'package:app/views/home_page.dart';
+import 'package:app/views/myMatches.dart';
 import 'package:app/views/sidenavbar.dart';
 import 'package:app/views/wallet.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
-
   @override
   State<MainPage> createState() => _MainPageState();
 }
@@ -19,10 +17,9 @@ class _MainPageState extends State<MainPage> {
   final dynamic _pages = [
     const SideNavbar(),
     const WalletScreen(),
-    const LeagePage(),
+    const MyMatches(),
     const SidebarXExampleApp(),
   ].reversed.toList();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
