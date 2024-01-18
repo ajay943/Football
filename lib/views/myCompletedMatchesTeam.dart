@@ -1,3 +1,4 @@
+import 'package:app/views/myCompletedWinningRank.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,8 @@ class MyCompletedMatchesTeam extends StatefulWidget {
 class _MyCompletedMatchesTeamState extends State<MyCompletedMatchesTeam> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return 
+    Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -130,162 +132,88 @@ class _MyCompletedMatchesTeamState extends State<MyCompletedMatchesTeam> {
               ],
             ),
           ),
-          Center(
-              child: Container(
-                  height: MediaQuery.of(context).size.height * 0.23,
-                  width: double.infinity,
-                  // margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 169, 74, 228),
-                              Color.fromARGB(255, 51, 10, 86),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyCompletedWinningRank(),
+                ),
+              );
+            },
+            child: Center(
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.23,
+                    width: double.infinity,
+                    // margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 60,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color.fromARGB(255, 169, 74, 228),
+                                Color.fromARGB(255, 51, 10, 86),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0.0),
+                              topRight: Radius.circular(0.0),
+                            ),
                           ),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(0.0),
-                            topRight: Radius.circular(0.0),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                            Text(
-                              "Congratulations! You’ve won in 1 contest.",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                              Text(
+                                "Congratulations! You’ve won in 1 contest.",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            Text(
-                              "₹ 1000",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
-                            )
-                          ]),
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.016,
-                      ), // Adjust the height based on your design
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "Prize Pool",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey,
-                                  ),
+                              Text(
+                                "₹ 1000",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  "₹ 25000",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Spots",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                Text(
-                                  "12",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  "Entry",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                Text(
-                                  "₹ 1000",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height *
-                            0.016, // Adjust the percentage as needed
-                      ),
-                      // Adjust the height based on your design
-                      Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 169, 74, 228),
-                              Color.fromARGB(255, 51, 10, 86),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(30.0),
-                            bottomRight: Radius.circular(30.0),
+                              )
+                            ]),
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 20, top: 15),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.016,
+                        ), // Adjust the height based on your design
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 children: [
                                   Text(
-                                    "Alex John",
+                                    "Prize Pool",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w400,
-                                      color: Colors.white,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Text(
+                                    "₹ 25000",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
                                     ),
                                   )
                                 ],
@@ -293,11 +221,19 @@ class _MyCompletedMatchesTeamState extends State<MyCompletedMatchesTeam> {
                               Column(
                                 children: [
                                   Text(
-                                    "PTS - 432",
+                                    "Spots",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w400,
-                                      color: Colors.white,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Text(
+                                    "12",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
                                     ),
                                   )
                                 ],
@@ -305,11 +241,19 @@ class _MyCompletedMatchesTeamState extends State<MyCompletedMatchesTeam> {
                               Column(
                                 children: [
                                   Text(
-                                    "# 7",
+                                    "Entry",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w400,
-                                      color: Colors.white,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Text(
+                                    "₹ 1000",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black,
                                     ),
                                   )
                                 ],
@@ -317,9 +261,77 @@ class _MyCompletedMatchesTeamState extends State<MyCompletedMatchesTeam> {
                             ],
                           ),
                         ),
-                      ),
-                    ],
-                  ))),
+            
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height *
+                              0.016, // Adjust the percentage as needed
+                        ),
+                        // Adjust the height based on your design
+                        Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color.fromARGB(255, 169, 74, 228),
+                                Color.fromARGB(255, 51, 10, 86),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(30.0),
+                              bottomRight: Radius.circular(30.0),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      "Alex John",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "PTS - 432",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "# 7",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))),
+          ),
           SizedBox(
             height: 10,
           ),

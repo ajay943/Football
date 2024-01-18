@@ -17,6 +17,7 @@ import 'package:loader_skeleton/loader_skeleton.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class MatchDetailPage extends StatefulWidget {
+  
   final int matchId;
   final int competition;
   final String short_title;
@@ -26,7 +27,7 @@ class MatchDetailPage extends StatefulWidget {
   final int balance;
   final String contestId;
   const MatchDetailPage({
-    Key? key,
+   
     required this.matchId,
     required this.short_title,
     required this.date_start_ist,
@@ -35,7 +36,7 @@ class MatchDetailPage extends StatefulWidget {
     required this.teamId,
     required this.balance,
     required this.contestId,
-  }) : super(key: key);
+  });
   @override
   State<MatchDetailPage> createState() => _MatchDetailPageState();
 }
@@ -763,6 +764,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: null,
     );
   }
 

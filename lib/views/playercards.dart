@@ -61,7 +61,6 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
     try {
       var response = await http.get(Uri.parse(
           'https://rest.entitysport.com/v2/competitions/${widget.competitionId}/squads/${widget.matchId}/?token=444b8b1e48d9cd803ea3820c5c17ecc4'));
-
       if (response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
         if (jsonResponse.containsKey('response')) {
@@ -74,8 +73,6 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                   jsonResponse['response']['squads'][i]['team']['logo_url'];
               teamAname = jsonResponse['response']['squads'][i]['team']['abbr'];
             });
-            print(
-                "object${jsonResponse['response']['squads'][i]['team']['logo_url']}");
           }
           for (int i = 1; i < jsonResponse['response']['squads'].length; i++) {
             setState(() {
@@ -83,8 +80,6 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                   jsonResponse['response']['squads'][i]['team']['logo_url'];
               teamBname = jsonResponse['response']['squads'][i]['team']['abbr'];
             });
-            print(
-                "object${jsonResponse['response']['squads'][i]['team']['logo_url']}");
           }
           for (int i = 0; i < jsonResponse['response']['squads'].length; i++) {
             for (int j = 0;
@@ -122,7 +117,6 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
           setState(() {
             players = apiPlayers;
             isLoading = false;
-            // print("hello$players");
           });
         } else {
           print('Error: Data not found in API response');

@@ -195,7 +195,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/packages/flutter",
+      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -243,13 +243,13 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -627,7 +627,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/apple/Downloads/flutter%20project/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/apple/Documents/FlutterDev/Sdk/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -710,52 +710,58 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "url_launcher",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher-6.1.10",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
-    },
-    {
-      "name": "url_launcher_android",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_android-6.0.27",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "url_launcher_ios",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_ios-6.1.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "url_launcher_linux",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_linux-3.0.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "url_launcher_macos",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_macos-3.0.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "url_launcher_platform_interface",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_platform_interface-2.1.2",
+      "name": "upi_india",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/upi_india-3.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
-      "name": "url_launcher_web",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_web-2.0.16",
+      "name": "url_launcher",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher-6.2.3",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "url_launcher_android",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_android-6.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "url_launcher_ios",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_ios-6.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_linux-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_macos-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_platform_interface-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_web-2.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "url_launcher_windows",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_windows-3.0.5",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "uuid",
@@ -848,7 +854,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2024-01-16T09:29:38.955090Z",
+  "generated": "2024-01-17T11:09:51.061833Z",
   "generator": "pub",
-  "generatorVersion": "3.2.3"
+  "generatorVersion": "3.2.0"
 }

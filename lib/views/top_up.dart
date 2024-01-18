@@ -1,15 +1,30 @@
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:app/views/paymentaGetwayList.dart';
 import 'package:flutter/material.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TopUpScreen extends StatefulWidget {
   const TopUpScreen({Key? key}) : super(key: key);
-
   @override
   State<TopUpScreen> createState() => _TopUpScreenState();
 }
 
 class _TopUpScreenState extends State<TopUpScreen> {
   TextEditingController _amountController = TextEditingController();
+  late String phone;
+  @override
+  void initState() {
+    super.initState();
+    _isLoggedIn();
+  }
+
+  _isLoggedIn() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var phoneNumber = pref.getString('phoneNumber');
+    setState(() {
+      phone = phoneNumber!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +91,9 @@ class _TopUpScreenState extends State<TopUpScreen> {
                       child: Row(
                         children: [
                           CircleAvatar(
-                            radius: 12.0,
+                            radius: 15.0,
                             backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.person,
-                              color: Colors.black,
-                            ),
+                           backgroundImage: AssetImage('assets/walletimage.png'),
                           ),
                           SizedBox(width: 15.0),
                           Text(
@@ -126,15 +138,6 @@ class _TopUpScreenState extends State<TopUpScreen> {
                         ),
                         child: Row(
                           children: [
-                            // Padding(
-                            //   padding: const EdgeInsets.only(
-                            //     left: 40.0,
-                            //   ), // Adjust the left margin for the hintText
-                            //   child: VerticalDivider(
-                            //     color: Colors.grey, // Adjust the color of the vertical divider
-                            //     width: 2.0, // Adjust the width of the vertical divider
-                            //   ),
-                            // ),
                             Expanded(
                               child: Container(
                                 decoration: BoxDecoration(
@@ -152,21 +155,53 @@ class _TopUpScreenState extends State<TopUpScreen> {
                                                 10.0), // Padding for the TextFormField
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
-                                              10.0), // Adjust the border radius
+                                              10.0),  
                                           border: Border.all(
                                             width:
-                                                2.0, // Adjust the width of the border
+                                                2.0,  
                                             color: Colors
-                                                .grey, // Adjust the color of the border
+                                                .grey, 
                                           ),
                                         ),
-                                        child: TextFormField(
-                                          controller: _amountController,
-                                          decoration: InputDecoration(
-                                            border: InputBorder
-                                                .none, // No need for the default border
-                                            hintText: 'Amount',
-                                          ),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(width: 3.0),
+                                            Text(
+                                              '\u20B9', 
+                                              style: TextStyle(
+                                                  fontSize: 25.0,
+                                                  color: Colors
+                                                      .white),
+                                            ),
+                                            SizedBox(width: 15.0),
+                                            VerticalDivider(
+                                              thickness:
+                                                  1.0, 
+                                              color: Colors
+                                                  .white, 
+                                            ),
+                                            SizedBox(
+                                                width:
+                                                    10.0), 
+                                            Expanded(
+                                              child: TextFormField(
+                                                controller: _amountController,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                style: TextStyle(
+                                                    color: Colors
+                                                        .white), 
+                                                decoration: InputDecoration(
+                                                  hintText: 'Amount',
+                                                  hintStyle: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize:
+                                                          18), // 
+                                                  border: InputBorder.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -200,13 +235,13 @@ class _TopUpScreenState extends State<TopUpScreen> {
                       left: 21,
                       child: Row(
                         children: [
-                          _buildAmountButton('₹100'),
+                          _buildAmountButton('100'),
                           SizedBox(width: 10.0),
-                          _buildAmountButton('₹200'),
+                          _buildAmountButton('200'),
                           SizedBox(width: 10.0),
-                          _buildAmountButton('₹500'),
+                          _buildAmountButton('500'),
                           SizedBox(width: 10.0),
-                          _buildAmountButton('₹2000'),
+                          _buildAmountButton('2000'),
                         ],
                       ),
                     ),
@@ -215,19 +250,25 @@ class _TopUpScreenState extends State<TopUpScreen> {
               ],
             ),
           ),
-          // Container at the bottom
           Positioned(
             bottom: 36,
             left: 21,
             right: 21,
             child: InkWell(
-              onTap:() {
-                 double enteredAmount = double.parse(_amountController.text);
+              onTap: () {
+                double enteredAmount = double.parse(_amountController.text);
                 if (enteredAmount >= 1) {
-                  _openRazorpay(enteredAmount);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentGetwayList(
+                        enteredAmount: enteredAmount,
+                        phone : phone
+                      ),
+                    ),
+                  );
                 } else {
                   // Handle invalid amount
-                  // You can show an error message or perform other actions
                 }
               },
               child: Container(
@@ -253,6 +294,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
               ),
             ),
           ),
+       
         ],
       ),
     );
@@ -269,7 +311,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
         primary: Colors.white, // Button background color
         onPrimary: Colors.black, // Text color
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0), // Adjust the border radius
+          borderRadius: BorderRadius.circular(10.0), 
         ),
       ),
       child: Text(
@@ -280,69 +322,5 @@ class _TopUpScreenState extends State<TopUpScreen> {
       ),
     );
   }
-
-   void _openRazorpay(double amount) {
-    Razorpay razorpay = Razorpay();
-    var options = {
-      'key': 'rzp_test_kLcl21a6RHqZpK',
-      'amount': (amount * 100).toInt(), // Convert amount to paise
-      'name': 'abhi',
-      'description': 'Fine T-Shirt',
-      'retry': {'enabled': true, 'max_count': 1},
-      'send_sms_hash': true,
-      'prefill': {
-        'contact': '6200345898',
-        'email': 'test@razorpay.com',
-      },
-      'external': {
-        'wallets': ['paytm'],
-      },
-    };
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentErrorResponse);
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccessResponse);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWalletSelected);
-    razorpay.open(options);
-  }
-
-  void _handlePaymentErrorResponse(PaymentFailureResponse response) {
-    _showAlertDialog(
-      "Payment Failed",
-      "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}",
-    );
-  }
-
-  void _handlePaymentSuccessResponse(PaymentSuccessResponse response) {
-    _showAlertDialog(
-      "Payment Successful",
-      "Payment ID: ${response.paymentId}",
-    );
-  }
-
-  void _handleExternalWalletSelected(ExternalWalletResponse response) {
-    _showAlertDialog(
-      "External Wallet Selected",
-      "${response.walletName}",
-    );
-  }
-
-  void _showAlertDialog(String title, String message) {
-    Widget continueButton = ElevatedButton(
-      child: const Text("Continue"),
-      onPressed: () {},
-    );
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(message),
-      actions: [
-        continueButton,
-      ],
-    );
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
 }
+
