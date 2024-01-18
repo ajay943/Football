@@ -6,15 +6,65 @@ import 'package:app/views/responsibleplay.dart';
 import 'package:app/views/termsandconditions.dart';
 import 'package:app/views/wallet.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SideNavbar extends StatefulWidget {
   const SideNavbar({Key? key}) : super(key: key);
-
   @override
   State<SideNavbar> createState() => _SideNavbarState();
 }
 
 class _SideNavbarState extends State<SideNavbar> {
+  late String phone;
+
+  Future<void> makeLogoutRequest() async {
+    var url = Uri.parse('https://crickx.onrender.com/logout');
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    var body = json.encode({
+      "phoneNumber": phone,
+    });
+    try {
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        await preferences.clear();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SignInNewScreen(),
+          ),
+        );
+      } else {
+        print('Error: ${response.reasonPhrase}');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  _isLoggedIn() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var phoneNumber = pref.getString('phoneNumber');
+    setState(() {
+      phone = phoneNumber!;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _isLoggedIn();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,7 +198,6 @@ class _SideNavbarState extends State<SideNavbar> {
                             padding: EdgeInsets.only(left: 50.0, top: 8.0),
                             child: Row(
                               children: [
-                                // SizedBox(height: 10.0),
                                 Icon(
                                   Icons.account_balance_wallet,
                                   color: const Color(0xFF8443BA),
@@ -267,8 +316,9 @@ class _SideNavbarState extends State<SideNavbar> {
                           },
                           child: Padding(
                             padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width *0.15, // Adjust as needed
-                              top: MediaQuery.of(context).size.height *0.01,
+                              left: MediaQuery.of(context).size.width *
+                                  0.15, // Adjust as needed
+                              top: MediaQuery.of(context).size.height * 0.01,
                             ),
                             child: Row(
                               children: [
@@ -340,13 +390,8 @@ class _SideNavbarState extends State<SideNavbar> {
                         ),
                         SizedBox(height: 1.0),
                         InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SignInNewScreen(),
-                              ),
-                            );
+                          onTap: () async {
+                            makeLogoutRequest() ;
                           },
                           child: Padding(
                             padding: EdgeInsets.only(left: 50.0, top: 8.0),
@@ -390,4 +435,3 @@ class _SideNavbarState extends State<SideNavbar> {
     );
   }
 }
-
