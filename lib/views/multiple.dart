@@ -35,7 +35,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
   String responseData = "";
   late String phone;
   // bool rankData = true;
-  bool isLoading = true;
+  bool isLoading = false;
   List<dynamic> suggestions = [];
   int? poolprize;
   int? joinamount;
@@ -297,210 +297,305 @@ class _YourNewScreenState extends State<YourNewScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {},
-                          child: Center(
-                            child: Container(
-                              height:MediaQuery.of(context).size.height * .288,
-                              width:MediaQuery.of(context).size.width * .899,
-                              child: Card(
-                                elevation: 5,
-                                shadowColor: Colors.grey,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                color: Colors.white,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          child: Container(
-                                            height: MediaQuery.of(context).size.width * .15,
-                                            width:MediaQuery.of(context).size.width * .877,
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Color.fromARGB(
-                                                      255, 169, 74, 228),
-                                                  Color.fromARGB(255, 51, 10,
-                                                      86), // End color
-                                                ],
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                              ),
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(10.0),
-                                                topRight: Radius.circular(10.0),
-                                              ),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                SizedBox(
-                                                  height: MediaQuery.of(context).size.height * .002,
-                                                ),
-                                                Text(
-                                                  'Max Prize Pool',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.white54,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: MediaQuery.of(context).size.height * .002,
-                                                ),
-                                                Text(
-                                                  "$poolprize",
-                                                  style: TextStyle(
-                                                    fontSize: 22,
-                                                    fontWeight: FontWeight.w900,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
+                          child: Container(
+                            height:MediaQuery.of(context).size.height * .288,
+                            width:MediaQuery.of(context).size.width * .899,
+                            child: Card(
+                              elevation: 5,
+                              shadowColor: Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              color: Colors.white,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        child: Container(
+                                          height: MediaQuery.of(context).size.width * .15,
+                                          width:MediaQuery.of(context).size.width * .877,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color.fromARGB(
+                                                    255, 169, 74, 228),
+                                                Color.fromARGB(255, 51, 10,
+                                                    86), // End color
                                               ],
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                            ),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10.0),
+                                              topRight: Radius.circular(10.0),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(height: MediaQuery.of(context).size.height * .018,),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 20, left: 20),
-                                            child: LinearProgressIndicator(
-                                              value: 0,
-                                              backgroundColor: Colors.grey[300],
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                      const Color(0xFF8443BA)),
-                                            ),
-                                          ),
-                                          SizedBox(height: MediaQuery.of(context).size.height * .012,),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 20, left: 20),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  '1,567 spots left',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color:
-                                                        const Color(0xFF8443BA),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '2,000 spots',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.black54,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(height:MediaQuery.of(context).size.height * .012,),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        Center(
-                                          child: SizedBox(
-                                            height:MediaQuery.of(context).size.height * .047,
-                                            width: MediaQuery.of(context).size.width * .75,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                makePostRequest();
-                                                print("Button Pressed");
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.green,
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 10),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.0),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                height: MediaQuery.of(context).size.height * .002,
+                                              ),
+                                              Text(
+                                                'Max Prize Pool',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.white54,
                                                 ),
                                               ),
-                                              child: RichText(
-                                                text: TextSpan(
-                                                  text: 'Entry: ₹',
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                  ),
-                                                  children: <TextSpan>[
-                                                    TextSpan(
-                                                      text: " $joinamount",
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ],
+                                              SizedBox(
+                                                height: MediaQuery.of(context).size.height * .002,
+                                              ),
+                                              Text(
+                                                "$poolprize",
+                                                style: TextStyle(
+                                                  fontSize: 22,
+                                                  fontWeight: FontWeight.w900,
+                                                  color: Colors.white,
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: MediaQuery.of(context).size.height * .056,),
-                                    Container(
-                                      child: Container(
-                                        height: MediaQuery.of(context).size.height * .035,
-                                        width:MediaQuery.of(context).size.width * .879,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color.fromARGB(255, 169, 74, 228),
-                                              Color.fromARGB(
-                                                  255, 51, 10, 86), // End color
                                             ],
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                          ),
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(10.0),
-                                            bottomRight: Radius.circular(10.0),
                                           ),
                                         ),
-                                        child: Column(
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: MediaQuery.of(context).size.height * .018,),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 20, left: 20),
+                                        child: LinearProgressIndicator(
+                                          value: 0,
+                                          backgroundColor: Colors.grey[300],
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  const Color(0xFF8443BA)),
+                                        ),
+                                      ),
+                                      SizedBox(height: MediaQuery.of(context).size.height * .012,),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 20, left: 20),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
                                           children: [
-                                            SizedBox(
-                                              height: 6,
-                                            ),
                                             Text(
-                                              'Max Prize Pool',
+                                              '1,567 spots left',
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400,
-                                                color: Colors.white54,
+                                                color:
+                                                    const Color(0xFF8443BA),
+                                              ),
+                                            ),
+                                            Text(
+                                              '2,000 spots',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black54,
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
+                                      SizedBox(height:MediaQuery.of(context).size.height * .012,),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Center(
+                                        child: SizedBox(
+                                          height:MediaQuery.of(context).size.height * .047,
+                                          width: MediaQuery.of(context).size.width * .75,
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              makePostRequest();
+                                              print("Button Pressed");
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors.green,
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        4.0),
+                                              ),
+                                            ),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                text: 'Entry: ₹',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: " $joinamount",
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: MediaQuery.of(context).size.height * .056,),
+                                  Container(
+                                    child: Container(
+                                      height: MediaQuery.of(context).size.height * .035,
+                                      width:MediaQuery.of(context).size.width * .879,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color.fromARGB(255, 169, 74, 228),
+                                            Color.fromARGB(
+                                                255, 51, 10, 86), // End color
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                        ),
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10.0),
+                                          bottomRight: Radius.circular(10.0),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 6,
+                                          ),
+                                          Row(
+                                                        children: [
+                                                          SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                          Container(
+                                                            height: 15,
+                                                            width: 15,
+                                                            child: Image.asset(
+                                                              'assets/filledicon.png', // Replace with the actual path to your PNG image
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                           SizedBox(
+                                                        width: 2,
+                                                      ),
+                                                          Text(
+                                                            '₹80',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Colors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                           SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                          Container(
+                                                            height: 13,
+                                                            width: 13,
+                                                            child: Image.asset(
+                                                              'assets/cup.png', // Replace with the actual path to your PNG image
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                           SizedBox(
+                                                        width: 2,
+                                                      ),
+                                                          Text(
+                                                            '21%',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Colors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                           SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                          Container(
+                                                            height: 15,
+                                                            width: 15,
+                                                            child: Image.asset(
+                                                              'assets/micon.png', // Replace with the actual path to your PNG image
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                           SizedBox(
+                                                        width: 2,
+                                                      ),
+                                                          Text(
+                                                            'Upto 11',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Colors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                           SizedBox(
+                                                        width: 120,
+                                                      ),
+                                                          Container(
+                                                            height: 15,
+                                                            width: 15,
+                                                            child: Image.asset(
+                                                              'assets/rupeeicon.png', // Replace with the actual path to your PNG image
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                        width: 2,
+                                                      ),
+                                                          Text(
+                                                            'Flexible',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Colors
+                                                                  .white,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                  
+                                        ],
+                                      ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

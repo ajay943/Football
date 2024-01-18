@@ -171,179 +171,177 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                 Container(
                   height: 200.0,
                   width: double.infinity,
-                  child: Card(
-                    color: const Color(0xFF8443BA),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                  left: 50.0), // Adjust right padding as needed
-                                  child: Container(
-                                    width: 45, // Set your desired width
-                                    height: 45,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          0), // Set border radius as needed
-                                      image: DecorationImage(
-                                        image: CachedNetworkImageProvider(
-                                            teamAlogo!),
-                                        fit: BoxFit.cover,
-                                      ),
+                  color: const Color(0xFF8443BA),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                left: 50.0), // Adjust right padding as needed
+                                child: Container(
+                                  width: 45, // Set your desired width
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        0), // Set border radius as needed
+                                    image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                          teamAlogo!),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                   padding: const EdgeInsets.only(
-                                  left: 50.0),
-                                  child: Text(
-                                    teamAname!,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 20.0),
+                              ),
+                              Padding(
+                                 padding: const EdgeInsets.only(
+                                left: 50.0),
                                 child: Text(
-                                  'vs',
+                                  teamAname!,
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 30.0,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Center(
+                            child: Container(
+                              height:70,width:70,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: Image.asset(
+                                              'assets/vs.png', // Replace with the actual path to your PNG image
+                                              fit: BoxFit.cover,
+                                            ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 1.0),
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right:
+                                        60.0), // Adjust right padding as needed
+                                child: Container(
+                                  width: 45, // Set your desired width
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        0), // Set border radius as needed
+                                    image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                          teamBlogo!),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: 1.0),
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right:
-                                          60.0), // Adjust right padding as needed
-                                  child: Container(
-                                    width: 45, // Set your desired width
-                                    height: 45,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          0), // Set border radius as needed
-                                      image: DecorationImage(
-                                        image: CachedNetworkImageProvider(
-                                            teamBlogo!),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 60.0),
+                                child: Text(
+                                  teamBname!,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 60.0),
-                                  child: Text(
-                                    teamBname!,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 15.0),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 55.0), // Adjust left padding as needed
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              LinearPercentIndicator(
+                                width: 290.0,
+                                lineHeight: 27.0,
+                                percent: (selectedPlayers.length / maxPlayers)
+                                    .toDouble(),
+                                center: Text(
+                                  '${(selectedPlayers.length / maxPlayers * 100).toStringAsFixed(1)}%',
+                                  style: TextStyle(fontSize: 12.0),
+                                ),
+                                linearStrokeCap: LinearStrokeCap.roundAll,
+                                backgroundColor: Colors.grey,
+                                progressColor: Colors.white,
+                              ),
+                            ],
+                          ),
                         ),
-                        SizedBox(height: 15.0),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 55.0), // Adjust left padding as needed
-                            child: Stack(
-                              alignment: Alignment.center,
+                      ),
+                      SizedBox(height: 10.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: Row(
                               children: [
-                                LinearPercentIndicator(
-                                  width: 290.0,
-                                  lineHeight: 27.0,
-                                  percent: (selectedPlayers.length / maxPlayers)
-                                      .toDouble(),
-                                  center: Text(
-                                    '${(selectedPlayers.length / maxPlayers * 100).toStringAsFixed(1)}%',
-                                    style: TextStyle(fontSize: 12.0),
+                                Text(
+                                  'Players ',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 12.0,
                                   ),
-                                  linearStrokeCap: LinearStrokeCap.roundAll,
-                                  backgroundColor: Colors.grey,
-                                  progressColor: Colors.white,
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  '${selectedPlayers.length}/$maxPlayers',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                        SizedBox(height: 10.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Players ',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 10.0,
-                                    ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Credits Left ',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 12.0,
                                   ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    '${selectedPlayers.length}/$maxPlayers',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  '$totalCredits',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 20.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Credits Left ',
-                                    style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 10.0,
-                                    ),
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    '$totalCredits',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 12.0),
-                        Text(
-                          'Maximum of 10 players from a team',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold,
                           ),
+                        ],
+                      ),
+                      SizedBox(height: 12.0),
+                      Text(
+                        'Maximum of 10 players from a team',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 TabBar(
@@ -377,37 +375,23 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                               child: Text(
                                 'SELECTED BY',
                                 style: TextStyle(
-                                  fontSize: 10.0,
+                                  fontSize: 12.0,
                                   color: Colors.grey,
                                 ),
                               ),
                             ),
                             Container(
-                              width: 80.0,
+                              width: 130.0,
                               height: 15.0,
-                              margin: EdgeInsets.only(left: 90.0),
+                              margin: EdgeInsets.only(left: 8.0),
                               child: Text(
                                 'POINTS',
                                 style: TextStyle(
-                                  fontSize: 10.0,
+                                  fontSize: 12.0,
                                   color: Colors.grey,
                                 ),
                               ),
                             ),
-                            // Container(
-                            //   width: 70.0,
-                            //   height: 15.0,
-                            //   margin: EdgeInsets.only(
-                            //       right:
-                            //           0.0), // Adjust the margin value as needed
-                            //   child: Text(
-                            //     'CREDITS',
-                            //     style: TextStyle(
-                            //       fontSize: 10.0,
-                            //       color: Colors.grey,
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ],
@@ -436,9 +420,9 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                       : null,
                                   child: Container(
                                     width: 400,
-                                    height: 90.0,
+                                    height: 80.0,
                                     padding: const EdgeInsets.only(
-                                        left: 19, right: 19, bottom: 8),
+                                        left: 19, right: 19, bottom: 4),
                                     child: Stack(
                                       children: [
                                         Positioned(
@@ -446,7 +430,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                           top: 0,
                                           width: 55.0,
                                           height:
-                                              100.0, // Adjusted height to cover full card height
+                                              80.0, // Adjusted height to cover full card height
                                           child: Image.asset(
                                             'assets/profileimage.png', // Replace with the actual path to your PNG image
                                             fit: BoxFit.cover,
@@ -455,7 +439,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                         Positioned(
                                           left:
                                               83.0, // Adjusted left position for the text content
-                                          top: 25,
+                                          top: 10,
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -469,7 +453,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              SizedBox(height: 3.0),
+                                              SizedBox(height: 0.0),
                                               Row(
                                                 children: [
                                                   SizedBox(width: 30.0),
@@ -490,7 +474,15 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                                     ),
                                                   ),
                                                   SizedBox(width: 20.0),
-                                                  IconButton(
+                                                  ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 14,
+                                          left: 300,
+                                          child:  IconButton(
                                                     icon: (player?.isSelected ==
                                                             true)
                                                         ? Icon(Icons.remove,
@@ -541,10 +533,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                                       });
                                                     },
                                                   ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                               
                                         ),
                                         Positioned(
                                           left:

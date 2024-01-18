@@ -17,7 +17,6 @@ import 'package:loader_skeleton/loader_skeleton.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class MatchDetailPage extends StatefulWidget {
-  
   final int matchId;
   final int competition;
   final String short_title;
@@ -27,7 +26,6 @@ class MatchDetailPage extends StatefulWidget {
   final int balance;
   final String contestId;
   const MatchDetailPage({
-   
     required this.matchId,
     required this.short_title,
     required this.date_start_ist,
@@ -96,7 +94,8 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SidebarXExampleApp(),),
+          builder: (context) => SidebarXExampleApp(),
+        ),
       );
       print(response.body);
     } else {
@@ -109,7 +108,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
       _showBottomSheet(context);
     }
   }
-  
+
   _isLoggedIn() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var phoneNumber = pref.getString('phoneNumber');
@@ -231,7 +230,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                 ),
                 child: Image.asset(
                   'assets/indianCricket.gif',
-                  width: 400,
+                  width: double.infinity,
                   height: 170,
                   fit: BoxFit.cover,
                 ),
@@ -564,7 +563,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                           ],
                                                         ),
                                                       ),
-                                                      SizedBox(height: 15),
+                                                      SizedBox(height: 19),
                                                     ],
                                                   ),
                                                 ),
@@ -603,15 +602,109 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                         SizedBox(
                                                           height: 5,
                                                         ),
-                                                        Text(
-                                                          'Max Prize Pool',
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color:
-                                                                Colors.white54,
-                                                          ),
+                                                        Row(
+                                                          children: [
+                                                            SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                            Container(
+                                                              height: 15,
+                                                              width: 15,
+                                                              child: Image.asset(
+                                                                'assets/filledicon.png', // Replace with the actual path to your PNG image
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            ),
+                                                             SizedBox(
+                                                          width: 2,
+                                                        ),
+                                                            Text(
+                                                              '₹80',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                             SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                            Container(
+                                                              height: 13,
+                                                              width: 13,
+                                                              child: Image.asset(
+                                                                'assets/cup.png', // Replace with the actual path to your PNG image
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            ),
+                                                             SizedBox(
+                                                          width: 2,
+                                                        ),
+                                                            Text(
+                                                              '21%',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                             SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                            Container(
+                                                              height: 15,
+                                                              width: 15,
+                                                              child: Image.asset(
+                                                                'assets/micon.png', // Replace with the actual path to your PNG image
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            ),
+                                                             SizedBox(
+                                                          width: 2,
+                                                        ),
+                                                            Text(
+                                                              'Upto 11',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                             SizedBox(
+                                                          width: 120,
+                                                        ),
+                                                            Container(
+                                                              height: 15,
+                                                              width: 15,
+                                                              child: Image.asset(
+                                                                'assets/rupeeicon.png', // Replace with the actual path to your PNG image
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                          width: 2,
+                                                        ),
+                                                            Text(
+                                                              'Flexible',
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
