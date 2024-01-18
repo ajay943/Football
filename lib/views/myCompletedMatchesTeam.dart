@@ -266,7 +266,6 @@ class _MyCompletedMatchesTeamState extends State<MyCompletedMatchesTeam> {
                           height: MediaQuery.of(context).size.height *
                               0.016, // Adjust the percentage as needed
                         ),
-                        // Adjust the height based on your design
                         Container(
                           height: 60,
                           decoration: BoxDecoration(
