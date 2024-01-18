@@ -298,8 +298,8 @@ class _YourNewScreenState extends State<YourNewScreen> {
                         GestureDetector(
                           onTap: () {},
                           child: Container(
-                            height:MediaQuery.of(context).size.height * .288,
-                            width:MediaQuery.of(context).size.width * .899,
+                            height:MediaQuery.of(context).size.height * .254,
+                            width:MediaQuery.of(context).size.width * .95,
                             child: Card(
                               elevation: 5,
                               shadowColor: Colors.grey,
@@ -317,7 +317,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                       Container(
                                         child: Container(
                                           height: MediaQuery.of(context).size.width * .15,
-                                          width:MediaQuery.of(context).size.width * .877,
+                                          width: MediaQuery.of(context).size.width * .925,
                                           decoration: BoxDecoration(
                                             gradient: LinearGradient(
                                               colors: [
@@ -338,7 +338,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               SizedBox(
-                                                height: MediaQuery.of(context).size.height * .002,
+                                                height: MediaQuery.of(context).size.height * .0005,
                                               ),
                                               Text(
                                                 'Max Prize Pool',
@@ -349,12 +349,12 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: MediaQuery.of(context).size.height * .002,
+                                                height: MediaQuery.of(context).size.height * .0005,
                                               ),
                                               Text(
                                                 "$poolprize",
                                                 style: TextStyle(
-                                                  fontSize: 22,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.w900,
                                                   color: Colors.white,
                                                 ),
@@ -411,7 +411,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(height:MediaQuery.of(context).size.height * .012,),
+                                      SizedBox(height:MediaQuery.of(context).size.height * .010,),
                                     ],
                                   ),
                                   Column(
@@ -461,11 +461,11 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: MediaQuery.of(context).size.height * .056,),
+                                  SizedBox(height: MediaQuery.of(context).size.height * .022,),
                                   Container(
                                     child: Container(
                                       height: MediaQuery.of(context).size.height * .035,
-                                      width:MediaQuery.of(context).size.width * .879,
+                                      width: double.infinity,
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
@@ -564,7 +564,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                                             ),
                                                           ),
                                                            SizedBox(
-                                                        width: 120,
+                                                        width:  MediaQuery.of(context).size.width * 0.21,
                                                       ),
                                                           Container(
                                                             height: 15,

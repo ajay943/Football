@@ -569,8 +569,8 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                 ),
                                                 Container(
                                                   child: Container(
-                                                    height: 27,
-                                                    width: 370,
+                                                    height:  MediaQuery.of(context).size.height * 0.029,
+                                                    width: double.infinity,
                                                     decoration: BoxDecoration(
                                                       gradient: LinearGradient(
                                                         colors: [
@@ -600,7 +600,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                     child: Column(
                                                       children: [
                                                         SizedBox(
-                                                          height: 5,
+                                                          height: 1,
                                                         ),
                                                         Row(
                                                           children: [
@@ -680,7 +680,7 @@ class _MatchDetailPageState extends State<MatchDetailPage> {
                                                               ),
                                                             ),
                                                              SizedBox(
-                                                          width: 120,
+                                                          width:  MediaQuery.of(context).size.width * 0.27,
                                                         ),
                                                             Container(
                                                               height: 15,

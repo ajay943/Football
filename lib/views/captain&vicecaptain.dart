@@ -13,6 +13,10 @@ class Captain extends StatefulWidget {
   final bool fromContest;
   final int balance;
   final String contestId;
+  final String teamAlogo;
+  final String teamBlogo;
+  final String teamAname;
+  final String teamBname;
   final List<Player> selectedPlayers;
   const Captain({
     Key? key,
@@ -24,6 +28,10 @@ class Captain extends StatefulWidget {
     required this.fromContest,
     required this.balance,
     required this.contestId,
+    required this.teamAlogo,
+    required this.teamBlogo,
+    required this.teamAname,
+    required this.teamBname,
   }) : super(key: key);
   @override
   State<Captain> createState() => _CaptainState();
@@ -68,6 +76,10 @@ class _CaptainState extends State<Captain> {
       "playersPoint": selectedPlayerPoint,
       "c": selectedCaptainId,
       "vc": selectedViceCaptainId,
+      "teama_logo": widget.teamAlogo,
+      "teamb_logo": widget.teamBlogo,
+      "teama_name": widget.teamAname,
+      "teamb_name": widget.teamBname
     };
     request.body = json.encode(requestBody);
     try {
@@ -76,20 +88,20 @@ class _CaptainState extends State<Captain> {
         print(await response.stream.bytesToString());
         setState(() {
           isLoading = false;
-        });      
+        });
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => MatchDetailPage(
-                matchId: widget.matchId,
-                short_title: widget.short_title,
-                date_start_ist: widget.date_start_ist,
-                competition: widget.competitionId,
-                fromContest: widget.fromContest,
-                teamId: "",
-                balance: widget.balance,
-                contestId: widget.contestId,
-                ),
+              matchId: widget.matchId,
+              short_title: widget.short_title,
+              date_start_ist: widget.date_start_ist,
+              competition: widget.competitionId,
+              fromContest: widget.fromContest,
+              teamId: "",
+              balance: widget.balance,
+              contestId: widget.contestId,
+            ),
           ),
         );
       } else {
@@ -187,8 +199,7 @@ class _CaptainState extends State<Captain> {
                       Container(
                         width: 90.0,
                         height: 20.0,
-                        margin: EdgeInsets.only(
-                            left: 8.0),
+                        margin: EdgeInsets.only(left: 8.0),
                         child: Text(
                           'SELECTED BY',
                           style: TextStyle(
@@ -304,8 +315,12 @@ class _CaptainState extends State<Captain> {
                                         }
                                       },
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width * .150,
-                                        height: MediaQuery.of(context).size.width * .080,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .150,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                .080,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: selectedCaptainId == player.pid
@@ -337,8 +352,12 @@ class _CaptainState extends State<Captain> {
                                         }
                                       },
                                       child: Container(
-                                        width: MediaQuery.of(context).size.width * .070,
-                                        height: MediaQuery.of(context).size.width * .080,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                .070,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                .080,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: selectedViceCaptainId ==

@@ -36,10 +36,10 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
   double totalCredits = 100;
   int maxPlayers = 11;
   bool isLoading = true;
-  String? teamAlogo;
-  String? teamBlogo;
-  String? teamAname;
-  String? teamBname;
+  late String teamAlogo;
+  late String teamBlogo;
+  late String teamAname;
+  late String teamBname;
 
   @override
   void initState() {
@@ -594,6 +594,10 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                           fromContest: widget.fromContest,
                           balance: widget.balance,
                           contestId: widget.contestId,
+                          teamAlogo: teamAlogo,
+                          teamBlogo: teamBlogo,
+                          teamAname: teamAname,
+                          teamBname: teamBname
                         ),
                       ),
                     );

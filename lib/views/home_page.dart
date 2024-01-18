@@ -25,8 +25,8 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
   int _currentIndex = 0;
   List competitions = [];
   final List<String> advertisements = [
-    'assets/slider1.jpg',
-    'assets/slider2.jpg',
+    'assets/slider1.png',
+    'assets/slider2.png',
     'assets/slider3.png',
   ];
   bool isLoading = true;
@@ -219,11 +219,11 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                 Expanded(
                   child: Column(
                     children: [
-                      SizedBox(height: 5),
+                      // SizedBox(height: 5),
                       CarouselSlider.builder(
                         itemCount: advertisements.length,
                         options: CarouselOptions(
-                          height: 120.0,
+                          height: 140.0,
                           enlargeCenterPage: true,
                           autoPlay: true,
                           // aspectRatio: 16 / 5,
@@ -242,9 +242,9 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
                             (BuildContext context, int index, int realIndex) {
                           return Container(
                             width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            // margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
+                              // borderRadius: BorderRadius.circular(8.0),
                               image: DecorationImage(
                                 image: AssetImage(advertisements[index]),
                                 fit: BoxFit.cover,
