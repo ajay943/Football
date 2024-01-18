@@ -262,12 +262,12 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                left: 40.0), // Adjust left padding as needed
+                                left: 55.0), // Adjust left padding as needed
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
                                 LinearPercentIndicator(
-                                  width: 280.0,
+                                  width: 290.0,
                                   lineHeight: 27.0,
                                   percent: (selectedPlayers.length / maxPlayers)
                                       .toDouble(),
@@ -394,20 +394,20 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                 ),
                               ),
                             ),
-                            Container(
-                              width: 70.0,
-                              height: 15.0,
-                              margin: EdgeInsets.only(
-                                  right:
-                                      0.0), // Adjust the margin value as needed
-                              child: Text(
-                                'CREDITS',
-                                style: TextStyle(
-                                  fontSize: 10.0,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
+                            // Container(
+                            //   width: 70.0,
+                            //   height: 15.0,
+                            //   margin: EdgeInsets.only(
+                            //       right:
+                            //           0.0), // Adjust the margin value as needed
+                            //   child: Text(
+                            //     'CREDITS',
+                            //     style: TextStyle(
+                            //       fontSize: 10.0,
+                            //       color: Colors.grey,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ],
@@ -477,7 +477,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                                                     player.skill,
                                                     style: TextStyle(
                                                       fontSize: 16.0,
-                                                      color: Colors.grey,
+                                                      color: Colors.black,
                                                     ),
                                                   ),
                                                   SizedBox(width: 75.0),

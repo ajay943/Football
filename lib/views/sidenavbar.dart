@@ -36,7 +36,7 @@ class _SideNavbarState extends State<SideNavbar> {
                   ),
                 ),
                 Positioned(
-                  top: MediaQuery.of(context).size.height * 0.22,
+                  top: MediaQuery.of(context).size.height * 0.20,
                   left: MediaQuery.of(context).size.width * 0.00,
                   right: MediaQuery.of(context).size.width * 0.00,
                   child: Container(
@@ -126,7 +126,7 @@ class _SideNavbarState extends State<SideNavbar> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5.0),
+                        SizedBox(height: 1.0),
                         Divider(
                           color: const Color.fromARGB(221, 237, 236, 236),
                           thickness: 1.0,
@@ -134,7 +134,7 @@ class _SideNavbarState extends State<SideNavbar> {
                           indent: 16.0,
                           endIndent: 15.0,
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -167,7 +167,7 @@ class _SideNavbarState extends State<SideNavbar> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         Divider(
                           color: const Color.fromARGB(221, 237, 236, 236),
                           thickness: 1.0,
@@ -175,7 +175,7 @@ class _SideNavbarState extends State<SideNavbar> {
                           indent: 16.0,
                           endIndent: 15.0,
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -207,7 +207,7 @@ class _SideNavbarState extends State<SideNavbar> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         Divider(
                           color: const Color.fromARGB(221, 237, 236, 236),
                           thickness: 1.0,
@@ -215,7 +215,7 @@ class _SideNavbarState extends State<SideNavbar> {
                           indent: 16.0,
                           endIndent: 15.0,
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -247,7 +247,7 @@ class _SideNavbarState extends State<SideNavbar> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         Divider(
                           color: const Color.fromARGB(221, 237, 236, 236),
                           thickness: 1.0,
@@ -255,7 +255,7 @@ class _SideNavbarState extends State<SideNavbar> {
                           indent: 16.0,
                           endIndent: 15.0,
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -290,7 +290,7 @@ class _SideNavbarState extends State<SideNavbar> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         Divider(
                           color: const Color.fromARGB(221, 237, 236, 236),
                           thickness: 1.0,
@@ -298,7 +298,7 @@ class _SideNavbarState extends State<SideNavbar> {
                           indent: 16.0,
                           endIndent: 15.0,
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -330,7 +330,7 @@ class _SideNavbarState extends State<SideNavbar> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         Divider(
                           color: const Color.fromARGB(221, 237, 236, 236),
                           thickness: 1.0,
@@ -338,7 +338,7 @@ class _SideNavbarState extends State<SideNavbar> {
                           indent: 16.0,
                           endIndent: 15.0,
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -370,7 +370,7 @@ class _SideNavbarState extends State<SideNavbar> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: 1.0),
                         Divider(
                           color: const Color.fromARGB(221, 237, 236, 236),
                           thickness: 1.0,

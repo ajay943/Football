@@ -186,7 +186,7 @@ class _CaptainState extends State<Captain> {
                     children: [
                       Container(
                         width: 90.0,
-                        height: 15.0,
+                        height: 20.0,
                         margin: EdgeInsets.only(
                             left: 8.0),
                         child: Text(
@@ -199,8 +199,8 @@ class _CaptainState extends State<Captain> {
                       ),
                       Container(
                         width: 50.0,
-                        height: 15.0,
-                        margin: EdgeInsets.only(left: 130.0),
+                        height: 20.0,
+                        margin: EdgeInsets.only(left: 120.0),
                         child: Text(
                           '% C BY',
                           style: TextStyle(
@@ -210,10 +210,10 @@ class _CaptainState extends State<Captain> {
                         ),
                       ),
                       Container(
-                        width: 40.0,
-                        height: 15.0,
+                        width: 75.0,
+                        height: 20.0,
                         margin: EdgeInsets.only(
-                            right: 0.0), // Adjust the margin value as needed
+                            right: 10.0), // Adjust the margin value as needed
                         child: Text(
                           '% VC BY',
                           style: TextStyle(
@@ -242,7 +242,7 @@ class _CaptainState extends State<Captain> {
                   ),
                   child: Container(
                     width: double.infinity,
-                    height: 70.0,
+                    height: 80.0,
                     padding:
                         const EdgeInsets.only(bottom: 4, left: 19, right: 19),
                     child: Stack(
@@ -273,7 +273,7 @@ class _CaptainState extends State<Captain> {
                                       Text(
                                         player.name,
                                         style: TextStyle(
-                                          fontSize: 16.0,
+                                          fontSize: 14.0,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -286,11 +286,11 @@ class _CaptainState extends State<Captain> {
                         ),
                         Positioned(
                           left: 83.0,
-                          top: 30,
+                          top: 40,
                           child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left: 175),
+                                padding: const EdgeInsets.only(left: 140),
                                 child: Row(
                                   children: [
                                     GestureDetector(
@@ -304,8 +304,8 @@ class _CaptainState extends State<Captain> {
                                         }
                                       },
                                       child: Container(
-                                        width: 30.0,
-                                        height: 30.0,
+                                        width: MediaQuery.of(context).size.width * .150,
+                                        height: MediaQuery.of(context).size.width * .080,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: selectedCaptainId == player.pid
@@ -337,8 +337,8 @@ class _CaptainState extends State<Captain> {
                                         }
                                       },
                                       child: Container(
-                                        width: 30.0,
-                                        height: 30.0,
+                                        width: MediaQuery.of(context).size.width * .070,
+                                        height: MediaQuery.of(context).size.width * .080,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: selectedViceCaptainId ==
