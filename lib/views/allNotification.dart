@@ -28,18 +28,12 @@ class _AllNotificationState extends State<AllNotification> {
   }
 
   Future<void> sendEmptyNotification() async {
-    // Replace the phone number with the actual one
     final phoneNumber = phone;
-
-    // API endpoint URL
     final url =
         Uri.parse('https://crickx.onrender.com/notifications/$phoneNumber');
 
     try {
-      // Make the POST request without a request body
       var response = await http.post(url);
-
-      // Check the response status code
       if (response.statusCode == 200) {
         print('Notification sent successfully');
         var data = json.decode(response.body);
@@ -87,38 +81,30 @@ class _AllNotificationState extends State<AllNotification> {
         ),
       ),
       body:
-          // isLoading
-          //     ? CardSkeleton(
-          //         isCircularImage: true,
-          //         isBottomLinesActive: true,
-          //       )
-          //     : competitions.isEmpty ? Center(
-          //       child: Text("No notifications availabel"),
-          //     ):
+          isLoading
+              ? CardSkeleton(
+                  isCircularImage: true,
+                  isBottomLinesActive: true,
+                )
+              : competitions.isEmpty ? Center(
+                child: Text("No notifications availabel"),
+              ):
           Expanded(
         child: ListView.builder(
-          // itemCount: competitions.length,
-          itemCount: 1,
+          itemCount: competitions.length,
+          // itemCount: 1,
           itemBuilder: (context, index) {
-            // var element = competitions[index];
+            var element = competitions[index];
             return InkWell(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetailNotification(
-                      // notificationId: element["_id"],
-                      notificationId: "1233",
+                      notificationId: element["_id"],                      
                     ),
-                    // builder: (context) => MatchDetailPage( matchId: 12345),
                   ),
                 );
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => DetailNotification(notificationId: '',),
-                //   ),
-                // );
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
@@ -157,7 +143,7 @@ class _AllNotificationState extends State<AllNotification> {
                                   ),
                                   SizedBox(width: 8.0),
                                   Text(
-                                    "IND-W vs AUS-W | Lineups Out",
+                                    element['title'],
                                     style: TextStyle(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w500,
@@ -171,9 +157,7 @@ class _AllNotificationState extends State<AllNotification> {
                                     left:
                                         30.0), // Adjust the left margin as needed
                                 child: Text(
-                                  // 'element['message']',
-                                  '${body.split(' ').take(5).join(' ')}...',
-
+                                  '${element['message'].split(' ').take(5).join(' ')}...',
                                   style: TextStyle(
                                     fontSize: 14.0,
                                   ),
@@ -184,7 +168,7 @@ class _AllNotificationState extends State<AllNotification> {
                         ),
                       ),
                     ),
-                    // SizedBox(height: 16.0),
+                    SizedBox(height: 16.0),
                   ],
                 ),
               ),
