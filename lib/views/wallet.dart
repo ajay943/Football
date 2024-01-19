@@ -1,4 +1,5 @@
 import 'package:app/views/top_up.dart';
+import 'package:app/views/withdrawlPage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:loader_skeleton/loader_skeleton.dart';
@@ -159,6 +160,14 @@ class _WalletScreenState extends State<WalletScreen> {
                                       ),
                                       child: FloatingActionButton(
                                         onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  withdrawPage(),
+                                            ),
+                                          );
+                                          
                                           // Add your logic for the left FloatingActionButton
                                         },
                                         child: Column(

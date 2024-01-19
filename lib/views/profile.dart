@@ -1,41 +1,72 @@
 import 'package:app/views/wallet.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  TextEditingController dateinput = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  String name = "";
+  String lastName = "";
+  String email = "";
+  String dob = "";
+
+  int calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+    if (birthDate.month > currentDate.month) {
+      age--;
+    } else if (currentDate.month == birthDate.month) {
+      if (birthDate.day > currentDate.day) {
+        age--;
+      }
+    }
+    return age;
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2040),
+    );
+
+    if (pickedDate != null) {
+      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      setState(() {
+        dateinput.text = formattedDate;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black, // Set the background color to black
+        backgroundColor: Colors.black,
         title: Text(
           'My profile',
-          style: TextStyle(color: Colors.white), // Set text color to white
+          style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-              color: Colors.white), // Set icon color to white
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            // Add your back arrow icon logic here
-            Navigator.pop(
-                context); // For example, you can pop the current screen
+            Navigator.pop(context);
           },
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.account_balance_wallet,
-                color: Colors.white), // Set icon color to white
+            icon: Icon(Icons.account_balance_wallet, color: Colors.white),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => WalletScreen(),
+                  builder: (context) => WalletScreen (),
                 ),
               );
             },
@@ -51,12 +82,12 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Card(
               child: Container(
                 width: double.infinity,
-                height: 250.0, // Set your desired height
+                height: MediaQuery.of(context).size.height * .280,
                 padding: const EdgeInsets.all(0.0),
                 child: Image.asset(
                   'assets/ball.png',
                   width: double.infinity,
-                  height: 200,
+                  height: MediaQuery.of(context).size.height * .95,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -69,8 +100,8 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Center(
               child: Card(
                 child: Container(
-                  width: 450.0,
-                  height: 600.0,
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * .85,
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -82,83 +113,98 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 80.0),
+                      SizedBox(height: 70.0),
                       Container(
-                        width: 400.0,
-                        height: 66.0,
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * .075,
                         child: TextFormField(
+                          onChanged: (value) {
+                            setState(() {
+                              name = value;
+                            });
+                          },
                           decoration: InputDecoration(
-                            labelText: 'Full Name',
+                            labelText: 'First Name',
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                             ),
-                            // enabledBorder: OutlineInputBorder(
-                            //   borderSide: BorderSide(color: Colors.grey),
-                            // ),
                           ),
-                          // Add any additional properties or controllers as needed
                         ),
                       ),
-                      SizedBox(height: 10.0),
+                      SizedBox(height: MediaQuery.of(context).size.height * .010,),
                       Container(
-                        width: 400.0,
-                        height: 66.0,
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * .075,
                         child: TextFormField(
+                          onChanged: (value) {
+                            setState(() {
+                              lastName = value;
+                            });
+                          },
                           decoration: InputDecoration(
-                            labelText: 'Contact Number',
+                            labelText: 'Last Name',
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                             ),
-                            // enabledBorder: OutlineInputBorder(
-                            //   borderSide: BorderSide(color: Colors.grey),
-                            // ),
                           ),
-                          // Add any additional properties or controllers as needed
                         ),
                       ),
-                      SizedBox(height: 10.0),
+                      SizedBox(height: MediaQuery.of(context).size.height * .010,),
                       Container(
-                        width: 400.0,
-                        height: 66.0,
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * .075,
                         child: TextFormField(
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
+                            });
+                          },
                           decoration: InputDecoration(
                             labelText: 'Email ID',
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                             ),
-                            // enabledBorder: OutlineInputBorder(
-                            //   borderSide: BorderSide(color: Colors.grey),
-                            // ),
                           ),
-                          // Add any additional properties or controllers as needed
                         ),
                       ),
-                      SizedBox(height: 10.0),
-                      Container(
-                        width: 400.0,
-                        height: 66.0,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'DOB',
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
+                      SizedBox(height: MediaQuery.of(context).size.height * .010,),
+                      GestureDetector(
+                        child: Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * .075,
+                          child: TextFormField(
+                            style: TextStyle(color: Colors.black),
+                            controller: dateinput,
+                            decoration: InputDecoration(
+                              labelText: dateinput.text.isEmpty ? 'DOB' : 'DOB',
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue),
+                              ),
+                              suffixIcon: Icon(Icons.calendar_today, color: Colors.grey),
                             ),
-                            // enabledBorder: OutlineInputBorder(
-                            //   borderSide: BorderSide(color: Colors.grey),
-                            // ),
+                            readOnly: true,
+                            validator: (value) {
+                              if (calculateAge(DateTime.parse(value!)) < 16 || value.isEmpty) {
+                                return 'Please enter a valid date.';
+                              }
+                              return null;
+                            },
+                            onTap: () {
+                              _selectDate(context);
+                            },
                           ),
-                          // Add any additional properties or controllers as needed
                         ),
                       ),
-                      SizedBox(height: 30.0),
+                       SizedBox(height: MediaQuery.of(context).size.height * .040,),
                       Center(
                         child: InkWell(
                           onTap: () {
                             // Add your edit profile button logic here
+                            printData(); // Print data when the button is tapped
                           },
                           child: Container(
-                            width: 134.0,
-                            height: 33.0,
+                            width: MediaQuery.of(context).size.width * .25,
+                            height: MediaQuery.of(context).size.width * .080,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -192,11 +238,18 @@ class _ProfilePageState extends State<ProfilePage> {
             left: (MediaQuery.of(context).size.width - 150) / 2,
             child: CircleAvatar(
               radius: 80.0,
-              backgroundImage: AssetImage('assets/img2.png'),
+              backgroundImage: AssetImage('assets/profileimage.png'),
             ),
           ),
         ],
       ),
     );
+  }
+
+  void printData() {
+    print('First Name: ${name}');
+    print('Last Name: ${lastName}');
+    print('Email: ${email}');
+    print('DOB: ${dateinput.text}');
   }
 }

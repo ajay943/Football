@@ -1,15 +1,14 @@
-import 'package:app/views/paymentaGetwayList.dart';
 import 'package:flutter/material.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TopUpScreen extends StatefulWidget {
-  const TopUpScreen({Key? key}) : super(key: key);
+class withdrawPage extends StatefulWidget {
+  const withdrawPage({super.key});
+
   @override
-  State<TopUpScreen> createState() => _TopUpScreenState();
+  State<withdrawPage> createState() => _withdrawPageState();
 }
 
-class _TopUpScreenState extends State<TopUpScreen> {
+class _withdrawPageState extends State<withdrawPage> {
   TextEditingController _amountController = TextEditingController();
   late String phone;
   @override
@@ -25,11 +24,9 @@ class _TopUpScreenState extends State<TopUpScreen> {
       phone = phoneNumber!;
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    return 
-    Scaffold(
+    return  Scaffold(
       body: Stack(
         children: [
           Container(
@@ -57,7 +54,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                   top: 0.0,
                 ),
                 child: Text(
-                  'Top - Up',
+                  'Withdraw',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -94,11 +91,11 @@ class _TopUpScreenState extends State<TopUpScreen> {
                           CircleAvatar(
                             radius: 15.0,
                             backgroundColor: Colors.white,
-                           backgroundImage: AssetImage('assets/walletimage.png'),
+                           backgroundImage: AssetImage('assets/withdraw1.png'),
                           ),
                           SizedBox(width: 15.0),
                           Text(
-                            'TOP - UP',
+                            'Withdraw',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20.0,
@@ -116,7 +113,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
                         children: [
                           SizedBox(height: 10.0),
                           Text(
-                            'Enter Amount (Min ₹ 1 )',
+                            'Enter Amount (Min ₹ 100 )',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16.0,
@@ -258,16 +255,16 @@ class _TopUpScreenState extends State<TopUpScreen> {
             child: InkWell(
               onTap: () {
                 double enteredAmount = double.parse(_amountController.text);
-                if (enteredAmount >= 1) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PaymentGetwayList(
-                        enteredAmount: enteredAmount,
-                        phone : phone
-                      ),
-                    ),
-                  );
+                if (enteredAmount >= 100) {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => PaymentGetwayList(
+                  //       enteredAmount: enteredAmount,
+                  //       phone : phone
+                  //     ),
+                  //   ),
+                  // );
                 } else {
                   // Handle invalid amount
                 }
@@ -299,6 +296,7 @@ class _TopUpScreenState extends State<TopUpScreen> {
         ],
       ),
     );
+ 
   }
 
   Widget _buildAmountButton(String amount) {
@@ -323,5 +321,5 @@ class _TopUpScreenState extends State<TopUpScreen> {
       ),
     );
   }
-}
 
+}
