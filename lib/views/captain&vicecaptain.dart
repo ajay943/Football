@@ -17,6 +17,7 @@ class Captain extends StatefulWidget {
   final String teamBlogo;
   final String teamAname;
   final String teamBname;
+  final String datetime;
   final List<Player> selectedPlayers;
   const Captain({
     Key? key,
@@ -32,6 +33,7 @@ class Captain extends StatefulWidget {
     required this.teamBlogo,
     required this.teamAname,
     required this.teamBname,
+    required this.datetime,
   }) : super(key: key);
   @override
   State<Captain> createState() => _CaptainState();
@@ -79,7 +81,7 @@ class _CaptainState extends State<Captain> {
       "teama_logo": widget.teamAlogo,
       "teamb_logo": widget.teamBlogo,
       "teama_name": widget.teamAname,
-      "teamb_name": widget.teamBname
+      "teamb_name": widget.teamBname,
     };
     request.body = json.encode(requestBody);
     try {

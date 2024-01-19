@@ -75,7 +75,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
     var body = {
       "poolContestId": widget.contestId,
       "phoneNumber": phone,
-       "teamID": ""
+      "teamID": ""
     };
     var uri = Uri.parse('https://crickx.onrender.com/joinContest');
     http.Response response = await http.post(
@@ -87,7 +87,8 @@ class _YourNewScreenState extends State<YourNewScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SidebarXExampleApp(),),
+          builder: (context) => SidebarXExampleApp(),
+        ),
       );
       print(response.body);
     } else {
@@ -298,8 +299,8 @@ class _YourNewScreenState extends State<YourNewScreen> {
                         GestureDetector(
                           onTap: () {},
                           child: Container(
-                            height:MediaQuery.of(context).size.height * .254,
-                            width:MediaQuery.of(context).size.width * .95,
+                            height: MediaQuery.of(context).size.height * .254,
+                            width: MediaQuery.of(context).size.width * .95,
                             child: Card(
                               elevation: 5,
                               shadowColor: Colors.grey,
@@ -311,13 +312,18 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Container(
                                         child: Container(
-                                          height: MediaQuery.of(context).size.width * .15,
-                                          width: MediaQuery.of(context).size.width * .925,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .15,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .925,
                                           decoration: BoxDecoration(
                                             gradient: LinearGradient(
                                               colors: [
@@ -335,10 +341,14 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                             ),
                                           ),
                                           child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               SizedBox(
-                                                height: MediaQuery.of(context).size.height * .0005,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    .0005,
                                               ),
                                               Text(
                                                 'Max Prize Pool',
@@ -349,7 +359,10 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: MediaQuery.of(context).size.height * .0005,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    .0005,
                                               ),
                                               Text(
                                                 "$poolprize",
@@ -366,11 +379,15 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                     ],
                                   ),
                                   Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(height: MediaQuery.of(context).size.height * .018,),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .018,
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             right: 20, left: 20),
@@ -382,22 +399,24 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                                   const Color(0xFF8443BA)),
                                         ),
                                       ),
-                                      SizedBox(height: MediaQuery.of(context).size.height * .012,),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .012,
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             right: 20, left: 20),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               '1,567 spots left',
                                               style: TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400,
-                                                color:
-                                                    const Color(0xFF8443BA),
+                                                color: const Color(0xFF8443BA),
                                               ),
                                             ),
                                             Text(
@@ -411,15 +430,25 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                           ],
                                         ),
                                       ),
-                                      SizedBox(height:MediaQuery.of(context).size.height * .010,),
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .010,
+                                      ),
                                     ],
                                   ),
                                   Column(
                                     children: [
                                       Center(
                                         child: SizedBox(
-                                          height:MediaQuery.of(context).size.height * .047,
-                                          width: MediaQuery.of(context).size.width * .75,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              .047,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .75,
                                           child: ElevatedButton(
                                             onPressed: () {
                                               makePostRequest();
@@ -431,8 +460,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                                   vertical: 10),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        4.0),
+                                                    BorderRadius.circular(4.0),
                                               ),
                                             ),
                                             child: RichText(
@@ -461,10 +489,15 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: MediaQuery.of(context).size.height * .022,),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        .022,
+                                  ),
                                   Container(
                                     child: Container(
-                                      height: MediaQuery.of(context).size.height * .035,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .035,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
@@ -487,110 +520,100 @@ class _YourNewScreenState extends State<YourNewScreen> {
                                             height: 6,
                                           ),
                                           Row(
-                                                        children: [
-                                                          SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                          Container(
-                                                            height: 15,
-                                                            width: 15,
-                                                            child: Image.asset(
-                                                              'assets/filledicon.png', // Replace with the actual path to your PNG image
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                           SizedBox(
-                                                        width: 2,
-                                                      ),
-                                                          Text(
-                                                            '₹80',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Colors
-                                                                  .white,
-                                                            ),
-                                                          ),
-                                                           SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                          Container(
-                                                            height: 13,
-                                                            width: 13,
-                                                            child: Image.asset(
-                                                              'assets/cup.png', // Replace with the actual path to your PNG image
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                           SizedBox(
-                                                        width: 2,
-                                                      ),
-                                                          Text(
-                                                            '21%',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Colors
-                                                                  .white,
-                                                            ),
-                                                          ),
-                                                           SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                          Container(
-                                                            height: 15,
-                                                            width: 15,
-                                                            child: Image.asset(
-                                                              'assets/micon.png', // Replace with the actual path to your PNG image
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                           SizedBox(
-                                                        width: 2,
-                                                      ),
-                                                          Text(
-                                                            'Upto 11',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Colors
-                                                                  .white,
-                                                            ),
-                                                          ),
-                                                           SizedBox(
-                                                        width:  MediaQuery.of(context).size.width * 0.21,
-                                                      ),
-                                                          Container(
-                                                            height: 15,
-                                                            width: 15,
-                                                            child: Image.asset(
-                                                              'assets/rupeeicon.png', // Replace with the actual path to your PNG image
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                        width: 2,
-                                                      ),
-                                                          Text(
-                                                            'Flexible',
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Colors
-                                                                  .white,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                  
+                                            children: [
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Container(
+                                                height: 15,
+                                                width: 15,
+                                                child: Image.asset(
+                                                  'assets/filledicon.png', // Replace with the actual path to your PNG image
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Text(
+                                                '₹80',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                height: 13,
+                                                width: 13,
+                                                child: Image.asset(
+                                                  'assets/cup.png', // Replace with the actual path to your PNG image
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Text(
+                                                '21%',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                height: 15,
+                                                width: 15,
+                                                child: Image.asset(
+                                                  'assets/micon.png', // Replace with the actual path to your PNG image
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Text(
+                                                'Upto 11',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.21,
+                                              ),
+                                              Container(
+                                                height: 15,
+                                                width: 15,
+                                                child: Image.asset(
+                                                  'assets/rupeeicon.png', // Replace with the actual path to your PNG image
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 2,
+                                              ),
+                                              Text(
+                                                'Flexible',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -876,7 +899,7 @@ class _YourNewScreenState extends State<YourNewScreen> {
   Map<String, dynamic> getRanksAndPricesFromResponse() {
     if (responseData.isNotEmpty) {
       Map<String, dynamic> jsonResponse = json.decode(responseData);
-      return jsonResponse['data']['ranksAndPrices'];
+      return jsonResponse['data'];
     }
     return {};
   }

@@ -52,7 +52,7 @@ class _MyTeamState extends State<MyTeam> {
         var jsonResponse = json.decode(responseString);
         print("Response: $jsonResponse"); // Add this line
         setState(() {
-          teams = jsonResponse['teams'] ?? [];
+          teams = jsonResponse['array'] ?? [];
         });
         print("Teams: $teams");
       } else {
@@ -67,8 +67,8 @@ class _MyTeamState extends State<MyTeam> {
   String _getCaptainName(Map<String, dynamic> team) {
     for (int i = 1; i <= 11; i++) {
       String playerKey = 'player$i';
-      if (team[playerKey]['c'] == true) {
-        return team[playerKey]['name'];
+      if (team['team'][playerKey]['c'] == true) {
+        return team['team'][playerKey]['name'];
       }
     }
     return ''; // Handle the case where no captain is found
@@ -77,8 +77,8 @@ class _MyTeamState extends State<MyTeam> {
   String _getViceCaptainName(Map<String, dynamic> team) {
     for (int i = 1; i <= 11; i++) {
       String playerKey = 'player$i';
-      if (team[playerKey]['vc'] == true) {
-        return team[playerKey]['name'];
+      if (team['team'][playerKey]['vc'] == true) {
+        return team['team'][playerKey]['name'];
       }
     }
     return ''; // Handle the case where no vice-captain is found
@@ -210,7 +210,7 @@ class _MyTeamState extends State<MyTeam> {
                                                           _selectedCheckboxIndex =
                                                               index;
                                                           teamId =
-                                                              element['_id'];
+                                                              element["team"]['_id'];
                                                         });
                                                       },
                                                       checkColor: Colors.black,
