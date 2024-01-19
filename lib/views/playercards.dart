@@ -40,6 +40,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
   late String teamBlogo;
   late String teamAname;
   late String teamBname;
+  late String matchDateTime;
 
   @override
   void initState() {
@@ -63,6 +64,10 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
           'https://rest.entitysport.com/v2/competitions/${widget.competitionId}/squads/${widget.matchId}/?token=444b8b1e48d9cd803ea3820c5c17ecc4'));
       if (response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);
+        setState(() {
+          matchDateTime = jsonResponse['datetime'];
+        });
+        print("datetime$matchDateTime");
         if (jsonResponse.containsKey('response')) {
           List<Player> apiPlayers = [];
           for (int i = 0;
@@ -597,7 +602,8 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen>
                           teamAlogo: teamAlogo,
                           teamBlogo: teamBlogo,
                           teamAname: teamAname,
-                          teamBname: teamBname
+                          teamBname: teamBname,
+                          datetime: matchDateTime,
                         ),
                       ),
                     );
